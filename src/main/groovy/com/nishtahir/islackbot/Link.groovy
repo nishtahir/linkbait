@@ -8,8 +8,8 @@ import groovy.transform.Canonical
 @DatabaseTable
 class Link {
 
-    @DatabaseField(id = true)
-    String timestamp;
+    @DatabaseField( id = true)
+    double timestamp;
 
     @DatabaseField
     String url;

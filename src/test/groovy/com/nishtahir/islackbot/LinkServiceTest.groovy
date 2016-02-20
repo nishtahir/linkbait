@@ -36,7 +36,17 @@ class LinkServiceTest extends Specification {
             link == linkService.saveLink('1234', 'http://example.com', 'testAuthor')
     }
 
-    def "GetLinkDao"() {
+    def "GetLinksPostedToday"() {
+        given:
+        linkService.saveLink(new Link(Calendar.getInstance().getTimeInMillis(), 'http://test.com', 'testAuthor'))
+        linkService.saveLink(new Link(Calendar.getInstance().getTimeInMillis(), 'http://test2.com', 'testAuthor2'))
+        Link badTest = new Link(1234, 'http://test2.com', 'testAuthor2')
+        linkService.saveLink(badTest)
 
+        List<Link> result = linkService.linksPostedToday
+
+        expect:
+        result.size() == 2
+        !result.contains(badTest)
     }
 }

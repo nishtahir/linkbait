@@ -28,6 +28,7 @@ class App {
 
     LinkService linkService
 
+    ConnectionSource connectionSource
 
     App() {
         initDatabase();
@@ -51,6 +52,7 @@ class App {
             slackSession.addMessagePostedListener([
                     onEvent: { SlackMessagePosted event, SlackSession session ->
                         String message = event.messageContent
+                        println("Username: ${session.sessionPersona().userName}, ID: ${session.sessionPersona().id}, RealName: ${session.sessionPersona().realName}");
 
                         println("Message: ${event.messageContent}, by ${event.sender.userName}")
                         String url = message.find(Validator.URL_PATTERN)
@@ -60,6 +62,10 @@ class App {
 
                             linkService.saveLink(event.timestamp, url, event.sender.userName)
                         }
+
+                        if(Validator.isValidTacoRequest(event.messageContent, session.sessionPersona().id)){
+                            session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}> :taco:", null)
+                        }
                     }
             ] as SlackMessagePostedListener);
 
@@ -67,6 +73,7 @@ class App {
                     onEvent: { ReactionAdded event, SlackSession session ->
                         println("${event.emojiName}, ${event.getMessageID()}")
                         Link link = linkService.findLink(event.messageID)
+
                         if("arrow_up".equals(event.emojiName)){
                             link.upvotes++
                         } else if("arrow_down".equals(event.emojiName)){
@@ -90,15 +97,16 @@ class App {
     }
 
     def initApi() {
-        get("/hello", { request, response -> "Hello World!" });
+        linkService = new LinkService(connectionSource)
+        new LinkController(linkService).init()
     }
 
     def initDatabase() {
         Class.forName("org.sqlite.JDBC")
-        ConnectionSource connectionSource = new JdbcConnectionSource(config.connection.url)
+        connectionSource = new JdbcConnectionSource(config.connection.url)
         TableUtils.createTableIfNotExists(connectionSource, Link.class)
 
-        linkService = new LinkService(connectionSource)
+
     }
 
     static def parseOptions(args) {
