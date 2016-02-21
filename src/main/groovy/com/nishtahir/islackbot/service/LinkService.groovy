@@ -31,12 +31,12 @@ class LinkService {
      * @param publisher
      * @return
      */
-    def saveLink(String timestamp, String url, String publisher, String slackGroup, String channel) {
+    def saveLink(String timestamp, String url, String publisher, String group, String channel) {
         linkDao.createIfNotExists(new Link(
                 timestamp: Double.valueOf(timestamp),
                 url: url,
                 publisher: publisher,
-                slackGroup: slackGroup,
+                group: group,
                 channel: channel));
     }
 

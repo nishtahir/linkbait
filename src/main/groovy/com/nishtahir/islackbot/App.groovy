@@ -62,7 +62,7 @@ class App {
                             session.addReactionToMessage(event.getChannel(), event.timestamp, "arrow_up")
                             session.addReactionToMessage(event.getChannel(), event.timestamp, "arrow_down")
 
-                            linkService.saveLink(event.timestamp, url, event.sender.userName)
+                            linkService.saveLink(event.timestamp, url, event.sender.userName, k, event.channel.name)
                         }
 
                         if(ValidationUtils.isValidTacoRequest(event.messageContent, session.sessionPersona().id)){
