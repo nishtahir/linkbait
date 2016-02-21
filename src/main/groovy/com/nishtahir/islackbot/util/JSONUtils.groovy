@@ -4,23 +4,21 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 
 /**
- * Created by nish on 2/20/16.
+ * Utility class to work with JSON.
  */
 class JSONUtils {
 
     /**
-     *
      * @param data
-     * @return
+     * @return compact JSON presentation of data
      */
     static String dataToJSON(def data) {
         return new JsonBuilder(data).toString()
     }
 
     /**
-     *
      * @param data
-     * @return
+     * @return nicely formatted JSON representation of data
      */
     static String dataToPrettyJSON(def data) {
         return JsonOutput.prettyPrint(dataToJSON(data))

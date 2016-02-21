@@ -1,11 +1,14 @@
-package com.nishtahir.islackbot
+package com.nishtahir.islackbot.util
 
 /**
- *
+ *  Utility class to help with data validation.
  */
-class Validator {
+class ValidationUtils {
 
-
+    /**
+     *  Could be improved. Currently matches silly things like
+     *  spaghetti...
+     */
     def static final URL_PATTERN = /(?i)(https?:\\/\\/)?([\w\.-]+)\.([\w.]{2,6})([\\/\w\.-]*)*\\/?(([\w\.#\?=])*\\/?)*/
 
     /**

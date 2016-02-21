@@ -3,9 +3,17 @@ package com.nishtahir.islackbot.config
 import groovy.transform.Canonical;
 
 /**
- * Created by nish on 2/19/16.
+ *
  */
 @Canonical
 class Connection {
+
+    /**
+     * Connection to SQL db
+     *
+     * relevant yml
+     *
+     *  url: {jdbc connection url}
+     */
     String url
 }

@@ -1,4 +1,4 @@
-package com.nishtahir.islackbot
+package com.nishtahir.islackbot.model
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
@@ -22,4 +22,10 @@ class Link {
 
     @DatabaseField
     long downvotes;
+
+    @DatabaseField
+    String channel;
+
+    @DatabaseField
+    String group;
 }

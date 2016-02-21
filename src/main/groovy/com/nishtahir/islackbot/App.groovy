@@ -4,6 +4,10 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import com.nishtahir.islackbot.config.Configuration
+import com.nishtahir.islackbot.controller.LinkController
+import com.nishtahir.islackbot.model.Link
+import com.nishtahir.islackbot.service.LinkService
+import com.nishtahir.islackbot.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
@@ -13,8 +17,6 @@ import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessageUpdatedListener
 import org.yaml.snakeyaml.Yaml
 import spark.Spark
-
-import static spark.Spark.get
 
 class App {
 
@@ -55,7 +57,7 @@ class App {
                         println("Username: ${session.sessionPersona().userName}, ID: ${session.sessionPersona().id}, RealName: ${session.sessionPersona().realName}");
 
                         println("Message: ${event.messageContent}, by ${event.sender.userName}")
-                        String url = message.find(Validator.URL_PATTERN)
+                        String url = message.find(ValidationUtils.URL_PATTERN)
                         if (url) {
                             session.addReactionToMessage(event.getChannel(), event.timestamp, "arrow_up")
                             session.addReactionToMessage(event.getChannel(), event.timestamp, "arrow_down")
@@ -63,7 +65,7 @@ class App {
                             linkService.saveLink(event.timestamp, url, event.sender.userName)
                         }
 
-                        if(Validator.isValidTacoRequest(event.messageContent, session.sessionPersona().id)){
+                        if(ValidationUtils.isValidTacoRequest(event.messageContent, session.sessionPersona().id)){
                             session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}> :taco:", null)
                         }
                     }

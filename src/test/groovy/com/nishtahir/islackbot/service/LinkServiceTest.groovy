@@ -1,8 +1,9 @@
-package com.nishtahir.islackbot
+package com.nishtahir.islackbot.service
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
+import com.nishtahir.islackbot.model.Link
 import spock.lang.Specification
 
 /**
@@ -27,13 +28,13 @@ class LinkServiceTest extends Specification {
 
     def "SaveLink"() {
         given:
-            def link = new Link()
-            link.with {
-                (timestamp, url, publisher) = ['1234', 'http://example.com', 'testAuthor']
-            }
+        def link = new Link()
+        link.with {
+            (timestamp, url, publisher) = [1234, 'http://example.com', 'testAuthor']
+        }
 
         expect:
-            link == linkService.saveLink('1234', 'http://example.com', 'testAuthor')
+        link == linkService.saveLink(link)
     }
 
     def "GetLinksPostedToday"() {
