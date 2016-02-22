@@ -50,7 +50,7 @@ class App {
         initApi()
     }
 
-    static main(String[] args) {
+    static void main(String[] args) {
         parseOptions(args)
         new App()
 
