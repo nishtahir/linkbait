@@ -1,11 +1,14 @@
 package com.nishtahir.islackbot.util
 
+import com.nishtahir.islackbot.Patterns
+
 /**
  *  Utility class to help with data validation.
  */
 class ValidationUtils {
 
     /**
+     *  @deprecated
      *  Could be improved. Currently matches silly things like
      *  spaghetti...
      */
@@ -16,7 +19,7 @@ class ValidationUtils {
      * @return true if valid
      */
     static boolean isValidUrl(String context) {
-        context?.matches(URL_PATTERN)
+        Patterns.WEB_URL.matcher(context).matches()
     }
 
     /**

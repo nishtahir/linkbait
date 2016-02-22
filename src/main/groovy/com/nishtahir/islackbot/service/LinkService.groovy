@@ -18,7 +18,7 @@ class LinkService {
 
     /**
      *
-     * @param connectionSource
+     * @param connectionSource Database connection source
      */
     LinkService(ConnectionSource connectionSource) {
         linkDao = DaoManager.createDao(connectionSource, Link.class)

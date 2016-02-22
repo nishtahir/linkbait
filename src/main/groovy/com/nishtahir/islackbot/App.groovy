@@ -20,7 +20,15 @@ import spark.Spark
 
 class App {
 
-    static def cli
+    /**
+     *
+     */
+    static String EMOJI_ARROW_UP = 'arrow_up'
+
+    /**
+     *
+     */
+    static String EMOJI_ARROW_DOWN = 'arrow_down'
 
     /**
      * Application configuration.
@@ -38,7 +46,7 @@ class App {
         initApi()
     }
 
-    static main(args) {
+    static main(String[] args) {
         parseOptions(args)
         new App()
 
@@ -49,23 +57,27 @@ class App {
      */
     void initSlackBot() {
 
-        config.teams.each { k, v ->
-            SlackSession slackSession = SlackSessionFactory.createWebSocketSlackSession(v)
+        config.teams.each { group, apiToken ->
+
+            SlackSession slackSession = SlackSessionFactory.createWebSocketSlackSession(apiToken)
             slackSession.addMessagePostedListener([
                     onEvent: { SlackMessagePosted event, SlackSession session ->
+
                         String message = event.messageContent
-                        println("Username: ${session.sessionPersona().userName}, ID: ${session.sessionPersona().id}, RealName: ${session.sessionPersona().realName}");
+                        String senderUsername = event.sender.userName
+                        String channelName = event.channel.name
+                        String timestamp = event.timestamp
 
-                        println("Message: ${event.messageContent}, by ${event.sender.userName}")
-                        String url = message.find(ValidationUtils.URL_PATTERN)
+                        //Check for link in message
+                        String url = message.find(Patterns.WEB_URL)
                         if (url) {
-                            session.addReactionToMessage(event.getChannel(), event.timestamp, "arrow_up")
-                            session.addReactionToMessage(event.getChannel(), event.timestamp, "arrow_down")
-
-                            linkService.saveLink(event.timestamp, url, event.sender.userName, k, event.channel.name)
+                            session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_UP)
+                            session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_DOWN)
+                            linkService.saveLink(timestamp, url, senderUsername, group, channelName)
                         }
 
-                        if(ValidationUtils.isValidTacoRequest(event.messageContent, session.sessionPersona().id)){
+                        //Check for taco request In message
+                        if (ValidationUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
                             session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}> :taco:", null)
                         }
                     }
@@ -73,12 +85,12 @@ class App {
 
             slackSession.addReactionAddedListener([
                     onEvent: { ReactionAdded event, SlackSession session ->
-                        println("${event.emojiName}, ${event.getMessageID()}")
-                        Link link = linkService.findLink(event.messageID)
+                        String timestamp = event.messageID
+                        Link link = linkService.findLink(timestamp)
 
-                        if("arrow_up".equals(event.emojiName)){
+                        if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
                             link.upvotes++
-                        } else if("arrow_down".equals(event.emojiName)){
+                        } else if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
                             link.downvotes++
                         }
                         linkService.updateLink(link)
@@ -98,21 +110,29 @@ class App {
 
     }
 
-    def initApi() {
+    /**
+     * Init API routes and services.
+     */
+    void initApi() {
         linkService = new LinkService(connectionSource)
         new LinkController(linkService).init()
     }
 
-    def initDatabase() {
+    /**
+     *
+     */
+    void initDatabase() {
         Class.forName("org.sqlite.JDBC")
         connectionSource = new JdbcConnectionSource(config.connection.url)
         TableUtils.createTableIfNotExists(connectionSource, Link.class)
-
-
     }
 
-    static def parseOptions(args) {
-        cli = new CliBuilder()
+    /**
+     * Parse comm
+     * @param args
+     */
+    static void parseOptions(String[] args) {
+        def cli = new CliBuilder()
 
         cli.with {
             usage: '[-c] config.yml'
@@ -120,16 +140,30 @@ class App {
             c longOpt: 'config', 'configuration file', args: 1, required: true
         }
         def options = cli.parse(args)
-        options || System.exit(1)
+        options || exitWithMessage('Failed to parse arguments.')
 
-        File file = new File(options.c as String);
-        file.exists() || exitWithMessage("File not found : ${file}")
-        config = new Yaml().loadAs(file.newInputStream(), Configuration.class)
+        //Configuration
+        File configFile = new File(options.c as String);
+        configFile.exists() || exitWithMessage("File not found : ${configFile}")
+        config = initConfig(configFile)
 
+        //WebService Listening port
         options.p && Spark.port(options.p as Integer)
-
     }
 
+    /**
+     * Load configuration file
+     * @param configFile file to load
+     * @return configuration
+     */
+    static Configuration initConfig(File configFile) {
+        new Yaml().loadAs(configFile.newInputStream(), Configuration.class)
+    }
+
+    /**
+     * Print error message and terminate application
+     * @param message message to print
+     */
     static void exitWithMessage(message) {
         System.err.println(message);
         System.exit(1)

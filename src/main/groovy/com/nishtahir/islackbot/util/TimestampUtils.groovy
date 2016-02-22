@@ -13,9 +13,8 @@ class TimestampUtils {
     }
 
     /**
-     *
      * @param calendar
-     * @return
+     * @return calendar with time set to beginning of current day
      */
     static long getStartOfDay(Calendar calendar) {
         resetDay(calendar)
@@ -30,9 +29,8 @@ class TimestampUtils {
     }
 
     /**
-     *
      * @param calendar
-     * @return
+     * @return calendar with time set to first day of current week at 00:00:00 hh:mm:ss
      */
     static long getStartOfWeek(Calendar calendar) {
         resetWeek(calendar)
@@ -40,16 +38,15 @@ class TimestampUtils {
     }
 
     /**
-     * @return Unix timestamp of beginning of current week.
+     * @return Unix timestamp of beginning of current month.
      */
     static long getStartOfCurrentMonth() {
         return getStartOfMonth(Calendar.instance)
     }
 
     /**
-     *
      * @param calendar
-     * @return
+     * @return calendar with time set to first day of current month at 00:00:00 hh:mm:ss.
      */
     static long getStartOfMonth(Calendar calendar) {
         resetMonth(calendar)
@@ -57,7 +54,7 @@ class TimestampUtils {
     }
 
     /**
-     *
+     * Sets given calendar to 00:00:00 hh:mm:ss.
      * @param calendar
      * @return
      */
@@ -69,7 +66,7 @@ class TimestampUtils {
     }
 
     /**
-     *
+     * Sets given calendar to first day of current week.
      * @param calendar
      * @return
      */
@@ -80,19 +77,18 @@ class TimestampUtils {
     }
 
     /**
-     *
+     * Sets given calendar to first day of current month at  00:00:00 hh:mm:ss.
      * @param calendar
      * @return
      */
     static def resetMonth(Calendar calendar) {
-        resetWeek(calendar)
+        resetDay(calendar)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
     }
 
     /**
-     *
-     * @param timeInMillis
-     * @return
+     * @param timeInMillis time in milliseconds.
+     * @return Unix time representation
      */
     static long getUnixTime(long timeInMillis) {
         return timeInMillis / 1000

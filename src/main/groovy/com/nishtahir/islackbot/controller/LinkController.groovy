@@ -10,11 +10,15 @@ import static spark.Spark.get
  * Created by nish on 2/20/16.
  */
 @Canonical
-class LinkController {
+class LinkController extends AbstractController{
 
     LinkService service
 
-    def init(){
+    /**
+     *
+     */
+    @Override
+    void init(){
 
         /**
          *  Returns JSON with List of links posted today.
