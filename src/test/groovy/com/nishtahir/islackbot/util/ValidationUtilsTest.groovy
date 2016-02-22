@@ -36,4 +36,9 @@ class ValidationUtilsTest extends Specification {
 
         !ValidationUtils.isValidTacoRequest("<@linkbait> gimme a taco", sessionName)
     }
+
+    def "GetPlaystoreId"(){
+        expect:
+        ValidationUtils.getPlaystoreId('https://play.google.com/store/apps/details?id=com.antutu.ABenchMark') == 'com.antutu.ABenchMark'
+    }
 }

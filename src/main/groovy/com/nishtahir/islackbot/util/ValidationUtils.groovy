@@ -32,4 +32,12 @@ class ValidationUtils {
     static boolean isValidTacoRequest(String context, String sessionId){
         context.matches(/^(?i)(<@${sessionId}>:)\s(gimme|give\s+me|me\s+want)(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/)
     }
+
+    static String getPlaystoreId(String context) {
+        def matcher = (context =~ /play\.google.com\\/store\\/apps\\/details\?id=(?<id>[\w\.]+)/)
+        if(matcher.find()){
+            return matcher.group('id')
+        }
+        return null
+    }
 }

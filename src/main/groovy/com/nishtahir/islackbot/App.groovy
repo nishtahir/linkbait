@@ -8,6 +8,7 @@ import com.nishtahir.islackbot.controller.LinkController
 import com.nishtahir.islackbot.model.Link
 import com.nishtahir.islackbot.service.LinkService
 import com.nishtahir.islackbot.util.ValidationUtils
+import com.ullink.slack.simpleslackapi.SlackAttachment
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
@@ -15,6 +16,9 @@ import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory
 import com.ullink.slack.simpleslackapi.listeners.ReactionAddedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessageUpdatedListener
+import org.apache.commons.lang3.StringEscapeUtils
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.yaml.snakeyaml.Yaml
 import spark.Spark
 
@@ -68,14 +72,36 @@ class App {
                         String channelName = event.channel.name
                         String timestamp = event.timestamp
 
-                        //Check for link in message
-                        String url = message.find(Patterns.WEB_URL)
-                        if (url) {
+                        final String url = message.find(Patterns.WEB_URL)
+                        if (url != null) {
+
+                            //Check if playstore URL
+                            String playId = ValidationUtils.getPlaystoreId(url)
+                            if (playId != null) {
+
+                                Map<String, String> playstoreDetails = getAppDetailsFromPlayStore(playId)
+                                SlackAttachment attachment = new SlackAttachment()
+                                attachment.fallback = playstoreDetails['title']
+                                attachment.title = playstoreDetails['title']
+                                attachment.titleLink = url
+                                attachment.thumb_url = playstoreDetails['imageUrl']
+                                attachment.color = '3F51B5' //Material Indigo 500
+                                attachment.text = playstoreDetails['desc']
+                                attachment.addField("Author", playstoreDetails['author'], true)
+                                attachment.addField("Price", playstoreDetails['price'], true)
+                                attachment.addField("Last updated", playstoreDetails['lastUpdated'], true)
+                                attachment.addField("Downloads", playstoreDetails['dlCount'], true)
+                                attachment.addField("All hail his Majesty", "@nish", false)
+
+                                session.sendMessage(event.channel, null, attachment)
+
+                            }
+
                             session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_UP)
                             session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_DOWN)
                             linkService.saveLink(timestamp, url, senderUsername, group, channelName)
-                        }
 
+                        }
                         //Check for taco request In message
                         if (ValidationUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
                             session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}> :taco:", null)
@@ -108,6 +134,44 @@ class App {
             }
         }
 
+    }
+
+    static final int MAX_DESC_LENGTH = 2000;
+
+    /**
+     * Parse playstore app content
+     * @param playId
+     * @return
+     */
+    static Map<String, String> getAppDetailsFromPlayStore(String playId) {
+        String link = "https://play.google.com/store/apps/details?id=${playId}&hl=en&gl=us"
+        String html = link.toURL().text
+        Document doc = Jsoup.parse(html)
+
+        def fields = [:]
+
+        fields.put('title', doc.select('.document-title div').text().trim())
+        fields.put('author', doc.select('div[itemprop=author] a span').text().trim())
+        fields.put('desc', escapeHtml(doc.select('div[itemprop=description]').text().take(MAX_DESC_LENGTH)))
+        fields.put('imageUrl', doc.select('.cover-image').attr('src').trim())
+        fields.put('score', doc.select('.score').text().trim())
+        fields.put('reviews', doc.select('.reviews-num').text().trim())
+        fields.put('lastUpdated', doc.select('div[itemprop=datePublished]').text().trim())
+        fields.put('dlCount', doc.select('div[itemprop=numDownloads]').text().trim())
+        fields.put('version', doc.select('div[itemprop=softwareVersion]').text().trim())
+        fields.put('osVersion', doc.select('div[itemprop=operatingSystems]').text().trim())
+        fields.put('contentRating', doc.select('div[itemprop=contentRating]').text().trim())
+        fields.put('price', doc.select('meta[itemprop=price]').attr('content').trim().replace("0", "Free"))
+
+        return fields
+    }
+
+    /**
+     * @param html stuff that needs to be formatted
+     * @return String with the tags escaped
+     */
+    static String escapeHtml(CharSequence html) {
+        return StringEscapeUtils.escapeHtml4(String.valueOf(html))
     }
 
     /**
