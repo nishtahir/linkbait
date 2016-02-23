@@ -17,6 +17,7 @@ class ValidationUtilsTest extends Specification {
         !ValidationUtils.isValidUrl("123.123.1234")
         !ValidationUtils.isValidUrl("spaghetti...")
         !ValidationUtils.isValidUrl("Potato")
+        !ValidationUtils.isValidUrl("Intent.ACTION_SEND")
         !ValidationUtils.isValidUrl("http://google.com\\q=test_back")
 
     }

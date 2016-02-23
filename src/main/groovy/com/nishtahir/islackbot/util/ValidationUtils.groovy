@@ -8,18 +8,25 @@ import com.nishtahir.islackbot.Patterns
 class ValidationUtils {
 
     /**
-     *  @deprecated
-     *  Could be improved. Currently matches silly things like
-     *  spaghetti...
+     *
      */
-    def static final URL_PATTERN = /(?i)(https?:\\/\\/)?([\w\.-]+)\.([\w.]{2,6})([\\/\w\.-]*)*\\/?(([\w\.#\?=])*\\/?)*/
+    def static final SlACK_URL_PATTERN = /(?i)<(?<url>(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \-&\?=%+\.]*)*\/?)(|.*)?>/
 
     /**
      * @param context url to match
      * @return true if valid
      */
     static boolean isValidUrl(String context) {
-        Patterns.WEB_URL.matcher(context).matches()
+        context.matches(SlACK_URL_PATTERN)
+    }
+
+    static String getUrlFromSlackLink(String context){
+        def matcher = (context =~ SlACK_URL_PATTERN)
+        if(matcher.find()){
+            return matcher.group('url')
+        }
+
+        return null
     }
 
     /**

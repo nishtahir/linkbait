@@ -72,7 +72,7 @@ class App {
                         String channelName = event.channel.name
                         String timestamp = event.timestamp
 
-                        final String url = message.find(Patterns.WEB_URL)
+                        final String url = ValidationUtils.getUrlFromSlackLink(message)
                         if (url != null) {
 
                             //Check if playstore URL
@@ -98,8 +98,9 @@ class App {
                             }
 
                             session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_UP)
-                            session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_DOWN)
+                            //Saving stuff usually takes a bit of time... might be nice delay
                             linkService.saveLink(timestamp, url, senderUsername, group, channelName)
+                            session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_DOWN)
 
                         }
                         //Check for taco request In message
