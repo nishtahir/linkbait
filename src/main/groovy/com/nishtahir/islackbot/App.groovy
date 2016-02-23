@@ -116,11 +116,12 @@ class App {
                         //Check for taco request In message
                         if (ValidationUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
                             int chanceOfTaco = ThreadLocalRandom.current().nextInt(10)
+
                             if(chanceOfTaco < 2){
                                 session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}> :taco:", null)
                             } else {
 
-                                if (request != null) {
+                                if (request != null && request.isValid) {
                                     session.sendMessage(event.getChannel(), "Hang on. ${request.user} is already asking for a taco.", null)
 
                                 } else {
@@ -137,10 +138,8 @@ class App {
                                     request = new TacoRequest(
                                             timestamp: ts,
                                             user: "<@${event.sender.id}>",
-                                            upvotes: 1,
-                                            downvotes: 1,
-                                            created: System.currentTimeMillis(),
-                                            lastupdated: System.currentTimeMillis())
+                                            upvotes: 0,
+                                            downvotes: 0)
                                 }
                             }
                         }
@@ -151,14 +150,14 @@ class App {
                     onEvent: { ReactionAdded event, SlackSession session ->
 
                         if(request != null && event.messageID == request.timestamp){
-                            if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
+                            if (EMOJI_ARROW_UP.equals(event.emojiName)) {
                                 request.upvotes++
                             } else if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
                                 request.downvotes++
                             }
 
-                            if(request.upvotes - request.downvotes > 3){
-                                session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}>: :taco:", null)
+                            if(request.upvotes - request.downvotes >= 3){
+                                session.sendMessageOverWebSocket(event.getChannel(), "${request.user}: :taco:", null)
                                 request = null
                             }
 
@@ -168,7 +167,7 @@ class App {
                             Link link = linkService.findLink(timestamp)
 
                             if (link != null) {
-                                if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
+                                if (EMOJI_ARROW_UP.equals(event.emojiName)) {
                                     link.upvotes++
                                 } else if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
                                     link.downvotes++

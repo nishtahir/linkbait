@@ -5,16 +5,23 @@ package com.nishtahir.islackbot
  */
 class TacoRequest {
 
+    TacoRequest(){
+        isValid = true
+        timer = new Timer()
+        timer.runAfter(60000){
+            isValid = false
+        }
+    }
+
     String timestamp
 
     String user
-
-    long created
-
-    long lastupdated
 
     int upvotes
 
     int downvotes
 
+    boolean isValid
+
+    Timer timer
 }
