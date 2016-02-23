@@ -5,10 +5,12 @@ import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import com.nishtahir.islackbot.config.Configuration
 import com.nishtahir.islackbot.controller.LinkController
+import com.nishtahir.islackbot.messages.Messages
 import com.nishtahir.islackbot.model.Link
 import com.nishtahir.islackbot.service.LinkService
 import com.nishtahir.islackbot.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackAttachment
+import com.ullink.slack.simpleslackapi.SlackMessageHandle
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
@@ -16,11 +18,17 @@ import com.ullink.slack.simpleslackapi.impl.SlackSessionFactory
 import com.ullink.slack.simpleslackapi.listeners.ReactionAddedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessageUpdatedListener
+import com.ullink.slack.simpleslackapi.replies.GenericSlackReply
+import com.ullink.slack.simpleslackapi.replies.SlackMessageReply
+import groovy.json.JsonSlurper
 import org.apache.commons.lang3.StringEscapeUtils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.yaml.snakeyaml.Yaml
 import spark.Spark
+
+import java.util.concurrent.ThreadLocalRandom
+import java.util.concurrent.TimeUnit
 
 class App {
 
@@ -53,8 +61,11 @@ class App {
     static void main(String[] args) {
         parseOptions(args)
         new App()
-
     }
+
+    Map<String, Long> currentlyRequestingTaco
+
+    TacoRequest request
 
     /**
      *
@@ -66,7 +77,7 @@ class App {
             SlackSession slackSession = SlackSessionFactory.createWebSocketSlackSession(apiToken)
             slackSession.addMessagePostedListener([
                     onEvent: { SlackMessagePosted event, SlackSession session ->
-
+                        println("-----------------------------------------------")
                         String message = event.messageContent
                         String senderUsername = event.sender.userName
                         String channelName = event.channel.name
@@ -94,7 +105,6 @@ class App {
                                 attachment.addField("All hail his Majesty", "@nish", false)
 
                                 session.sendMessage(event.channel, null, attachment)
-
                             }
 
                             session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_UP)
@@ -105,22 +115,67 @@ class App {
                         }
                         //Check for taco request In message
                         if (ValidationUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
-                            session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}> :taco:", null)
+                            int chanceOfTaco = ThreadLocalRandom.current().nextInt(10)
+                            if(chanceOfTaco < 2){
+                                session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}> :taco:", null)
+                            } else {
+
+                                if (request != null) {
+                                    session.sendMessage(event.getChannel(), "Hang on. ${request.user} is already asking for a taco.", null)
+
+                                } else {
+
+                                    SlackMessageHandle<SlackMessageReply> handle = session.sendMessage(event.getChannel(), Messages.getRandomTacoMessage("<@${event.sender.id}>"), null)
+                                    handle.waitForReply(1000, TimeUnit.MILLISECONDS)
+                                    //For some reason, they type returned GenericSlackReplyImpl throws a missing method exception
+                                    //The only way i could get it to work is to manually slurp the json
+                                    def result = new JsonSlurper().parseText(((GenericSlackReply) handle.getReply()).getPlainAnswer().toString())
+                                    String ts = result['ts'].toString()
+                                    session.addReactionToMessage(event.getChannel(), ts, EMOJI_ARROW_UP)
+                                    session.addReactionToMessage(event.getChannel(), ts, EMOJI_ARROW_DOWN)
+
+                                    request = new TacoRequest(
+                                            timestamp: ts,
+                                            user: "<@${event.sender.id}>",
+                                            upvotes: 1,
+                                            downvotes: 1,
+                                            created: System.currentTimeMillis(),
+                                            lastupdated: System.currentTimeMillis())
+                                }
+                            }
                         }
                     }
             ] as SlackMessagePostedListener);
 
             slackSession.addReactionAddedListener([
                     onEvent: { ReactionAdded event, SlackSession session ->
-                        String timestamp = event.messageID
-                        Link link = linkService.findLink(timestamp)
 
-                        if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
-                            link.upvotes++
-                        } else if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
-                            link.downvotes++
+                        if(request != null && event.messageID == request.timestamp){
+                            if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
+                                request.upvotes++
+                            } else if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
+                                request.downvotes++
+                            }
+
+                            if(request.upvotes - request.downvotes > 3){
+                                session.sendMessageOverWebSocket(event.getChannel(), "<@${event.sender.id}>: :taco:", null)
+                                request = null
+                            }
+
+                        } else {
+
+                            String timestamp = event.messageID
+                            Link link = linkService.findLink(timestamp)
+
+                            if (link != null) {
+                                if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
+                                    link.upvotes++
+                                } else if (EMOJI_ARROW_DOWN.equals(event.emojiName)) {
+                                    link.downvotes++
+                                }
+                                linkService.updateLink(link);
+                            }
                         }
-                        linkService.updateLink(link)
                     }
             ] as ReactionAddedListener)
 
