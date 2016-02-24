@@ -35,12 +35,12 @@ class App {
     /**
      *
      */
-    static String EMOJI_ARROW_UP = 'arrow_up'
+    static String EMOJI_ARROW_UP = 'upvote'
 
     /**
      *
      */
-    static String EMOJI_ARROW_DOWN = 'arrow_down'
+    static String EMOJI_ARROW_DOWN = 'downvote'
 
     /**
      * Application configuration.
@@ -77,7 +77,6 @@ class App {
             SlackSession slackSession = SlackSessionFactory.createWebSocketSlackSession(apiToken)
             slackSession.addMessagePostedListener([
                     onEvent: { SlackMessagePosted event, SlackSession session ->
-                        println("-----------------------------------------------")
                         String message = event.messageContent
                         String senderUsername = event.sender.userName
                         String channelName = event.channel.name
