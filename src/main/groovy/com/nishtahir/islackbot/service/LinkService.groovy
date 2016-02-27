@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.support.ConnectionSource
 import com.nishtahir.islackbot.model.Link
+import com.nishtahir.islackbot.model.User
 import com.nishtahir.islackbot.util.TimestampUtils
 
 /**
@@ -31,7 +32,7 @@ class LinkService {
      * @param publisher
      * @return
      */
-    def saveLink(String timestamp, String url, String publisher, String group, String channel) {
+    def saveLink(String timestamp, String url, User publisher, String group, String channel) {
         linkDao.createIfNotExists(new Link(
                 timestamp: Double.valueOf(timestamp),
                 url: url,
@@ -77,12 +78,36 @@ class LinkService {
     }
 
     /**
+     *
+     * @param timestamp
+     * @return
+     */
+    Link upvoteLink(String timestamp) {
+        Link link = findLink(timestamp)
+        link?.upvotes++
+        updateLink(link)
+        return link
+    }
+
+    /**
+     *
+     * @param timestamp
+     * @return
+     */
+    Link downvoteLink(String timestamp){
+        Link link = findLink(timestamp)
+        link?.upvotes--
+        updateLink(link)
+        return link
+    }
+
+    /**
      * @return links posted today.
      */
     List<Link> getLinksPostedToday() {
         def query = linkDao.queryBuilder()
                 .where().ge("timestamp", TimestampUtils.startOfCurrentDay).prepare()
-        return linkDao.query(query);
+        return linkDao.query(query)
     }
 
     /**
@@ -91,7 +116,7 @@ class LinkService {
     List<Link> getLinksPostedThisWeek() {
         def query = linkDao.queryBuilder()
                 .where().ge("timestamp", TimestampUtils.startOfCurrentWeek).prepare()
-        return linkDao.query(query);
+        return linkDao.query(query)
     }
 
     /**
@@ -100,7 +125,7 @@ class LinkService {
     List<Link> getLinksPostedThisMonth() {
         def query = linkDao.queryBuilder()
                 .where().ge("timestamp", TimestampUtils.startOfCurrentMonth).prepare()
-        return linkDao.query(query);
+        return linkDao.query(query)
     }
 
 }

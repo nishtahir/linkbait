@@ -5,12 +5,9 @@ import spock.lang.Specification
 /**
  * Created by nish on 2/22/16.
  */
-class AppTest extends Specification {
-    def "GetAppDetailsFromPlayStore"() {
-        given:
-        String id = 'net.broapp.app'
+class PlayStoreUtilsTest extends Specification {
 
-        expect:
-        App.getAppDetailsFromPlayStore(id)
+    def "GetAppDetailsFromPlayStore"() {
+
     }
 }
