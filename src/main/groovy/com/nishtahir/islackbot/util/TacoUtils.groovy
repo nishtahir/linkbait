@@ -11,7 +11,7 @@ class TacoUtils {
      * @return true if valid
      */
     static boolean isValidTacoRequest(String context, String sessionId) {
-        return context.matches(/^(?i)(<@${sessionId}>:?)\s+(gimme|give|want)\s+(?<recepient>(me|<@\w+>))?(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/)
+        return context.matches(/^(?i)(<@${sessionId}>:?)\s+(gimme|give|want)\s+(?<recipient>(me|<@\w+>))?(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/)
     }
 
     /**

@@ -11,6 +11,7 @@ import com.nishtahir.islackbot.model.Link
 import com.nishtahir.islackbot.model.User
 import com.nishtahir.islackbot.service.LinkService
 import com.nishtahir.islackbot.service.UserService
+import com.nishtahir.islackbot.util.HelpUtils
 import com.nishtahir.islackbot.util.PlayStoreUtils
 import com.nishtahir.islackbot.util.TacoUtils
 import com.nishtahir.islackbot.util.ValidationUtils
@@ -115,8 +116,8 @@ class App {
                             session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_DOWN)
 
                         }
-                        //Check for taco request In message
 
+                        //Check for taco request In message
                         if (TacoUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
                             String recipient = TacoUtils.parseTacoRequest(message, session.sessionPersona().id)
 
@@ -152,6 +153,12 @@ class App {
                                             downvotes: 0)
                                 }
                             }
+                        } else if(HelpUtils.isValidHelpRequest(message, session.sessionPersona().id)) {
+                            session.sendMessageToUser(
+                                event.sender,
+                                Messages.getHelpMessage(session.sessionPersona().userName),
+                                null
+                            )
                         }
                     }
             ] as SlackMessagePostedListener);
