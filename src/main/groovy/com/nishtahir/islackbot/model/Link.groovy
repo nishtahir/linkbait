@@ -14,8 +14,8 @@ class Link {
     @DatabaseField
     String url;
 
-    @DatabaseField
-    String publisher;
+    @DatabaseField(foreign = true, foreignAutoRefresh=true)
+    User publisher;
 
     @DatabaseField
     long upvotes;
@@ -28,4 +28,5 @@ class Link {
 
     @DatabaseField
     String group;
+
 }

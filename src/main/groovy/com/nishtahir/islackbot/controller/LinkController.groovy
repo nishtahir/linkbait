@@ -14,9 +14,6 @@ class LinkController extends AbstractController{
 
     LinkService service
 
-    /**
-     *
-     */
     @Override
     void init(){
 

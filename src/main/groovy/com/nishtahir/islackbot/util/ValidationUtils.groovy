@@ -1,7 +1,4 @@
 package com.nishtahir.islackbot.util
-
-import com.nishtahir.islackbot.Patterns
-
 /**
  *  Utility class to help with data validation.
  */
@@ -31,13 +28,15 @@ class ValidationUtils {
 
     /**
      * @<botid>: give me a taco.
+     * @<botid>: give @user a taco
      *
      * @param context
      * @param sessionId
      * @return true if valid
      */
     static boolean isValidTacoRequest(String context, String sessionId){
-        context.matches(/^(?i)(<@${sessionId}>:)\s(gimme|give\s+me|me\s+want)(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/)
+        //(<@bot>:)\s
+        context.matches(/^(?i)(<@${sessionId}>:?)\s+(gimme|give|want)\s+(?<recepient>(me|tim))?(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/)
     }
 
     static String getPlaystoreId(String context) {
