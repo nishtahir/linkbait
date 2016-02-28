@@ -22,22 +22,6 @@ class ValidationUtilsTest extends Specification {
 
     }
 
-    def "IsValidTacoRequest"() {
-        given:
-        def sessionName = "linkbait"
-
-        expect:
-        ValidationUtils.isValidTacoRequest("<@linkbait>: gimme a taco", sessionName)
-        ValidationUtils.isValidTacoRequest("<@linkbait>: give me a taco", sessionName)
-        ValidationUtils.isValidTacoRequest("<@linkbait>: give me a taco plz", sessionName)
-        ValidationUtils.isValidTacoRequest("<@linkbait>: give me a taco plzz", sessionName)
-        ValidationUtils.isValidTacoRequest("<@linkbait>: give me a taco plzz!!!", sessionName)
-
-        ValidationUtils.isValidTacoRequest("<@linkbait>: gimme a taco!", sessionName)
-
-        !ValidationUtils.isValidTacoRequest("<@linkbait> gimme a taco", sessionName)
-    }
-
     def "GetPlaystoreId"(){
         expect:
         ValidationUtils.getPlaystoreId('https://play.google.com/store/apps/details?id=com.antutu.ABenchMark') == 'com.antutu.ABenchMark'
