@@ -26,19 +26,6 @@ class ValidationUtils {
         return null
     }
 
-    /**
-     * @<botid>: give me a taco.
-     * @<botid>: give @user a taco
-     *
-     * @param context
-     * @param sessionId
-     * @return true if valid
-     */
-    static boolean isValidTacoRequest(String context, String sessionId){
-        //(<@bot>:)\s
-        context.matches(/^(?i)(<@${sessionId}>:?)\s+(gimme|give|want)\s+(?<recepient>(me|tim))?(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/)
-    }
-
     static String getPlaystoreId(String context) {
         def matcher = (context =~ /play\.google.com\\/store\\/apps\\/details\?id=(?<id>[\w\.]+)/)
         if(matcher.find()){
