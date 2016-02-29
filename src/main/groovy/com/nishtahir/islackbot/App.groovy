@@ -9,9 +9,9 @@ import com.nishtahir.islackbot.controller.UserController
 import com.nishtahir.islackbot.messages.Messages
 import com.nishtahir.islackbot.model.Link
 import com.nishtahir.islackbot.model.User
+import com.nishtahir.islackbot.request.HelpRequest
 import com.nishtahir.islackbot.service.LinkService
 import com.nishtahir.islackbot.service.UserService
-import com.nishtahir.islackbot.util.HelpUtils
 import com.nishtahir.islackbot.util.PlayStoreUtils
 import com.nishtahir.islackbot.util.TacoUtils
 import com.nishtahir.islackbot.util.ValidationUtils
@@ -106,6 +106,8 @@ class App {
                         // we'll have to check the first char of the id. C = Public channel
                         boolean isPublic = event.getChannel().getId()[0] == 'C'
 
+                        new HelpRequest(event, session)
+
                         if(isPublic) {
                             final String url = ValidationUtils.getUrlFromSlackLink(message)
                             if (url != null) {
@@ -163,13 +165,6 @@ class App {
                             }
                         }
 
-                        if(HelpUtils.isValidHelpRequest(message, session.sessionPersona().id)) {
-                            session.sendMessageToUser(
-                                event.sender,
-                                Messages.getHelpMessage(session.sessionPersona().userName),
-                                null
-                            )
-                        }
                     }
             ] as SlackMessagePostedListener);
 
