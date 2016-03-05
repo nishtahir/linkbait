@@ -43,7 +43,7 @@ class ValidationUtils {
      * @return unique steam id. -1 if invalid
      */
     static long getSteamId(String context) {
-        def matcher = (context =~ /https?:\\/\\/store.steampowered.com\\/app\\/(?<id>\d+)/)
+        def matcher = (context =~ /https?:\\/\\/store.steampowered.com(\\/agecheck)?\\/app\\/(?<id>\d+)/)
         if(matcher.find()){
             return Long.valueOf(matcher.group('id'))
         }
