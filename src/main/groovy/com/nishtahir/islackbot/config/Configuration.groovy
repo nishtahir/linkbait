@@ -30,4 +30,9 @@ class Configuration {
      *  {team name} : {api token}
      */
     Map< String, String> teams
+
+    /**
+     * Steam API token
+     */
+    String steam
 }

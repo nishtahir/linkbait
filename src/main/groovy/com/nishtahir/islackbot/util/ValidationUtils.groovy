@@ -26,11 +26,27 @@ class ValidationUtils {
         return null
     }
 
+    /**
+     * @param context
+     * @return app identifier for play store app
+     */
     static String getPlaystoreId(String context) {
         def matcher = (context =~ /play\.google.com\\/store\\/apps\\/details\?id=(?<id>[\w\.]+)/)
         if(matcher.find()){
             return matcher.group('id')
         }
         return null
+    }
+
+    /**
+     * @param context
+     * @return unique steam id. -1 if invalid
+     */
+    static long getSteamId(String context) {
+        def matcher = (context =~ /https?:\\/\\/store.steampowered.com\\/app\\/(?<id>\d+)/)
+        if(matcher.find()){
+            return Long.valueOf(matcher.group('id'))
+        }
+        return -1
     }
 }

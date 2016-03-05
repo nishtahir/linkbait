@@ -13,6 +13,7 @@ import com.nishtahir.islackbot.request.HelpRequest
 import com.nishtahir.islackbot.service.LinkService
 import com.nishtahir.islackbot.service.UserService
 import com.nishtahir.islackbot.util.PlayStoreUtils
+import com.nishtahir.islackbot.util.SteamStoreUtils
 import com.nishtahir.islackbot.util.TacoUtils
 import com.nishtahir.islackbot.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackMessageHandle
@@ -108,7 +109,6 @@ class App {
 
                         new HelpRequest(event, session)
 
-                        if(isPublic) {
                             final String url = ValidationUtils.getUrlFromSlackLink(message)
                             if (url != null) {
 
@@ -118,6 +118,11 @@ class App {
                                     session.sendMessage(event.channel, null, PlayStoreUtils.getPlayStoreDetailsAsSlackAttachment(url))
                                 }
 
+                                long steamId = ValidationUtils.getSteamId(url)
+                                if (steamId != null){
+                                    session.sendMessage(event.channel, null, SteamStoreUtils.getSteamGameDetailsAsSlackAttachment(steamId))
+                                }
+                        if(isPublic) {
                                 session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_UP)
                                 //Saving stuff usually takes a bit of time... might be nice delay
                                 User user = userService.createUser(new User(username: senderUsername, slackUserId: event.sender.id))
