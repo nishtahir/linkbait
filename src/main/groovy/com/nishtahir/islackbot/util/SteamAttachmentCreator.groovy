@@ -5,18 +5,14 @@ import com.github.goive.steamapi.SteamApiFactory
 import com.github.goive.steamapi.data.SteamApp
 import com.github.goive.steamapi.enums.CountryCode
 import com.ullink.slack.simpleslackapi.SlackAttachment
+import org.apache.commons.lang3.StringEscapeUtils
+
+import java.util.regex.Pattern
 
 /**
  * Steam store madness
  */
-class SteamStoreUtils {
-
-    /**
-     * Although slack truncates descriptions,
-     * it's probably not a good idea to send to many
-     * characters in the attachment.
-     */
-    static final int MAX_DESC_LENGTH = 2000;
+class SteamAttachmentCreator extends AttachmentCreator {
 
     /**
      * Parse steam store app content
@@ -31,7 +27,7 @@ class SteamStoreUtils {
 
         fields.put('title', steamApp.name)
         fields.put('publishers', steamApp.publishers.join(",").take(30))
-        fields.put('desc', steamApp.aboutTheGame)
+        fields.put('desc', makeFancyDescription(steamApp.aboutTheGame))
         fields.put('imageUrl', steamApp.headerImage)
         fields.put('categories', steamApp.categories.description.join(","))
 
@@ -47,8 +43,12 @@ class SteamStoreUtils {
         return fields
     }
 
-    static SlackAttachment getSteamGameDetailsAsSlackAttachment(long id) {
-        Map<String, String> appInfo = getAppDetailsFromSteam(id)
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    SlackAttachment getSlackAttachmentForUrl(String url) {
+        Map<String, String> appInfo = getAppDetailsFromSteam(ValidationUtils.getSteamId(url))
 
         SlackAttachment attachment = new SlackAttachment()
         attachment.fallback = appInfo['title']
@@ -60,6 +60,7 @@ class SteamStoreUtils {
         attachment.addField("Price", appInfo['price'], true)
         attachment.addField("Availability", appInfo['availability'], true)
         attachment.addField("Gaben's got nothing on", "@nish", false)
+        attachment.markdown_in = ['text']
 
         return attachment
     }

@@ -12,8 +12,8 @@ import com.nishtahir.islackbot.model.User
 import com.nishtahir.islackbot.request.HelpRequest
 import com.nishtahir.islackbot.service.LinkService
 import com.nishtahir.islackbot.service.UserService
-import com.nishtahir.islackbot.util.PlayStoreUtils
-import com.nishtahir.islackbot.util.SteamStoreUtils
+import com.nishtahir.islackbot.util.PlayAttachmentCreator
+import com.nishtahir.islackbot.util.SteamAttachmentCreator
 import com.nishtahir.islackbot.util.TacoUtils
 import com.nishtahir.islackbot.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackMessageHandle
@@ -115,12 +115,12 @@ class App {
                             //Check if playstore URL
                             String playId = ValidationUtils.getPlaystoreId(url)
                             if (playId != null) {
-                                session.sendMessage(event.channel, null, PlayStoreUtils.getPlayStoreDetailsAsSlackAttachment(url))
+                                session.sendMessage(event.channel, null, new PlayAttachmentCreator().getSlackAttachmentForUrl(url))
                             }
 
                             long steamId = ValidationUtils.getSteamId(url)
                             if (steamId != -1) {
-                                session.sendMessage(event.channel, null, SteamStoreUtils.getSteamGameDetailsAsSlackAttachment(steamId))
+                                session.sendMessage(event.channel, null, new SteamAttachmentCreator().getSlackAttachmentForUrl(url))
                             }
                             if (isPublic) {
                                 session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_UP)

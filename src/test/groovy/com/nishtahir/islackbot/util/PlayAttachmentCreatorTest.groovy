@@ -1,16 +1,15 @@
 package com.nishtahir.islackbot.util
 
-import com.nishtahir.islackbot.App
 import spock.lang.Specification
 
 /**
  * Created by nish on 2/27/16.
  */
-class PlayStoreUtilsTest extends Specification {
+class PlayAttachmentCreatorTest extends Specification {
     def "GetAppDetailsFromPlayStore_withFreeApp_ReturnsExpectedOutput"() {
         given:
-        String url = PlayStoreUtils.getUrlFromPlayId('net.broapp.app')
-        Map values = PlayStoreUtils.getAppDetailsFromPlayStore(url)
+        String url = PlayAttachmentCreator.getUrlFromPlayId('net.broapp.app')
+        Map values = PlayAttachmentCreator.getAppDetailsFromPlayStore(url)
 
         expect:
         values['title'] == 'BroApp'
@@ -25,8 +24,8 @@ class PlayStoreUtilsTest extends Specification {
 
     def "GetAppDetailsFromPlayStore_withPaidApp_ReturnsExpectedOutput"() {
         given:
-        String url = PlayStoreUtils.getUrlFromPlayId('com.mojang.minecraftpe')
-        Map values = PlayStoreUtils.getAppDetailsFromPlayStore(url)
+        String url = PlayAttachmentCreator.getUrlFromPlayId('com.mojang.minecraftpe')
+        Map values = PlayAttachmentCreator.getAppDetailsFromPlayStore(url)
 
         expect:
         values['title'] == 'Minecraft: Pocket Edition'
