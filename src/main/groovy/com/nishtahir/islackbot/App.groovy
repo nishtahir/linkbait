@@ -96,7 +96,7 @@ class App {
             SlackSession slackSession = SlackSessionFactory.createWebSocketSlackSession(apiToken)
             slackSession.addMessagePostedListener([
                     onEvent: { SlackMessagePosted event, SlackSession session ->
-                        if(event.sender == session.sessionPersona())
+                        if (event.sender == session.sessionPersona())
                             return
 
                         String message = event.messageContent
@@ -109,67 +109,64 @@ class App {
 
                         new HelpRequest(event, session)
 
-                            final String url = ValidationUtils.getUrlFromSlackLink(message)
-                            if (url != null) {
+                        final String url = ValidationUtils.getUrlFromSlackLink(message)
+                        if (url != null) {
 
-                                //Check if playstore URL
-                                String playId = ValidationUtils.getPlaystoreId(url)
-                                if (playId != null) {
-                                    session.sendMessage(event.channel, null, PlayStoreUtils.getPlayStoreDetailsAsSlackAttachment(url))
-                                }
+                            //Check if playstore URL
+                            String playId = ValidationUtils.getPlaystoreId(url)
+                            if (playId != null) {
+                                session.sendMessage(event.channel, null, PlayStoreUtils.getPlayStoreDetailsAsSlackAttachment(url))
+                            }
 
-                                long steamId = ValidationUtils.getSteamId(url)
-                                if (steamId != null){
-                                    session.sendMessage(event.channel, null, SteamStoreUtils.getSteamGameDetailsAsSlackAttachment(steamId))
-                                }
-                        if(isPublic) {
+                            long steamId = ValidationUtils.getSteamId(url)
+                            if (steamId != null) {
+                                session.sendMessage(event.channel, null, SteamStoreUtils.getSteamGameDetailsAsSlackAttachment(steamId))
+                            }
+                            if (isPublic) {
                                 session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_UP)
                                 //Saving stuff usually takes a bit of time... might be nice delay
                                 User user = userService.createUser(new User(username: senderUsername, slackUserId: event.sender.id))
                                 linkService.saveLink(timestamp, url, user, group, channelName)
                                 session.addReactionToMessage(event.channel, timestamp, EMOJI_ARROW_DOWN)
+                            }
+                        }
+                        //Check for taco request In message
+                        if (TacoUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
+                            String recipient = TacoUtils.parseTacoRequest(message, session.sessionPersona().id)
 
+                            if (recipient == 'me' || recipient == null) {
+                                recipient = "<@${event.sender.id}>"
                             }
 
-                            //Check for taco request In message
-                            if (TacoUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
-                                String recipient = TacoUtils.parseTacoRequest(message, session.sessionPersona().id)
+                            int chanceOfTaco = ThreadLocalRandom.current().nextInt(10)
 
-                                if(recipient == 'me' || recipient == null){
-                                    recipient = "<@${event.sender.id}>"
-                                }
+                            if (chanceOfTaco < 2) {
+                                session.sendMessageOverWebSocket(event.getChannel(), "$recipient :taco:", null)
+                            } else {
 
-                                int chanceOfTaco = ThreadLocalRandom.current().nextInt(10)
+                                if (request != null && request.isValid) {
+                                    session.sendMessage(event.getChannel(), "Hang on. ${request.user} is already asking for a taco.", null)
 
-                                if (chanceOfTaco < 2) {
-                                    session.sendMessageOverWebSocket(event.getChannel(), "$recipient :taco:", null)
                                 } else {
 
-                                    if (request != null && request.isValid) {
-                                        session.sendMessage(event.getChannel(), "Hang on. ${request.user} is already asking for a taco.", null)
-
-                                    } else {
-
-                                        SlackMessageHandle<SlackMessageReply> handle = session.sendMessage(event.getChannel(),
+                                    SlackMessageHandle<SlackMessageReply> handle = session.sendMessage(event.getChannel(),
                                             Messages.getRandomTacoMessage("$recipient"), null)
-                                        handle.waitForReply(1000, TimeUnit.MILLISECONDS)
-                                        //For some reason, they type returned GenericSlackReplyImpl throws a missing method exception
-                                        //The only way i could get it to work is to manually slurp the json
-                                        def result = new JsonSlurper().parseText(((GenericSlackReply) handle.getReply()).getPlainAnswer().toString())
-                                        String ts = result['ts'].toString()
-                                        session.addReactionToMessage(event.getChannel(), ts, EMOJI_ARROW_UP)
-                                        session.addReactionToMessage(event.getChannel(), ts, EMOJI_ARROW_DOWN)
+                                    handle.waitForReply(1000, TimeUnit.MILLISECONDS)
+                                    //For some reason, they type returned GenericSlackReplyImpl throws a missing method exception
+                                    //The only way i could get it to work is to manually slurp the json
+                                    def result = new JsonSlurper().parseText(((GenericSlackReply) handle.getReply()).getPlainAnswer().toString())
+                                    String ts = result['ts'].toString()
+                                    session.addReactionToMessage(event.getChannel(), ts, EMOJI_ARROW_UP)
+                                    session.addReactionToMessage(event.getChannel(), ts, EMOJI_ARROW_DOWN)
 
-                                        request = new TacoRequest(
+                                    request = new TacoRequest(
                                             timestamp: ts,
                                             user: "$recipient",
                                             upvotes: 0,
                                             downvotes: 0)
-                                    }
                                 }
                             }
                         }
-
                     }
             ] as SlackMessagePostedListener);
 
