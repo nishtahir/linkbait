@@ -5,12 +5,12 @@ import spock.lang.Specification
 /**
  * Created by nish on 3/5/16.
  */
-class SteamStoreUtilsTest extends Specification {
+class SteamAttachmentCreatorTest extends Specification {
 
     def "GetAppDetailsFromSteam"() {
         given:
         String url = "http://store.steampowered.com/app/292120/"
-        Map values = SteamStoreUtils.getAppDetailsFromSteam(url)
+        Map values = SteamAttachmentCreator.getAppDetailsFromSteam(url)
 
         expect:
         values['title'] == 'FINAL FANTASY® XIII'
