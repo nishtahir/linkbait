@@ -119,7 +119,7 @@ class App {
                             }
 
                             long steamId = ValidationUtils.getSteamId(url)
-                            if (steamId != null) {
+                            if (steamId != -1) {
                                 session.sendMessage(event.channel, null, SteamStoreUtils.getSteamGameDetailsAsSlackAttachment(steamId))
                             }
                             if (isPublic) {
