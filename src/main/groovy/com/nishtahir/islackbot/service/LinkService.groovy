@@ -18,7 +18,6 @@ class LinkService {
     Dao<Link, Double> linkDao
 
     /**
-     *
      * @param connectionSource Database connection source
      */
     LinkService(ConnectionSource connectionSource) {
@@ -128,4 +127,11 @@ class LinkService {
         return linkDao.query(query)
     }
 
+    /**
+     * Dige
+     * @return
+     */
+    List<Link> getWeeklyDigest(){
+
+    }
 }

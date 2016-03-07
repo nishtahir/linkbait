@@ -40,5 +40,13 @@ class LinkController extends AbstractController{
             response.type("application/json")
             return JSONUtils.dataToPrettyJSON(service.linksPostedThisMonth)
         });
+
+        /**
+         *  Returns the top links from the most active categories
+         */
+        get("/digest", { request, response ->
+            response.type("application/json")
+            return JSONUtils.dataToPrettyJSON(service.linksPostedThisMonth)
+        });
     }
 }

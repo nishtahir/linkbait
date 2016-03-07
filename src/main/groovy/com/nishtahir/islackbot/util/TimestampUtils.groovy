@@ -29,6 +29,15 @@ class TimestampUtils {
     }
 
     /**
+     * @return Unix timestamp of beginning of previous week.
+     */
+    static long getStartOfPreviousWeek(){
+        Calendar calendar = Calendar.instance
+        calendar.add(Calendar.DATE, -7)
+        return getStartOfWeek(calendar)
+    }
+
+    /**
      * @param calendar
      * @return calendar with time set to first day of current week at 00:00:00 hh:mm:ss
      */
@@ -74,6 +83,7 @@ class TimestampUtils {
         resetDay(calendar)
         calendar.setFirstDayOfWeek(Calendar.MONDAY)
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+
     }
 
     /**

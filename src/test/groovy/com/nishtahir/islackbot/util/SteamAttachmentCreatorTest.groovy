@@ -2,24 +2,31 @@ package com.nishtahir.islackbot.util
 
 import spock.lang.Specification
 
-/**
- * Created by nish on 3/5/16.
- */
 class SteamAttachmentCreatorTest extends Specification {
 
-    def "GetAppDetailsFromSteam"() {
+    /**
+     * This test may need to be updated regularly as its content may change.
+     * As of specification this
+     * <a href="http://store.steampowered.com/app/292120/">link</a> should
+     * point to FINAL FANTASY® XIII on the steam store.
+     */
+    def "GetAppDetailsFromSteam_WithValidId_ReturnsExpectedOutput"() {
         given:
-        String url = "http://store.steampowered.com/app/292120/"
-        Map values = SteamAttachmentCreator.getAppDetailsFromSteam(url)
+        Map values = SteamAttachmentCreator.getAppDetailsFromSteam(292120)
 
         expect:
         values['title'] == 'FINAL FANTASY® XIII'
-//        values['author'] == 'Factorial Products Pty. Ltd.'
-//        values['desc'].startsWith('BroApp is your clever relationship wingman. ' +
-//                'It automatically messages your girlfriend sweet things so you can spend more time with the Bros. ' +
-//                'Select your girlfriend\'s number, add some sweet messages, and set the time of day when you want those messages sent. ' +
-//                'BroApp takes care of the rest.')
+        values['publishers'] == 'SQUARE ENIX'
+        values['imageUrl'] == 'http://cdn.akamai.steamstatic.com/steam/apps/292120/header.jpg?t=1447361145'
+        values['availability'] == 'Windows'
+        values['price'] == '$15.99'
+    }
 
-        values['price'] == 'Free'
+    def "GetAppDetailsFromSteam_WithInValidId_ReturnsNull"() {
+        given:
+        Map values = SteamAttachmentCreator.getAppDetailsFromSteam(999999999999) // Probably doesn't exist...
+
+        expect:
+        values == null
     }
 }

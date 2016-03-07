@@ -3,7 +3,7 @@ package com.nishtahir.islackbot.util
 import spock.lang.Specification
 
 class ValidationUtilsTest extends Specification {
-    def "IsValidUrl"() {
+    def "IsValidUrl_WithRandomURLs_ReturnsExpectedBehavior"() {
         expect:
 
         ValidationUtils.isValidUrl("http://sqlitebrowser.org/")
@@ -22,8 +22,18 @@ class ValidationUtilsTest extends Specification {
 
     }
 
-    def "GetPlaystoreId"(){
+    def "GetPlaystoreId"() {
         expect:
         ValidationUtils.getPlaystoreId('https://play.google.com/store/apps/details?id=com.antutu.ABenchMark') == 'com.antutu.ABenchMark'
+    }
+
+    def "GetSteamId_WithValidSteamLink_ReturnsCorrectOutput"() {
+        expect:
+        ValidationUtils.getSteamId("http://store.steampowered.com/app/24980/") == 24980L
+    }
+
+    def "GetSteamId_WithInValidSteamLink_ReturnsCorrectOutput"(){
+        expect:
+        ValidationUtils.getSteamId("potato") == -1L
     }
 }

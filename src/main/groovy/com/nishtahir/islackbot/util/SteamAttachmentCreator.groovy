@@ -21,26 +21,34 @@ class SteamAttachmentCreator extends AttachmentCreator {
      */
     static Map<String, String> getAppDetailsFromSteam(long id) {
         SteamApi steamApi = SteamApiFactory.createSteamApi(CountryCode.US)
-        SteamApp steamApp = steamApi.retrieveApp(id)
 
-        def fields = [:]
+        try {
+            SteamApp steamApp = steamApi.retrieveApp(id)
 
-        fields.put('title', steamApp.name)
-        fields.put('publishers', steamApp.publishers.join(",").take(30))
-        fields.put('desc', makeFancyDescription(steamApp.aboutTheGame))
-        fields.put('imageUrl', steamApp.headerImage)
-        fields.put('categories', steamApp.categories.description.join(","))
+            def fields = [:]
 
-        List<String> availability = new ArrayList<>()
-        //For some reason, the elvis operator treats this as if not
-        !steamApp.availableForWindows ?: availability.add("Windows")
-        !steamApp.availableForLinux ?: availability.add("Linux")
-        !steamApp.availableForMac ?: availability.add("Mac")
+            fields.put('title', steamApp.name)
+            fields.put('publishers', steamApp.publishers.join(",").take(30))
+            fields.put('desc', steamApp.aboutTheGame)
+            fields.put('imageUrl', steamApp.headerImage)
+            fields.put('categories', steamApp.categories.description.join(","))
 
-        fields.put('availability', availability.join(","))
-        fields.put('price', steamApp.price.currency.symbol + steamApp.price.finalPrice)
+            List<String> availability = new ArrayList<>()
+            //For some reason, the elvis operator treats this as if not
+            !steamApp.availableForWindows ?: availability.add("Windows")
+            !steamApp.availableForLinux ?: availability.add("Linux")
+            !steamApp.availableForMac ?: availability.add("Mac")
 
-        return fields
+            fields.put('availability', availability.join(","))
+            fields.put('price', steamApp.price.currency.symbol + steamApp.price.finalPrice)
+
+            return fields
+
+        } catch (Exception e) {
+            e.printStackTrace()
+        }
+
+        return null
     }
 
     /**
