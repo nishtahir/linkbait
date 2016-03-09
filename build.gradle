@@ -7,7 +7,7 @@ repositories {
     jcenter()
 }
 
-mainClassName = "com.nishtahir.islackbot.App"
+mainClassName = "com.nishtahir.linkbait.App"
 
 run {
     //No clue why i'm getting a warning here,
