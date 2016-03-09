@@ -46,7 +46,7 @@ class LinkController extends AbstractController{
          */
         get("/digest", { request, response ->
             response.type("application/json")
-            return JSONUtils.dataToPrettyJSON(service.linksPostedThisMonth)
+            return JSONUtils.dataToPrettyJSON(service.weeklyDigest)
         });
     }
 }

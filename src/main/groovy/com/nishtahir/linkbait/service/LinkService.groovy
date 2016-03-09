@@ -152,10 +152,15 @@ class LinkService {
     }
 
     /**
-     * Dige
+     * Returns a digest last week's top links sorted by votes
      * @return
      */
     List<Link> getWeeklyDigest(){
-
+        def query = linkDao.queryBuilder()
+                .where().ge("timestamp", TimestampUtils.getStartOfPreviousWeek())
+                .and()
+                .le("timestamp", TimestampUtils.getStartOfCurrentWeek()).prepare()
+        List<Link> links = linkDao.query(query)
+        return links.sort(false) { a, b ->  b.upvotes <=> a.upvotes }
     }
 }
