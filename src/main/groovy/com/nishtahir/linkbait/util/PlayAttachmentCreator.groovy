@@ -5,12 +5,12 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 /**
- * Playstore-bot functionality
+ * Playstore-bot functionality.
  */
 class PlayAttachmentCreator extends AttachmentCreator {
 
     /**
-     * Parse playstore app content
+     * Parse playstore app content.
      * @param playId
      * @return
      */
@@ -37,7 +37,7 @@ class PlayAttachmentCreator extends AttachmentCreator {
     }
 
     /**
-     * {@inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     SlackAttachment getSlackAttachmentForUrl(String url) {
@@ -62,7 +62,7 @@ class PlayAttachmentCreator extends AttachmentCreator {
     }
 
     /**
-     * @param playId
+     * @param playId Unique ID identifying an application.
      * @return appropriate playstore Url
      */
     static String getUrlFromPlayId(String playId){

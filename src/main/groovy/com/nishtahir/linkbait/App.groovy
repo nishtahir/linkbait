@@ -7,17 +7,15 @@ import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.config.Configuration
 import com.nishtahir.linkbait.controller.LinkController
 import com.nishtahir.linkbait.controller.UserController
-import com.nishtahir.linkbait.messages.Messages
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
-import com.nishtahir.linkbait.request.HelpRequest
+import com.nishtahir.linkbait.request.HelpRequestHandler
+import com.nishtahir.linkbait.request.TacoRequestHandler
 import com.nishtahir.linkbait.service.LinkService
 import com.nishtahir.linkbait.service.UserService
 import com.nishtahir.linkbait.util.PlayAttachmentCreator
 import com.nishtahir.linkbait.util.SteamAttachmentCreator
-import com.nishtahir.linkbait.util.TacoUtils
 import com.nishtahir.linkbait.util.ValidationUtils
-import com.ullink.slack.simpleslackapi.SlackMessageHandle
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
 import com.ullink.slack.simpleslackapi.events.ReactionRemoved
@@ -27,16 +25,9 @@ import com.ullink.slack.simpleslackapi.listeners.ReactionAddedListener
 import com.ullink.slack.simpleslackapi.listeners.ReactionRemovedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessageUpdatedListener
-import com.ullink.slack.simpleslackapi.replies.GenericSlackReply
-import com.ullink.slack.simpleslackapi.replies.SlackMessageReply
-import groovy.json.JsonSlurper
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import spark.Spark
-
-import java.util.concurrent.ThreadLocalRandom
-import java.util.concurrent.TimeUnit
-
 
 class App {
 
@@ -44,7 +35,6 @@ class App {
      * This is not a logger.
      */
     static final Logger logger = LoggerFactory.getLogger(App.class)
-
 
     /**
      * Application configuration.
@@ -78,8 +68,6 @@ class App {
         new App()
     }
 
-    TacoRequest request
-
     /**
      *
      */
@@ -101,7 +89,7 @@ class App {
                         // we'll have to check the first char of the id. C = Public channel
                         boolean isPublic = event.getChannel().getId()[0] == 'C'
 
-                        new HelpRequest(event, session)
+                        HelpRequestHandler.instance.handle(session, event)
 
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
                         if (url != null) {
@@ -124,87 +112,21 @@ class App {
                                 session.addReactionToMessage(event.channel, timestamp, configuration.getDownvoteEmoji())
                             }
                         }
-                        //Check for taco request In message
-                        if (TacoUtils.isValidTacoRequest(message, session.sessionPersona().id)) {
-                            String recipient = TacoUtils.parseTacoRequest(message, session.sessionPersona().id)
-
-                            if (recipient == 'me' || recipient == null) {
-                                recipient = "<@${event.sender.id}>"
-                            }
-
-                            int chanceOfTaco = ThreadLocalRandom.current().nextInt(10)
-
-                            if (chanceOfTaco < 2) {
-                                session.sendMessageOverWebSocket(event.getChannel(), "$recipient :taco:", null)
-                            } else {
-
-                                if (request != null && request.isValid) {
-                                    session.sendMessage(event.getChannel(), "Hang on. ${request.user} is already asking for a taco.", null)
-
-                                } else {
-
-                                    SlackMessageHandle<SlackMessageReply> handle = session.sendMessage(event.getChannel(),
-                                            Messages.getRandomTacoMessage("$recipient"), null)
-                                    handle.waitForReply(1000, TimeUnit.MILLISECONDS)
-                                    //For some reason, they type returned GenericSlackReplyImpl throws a missing method exception
-                                    //The only way i could get it to work is to manually slurp the json
-                                    def result = new JsonSlurper().parseText(((GenericSlackReply) handle.getReply()).getPlainAnswer().toString())
-                                    String ts = result['ts'].toString()
-                                    session.addReactionToMessage(event.getChannel(), ts, configuration.getUpvoteEmoji())
-                                    session.addReactionToMessage(event.getChannel(), ts, configuration.getDownvoteEmoji())
-
-                                    request = new TacoRequest(
-                                            timestamp: ts,
-                                            user: "$recipient",
-                                            upvotes: 0,
-                                            downvotes: 0)
-                                }
-                            }
-                        }
+                        TacoRequestHandler.instance.handle(session, event)
                     }
             ] as SlackMessagePostedListener);
 
             slackSession.addReactionAddedListener([
                     onEvent: { ReactionAdded event, SlackSession session ->
-
-                        if (request != null && event.messageID == request.timestamp) {
-                            if (configuration.getUpvoteEmoji().equals(event.emojiName)) {
-                                request.upvotes++
-
-                            } else if (configuration.getDownvoteEmoji().equals(event.emojiName)) {
-                                request.downvotes++
-                            }
-
-                            if (request.upvotes - request.downvotes >= 3) {
-                                session.sendMessageOverWebSocket(event.getChannel(), "${request.user}: :taco:", null)
-                                request = null
-                            }
-
-                        } else {
-                            upOrDownvoteLink(event.messageID, event.emojiName)
-                        }
+                        TacoRequestHandler.instance.handleVote(session, event)
+                        upOrDownvoteLink(event.messageID, event.emojiName)
                     }
             ] as ReactionAddedListener)
 
             slackSession.addReactionRemovedListener([
                     onEvent: { ReactionRemoved event, SlackSession session ->
-
-                        if (request != null && event.messageID == request.timestamp) {
-                            if (configuration.getUpvoteEmoji().equals(event.emojiName)) {
-                                request.upvotes--
-
-                            } else if (configuration.getDownvoteEmoji().equals(event.emojiName)) {
-                                request.downvotes--
-                            }
-
-                            if (request.upvotes - request.downvotes >= 3) {
-                                session.sendMessageOverWebSocket(event.getChannel(), "${request.user}: :taco:", null)
-                                request = null
-                            }
-
-                        } else {
-                            revokeUpvoteOrDownvoteFromLink(event.messageID, event.emojiName)
-                        }
+                        TacoRequestHandler.instance.handleVote(session, event)
+                        revokeUpvoteOrDownvoteFromLink(event.messageID, event.emojiName)
                     }
             ] as ReactionRemovedListener)
 

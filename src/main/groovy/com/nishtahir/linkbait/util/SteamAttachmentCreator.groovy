@@ -12,9 +12,9 @@ import com.ullink.slack.simpleslackapi.SlackAttachment
 class SteamAttachmentCreator extends AttachmentCreator {
 
     /**
-     * Parse steam store app content
-     * @param playId
-     * @return
+     * Parse steam store app content.
+     * @param id application id in steam store. Usually games.
+     * @return Map of interesting content.
      */
     static Map<String, String> getAppDetailsFromSteam(long id) {
         SteamApi steamApi = SteamApiFactory.createSteamApi(CountryCode.US)

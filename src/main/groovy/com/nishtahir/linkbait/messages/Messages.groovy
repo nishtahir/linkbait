@@ -16,6 +16,16 @@ class Messages {
         "Shall I give {{user}} a taco?",
         "Sounds like {{user}} is hungry. Upvotes = taco."
     ]
+
+    static final String[] TACO_DENIED_MESSAGES = [
+        ":taco: Denied!",
+        "{{user}}: Sorry, no taco for you!",
+        "Sorry {{user}}, but your taco is in another Slack group.",
+        "{{user}}, better luck next time",
+        "{{user}}, I can't give you a taco but will a :nutella: do instead?",
+        "The people have spoken! No taco shall be given today.",
+        "{{user}}: Sorry buddy, best I can give you is :partyparrot:"
+    ]
     static final String[] HELP = [
         "Hi, my name is {{bot}}!",
         "I'm an open source bot of AndroidChat, find me <https://gitlab.com/nishtahir/linkbait|here>.",
@@ -49,5 +59,13 @@ class Messages {
     public static String getHelpMessage(String bot) {
         String[] messages = formatMessages(HELP, "bot", bot);
         return StringUtils.join(messages, "\n");
+    }
+
+    static String getRandomTacoDeniedMessage() {
+        return TACO_DENIED_MESSAGES[ThreadLocalRandom.current().nextInt(TACO_DENIED_MESSAGES.length)]
+    }
+
+    static String getRandomTacoDeniedMessage(String user){
+        return formatMessage(getRandomTacoDeniedMessage(), "user", user);
     }
 }
