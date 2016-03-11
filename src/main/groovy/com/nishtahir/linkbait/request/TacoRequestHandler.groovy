@@ -171,6 +171,7 @@ class TacoRequestHandler extends AbstractMessageRequestHandler {
     private void checkVotes(SlackSession session, SlackChannel channel){
         if (upvotes - downvotes >= 3) {
             session.sendMessageOverWebSocket(channel, "$user: congrats! You get a :taco:", null)
+            isRequestInProgress = false
         }
     }
 }
