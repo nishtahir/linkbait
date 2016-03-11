@@ -5,7 +5,7 @@ import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
 
 /**
- * React with a tasty snack whenever Android N is mentioned
+ * React with a tasty snack whenever Android N is mentioned.
  */
 @Singleton
 class NReactionHandler implements RequestHandler<Void, SlackMessagePosted> {
@@ -16,7 +16,7 @@ class NReactionHandler implements RequestHandler<Void, SlackMessagePosted> {
     Void parse(SlackSession session, SlackMessagePosted event) {
         String message = event.messageContent
 
-        def matcher = (message =~ /^(?i)(.*(\s+?N\s+).*)/)
+        def matcher = (message =~ /^(?i)\bN\b/)
 
         if (!matcher.find())
             throw new RequestParseException("This message wasn't aimed at the bot.")
