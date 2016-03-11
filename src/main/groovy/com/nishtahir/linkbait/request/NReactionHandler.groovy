@@ -16,7 +16,7 @@ class NReactionHandler implements RequestHandler<Void, SlackMessagePosted> {
     Void parse(SlackSession session, SlackMessagePosted event) {
         String message = event.messageContent
 
-        def matcher = (message =~ /^(?i)\bN\b/)
+        def matcher = (message =~ /.*?\bN\b.*?/)
 
         if (!matcher.find())
             throw new RequestParseException("This message wasn't aimed at the bot.")
