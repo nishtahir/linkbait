@@ -10,6 +10,7 @@ import com.nishtahir.linkbait.controller.UserController
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import com.nishtahir.linkbait.request.HelpRequestHandler
+import com.nishtahir.linkbait.request.NReactionHandler
 import com.nishtahir.linkbait.request.TacoRequestHandler
 import com.nishtahir.linkbait.service.LinkService
 import com.nishtahir.linkbait.service.UserService
@@ -90,6 +91,8 @@ class App {
                         boolean isPublic = event.getChannel().getId()[0] == 'C'
 
                         HelpRequestHandler.instance.handle(session, event)
+
+                        NReactionHandler.instance.handle(session,event)
 
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
                         if (url != null) {
