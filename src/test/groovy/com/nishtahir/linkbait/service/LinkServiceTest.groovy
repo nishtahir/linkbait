@@ -4,6 +4,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.model.Link
+import com.nishtahir.linkbait.model.User
 import spock.lang.Specification
 
 /**
@@ -17,6 +18,7 @@ class LinkServiceTest extends Specification {
     void setup() {
         Class.forName("org.sqlite.JDBC")
         connectionSource = new JdbcConnectionSource('jdbc:sqlite:islack-bot-test.sqlite')
+        TableUtils.dropTable(connectionSource, Link.class, true)
         TableUtils.createTableIfNotExists(connectionSource, Link.class)
 
         linkService = new LinkService(connectionSource)
@@ -26,28 +28,31 @@ class LinkServiceTest extends Specification {
         connectionSource.close()
     }
 
-    def "SaveLink"() {
+    def "SaveLink_WithSimpleLink_SavesCorrectly"() {
         given:
+        User testUser = new User(username:"Test User", upvotes:0, downvotes:0)
         def link = new Link()
         link.with {
-            (timestamp, url, publisher) = [1234, 'http://example.com', 'testAuthor']
+            (timestamp, url, publisher) = [1234, 'http://example.com', testUser]
         }
 
         expect:
         link == linkService.saveLink(link)
     }
 
-    def "GetLinksPostedToday"() {
+    def "GetLinksPostedToday_WithBadRecord_ReturnsCorrectValues"() {
         given:
-        linkService.saveLink(new Link(Calendar.getInstance().getTimeInMillis(), 'http://test.com', 'testAuthor'))
-        linkService.saveLink(new Link(Calendar.getInstance().getTimeInMillis(), 'http://test2.com', 'testAuthor2'))
-        Link badTest = new Link(1234, 'http://test2.com', 'testAuthor2')
-        linkService.saveLink(badTest)
+        User testUser = new User(username:"Test User", upvotes:0, downvotes:0)
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), url:'http://test.com', publisher:testUser))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), url:'http://test2.com', publisher:testUser))
+
+        Link recordWithTimestampThatIsntToday = new Link(1234, 'http://test2.com', testUser)
+        linkService.saveLink(recordWithTimestampThatIsntToday)
 
         List<Link> result = linkService.linksPostedToday
 
         expect:
         result.size() == 2
-        !result.contains(badTest)
+        !result.contains(recordWithTimestampThatIsntToday)
     }
 }

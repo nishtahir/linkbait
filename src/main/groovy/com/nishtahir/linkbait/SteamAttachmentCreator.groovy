@@ -1,9 +1,10 @@
-package com.nishtahir.linkbait.util
+package com.nishtahir.linkbait
 
 import com.github.goive.steamapi.SteamApi
 import com.github.goive.steamapi.SteamApiFactory
 import com.github.goive.steamapi.data.SteamApp
 import com.github.goive.steamapi.enums.CountryCode
+import com.nishtahir.linkbait.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackAttachment
 
 /**

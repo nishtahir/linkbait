@@ -13,9 +13,7 @@ class NReactionHandler implements RequestHandler<Void, SlackMessagePosted> {
     private static final String ANDROID7 = 'nutella'
 
     @Override
-    Void parse(SlackSession session, SlackMessagePosted event) {
-        String message = event.messageContent
-
+    Void parse(String message, String sessionId) {
         def matcher = (message =~ /.*?\bN\b.*?/)
 
         if (!matcher.find())
@@ -27,7 +25,7 @@ class NReactionHandler implements RequestHandler<Void, SlackMessagePosted> {
     @Override
     void handle(SlackSession session, SlackMessagePosted event) {
         try {
-            parse(session, event)
+            parse(event.messageContent, session.sessionPersona().id)
             session.addReactionToMessage(event.channel, event.timestamp, ANDROID7)
         } catch (RequestParseException ignore) {
 

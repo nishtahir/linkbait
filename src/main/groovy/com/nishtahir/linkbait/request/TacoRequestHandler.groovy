@@ -46,10 +46,10 @@ class TacoRequestHandler extends AbstractMessageRequestHandler {
 
 
     @Override
-    Tuple parse(SlackSession session, SlackMessagePosted event) {
-        String message = super.parse(session, event)[0];
+    Tuple parse(String message, String sessionId) {
+        String parsedMessage =  super.parse(message,sessionId)[0];
 
-        def matcher = message =~ /(gimme|give|want)\s+(?<recipient>(me|<@\w+>))?(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/
+        def matcher = parsedMessage =~ /(gimme|give|want)\s+(?<recipient>(me|<@\w+>))?(\s+(a|some))?\s+(taco|:taco:)(\s+(pls|pl(z)+))?(!+)?/
 
         if (!matcher.matches()) {
             throw new RequestParseException("Not a valid taco request")
@@ -60,7 +60,7 @@ class TacoRequestHandler extends AbstractMessageRequestHandler {
     @Override
     void handle(SlackSession session, SlackMessagePosted event) {
         try {
-            String recipient = parse(session, event)[0]
+            String recipient = parse(event.messageContent, session.sessionPersona().id)[0]
             if (recipient == 'me' || recipient == null) {
                 user = "<@${event.sender.id}>"
             }

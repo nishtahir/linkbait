@@ -1,4 +1,4 @@
-package com.nishtahir.linkbait.util
+package com.nishtahir.linkbait
 
 import com.ullink.slack.simpleslackapi.SlackAttachment
 import org.apache.commons.lang3.StringEscapeUtils

@@ -14,7 +14,7 @@ interface RequestHandler<T, E extends SlackEvent> {
      * Parse the request and throw a {@link com.nishtahir.linkbait.exception.RequestParseException} if invalid.
      * @return Object that is passed to {@link #handle}.
      */
-     T parse(SlackSession session, E event)
+     T parse(String message, String sessionId)
     /**
      * In case of no {@link com.nishtahir.linkbait.exception.RequestParseException}, execute this.
      * @param parsed

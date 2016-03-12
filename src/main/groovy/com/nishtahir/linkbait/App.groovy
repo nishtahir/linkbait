@@ -14,8 +14,6 @@ import com.nishtahir.linkbait.request.NReactionHandler
 import com.nishtahir.linkbait.request.TacoRequestHandler
 import com.nishtahir.linkbait.service.LinkService
 import com.nishtahir.linkbait.service.UserService
-import com.nishtahir.linkbait.util.PlayAttachmentCreator
-import com.nishtahir.linkbait.util.SteamAttachmentCreator
 import com.nishtahir.linkbait.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded

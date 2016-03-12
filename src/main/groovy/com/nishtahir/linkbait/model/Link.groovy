@@ -9,7 +9,7 @@ import groovy.transform.Sortable
 @DatabaseTable
 class Link {
 
-    @DatabaseField( id = true)
+    @DatabaseField(id = true)
     double timestamp;
 
     @DatabaseField

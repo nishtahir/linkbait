@@ -1,5 +1,6 @@
-package com.nishtahir.linkbait.util
+package com.nishtahir.linkbait
 
+import com.nishtahir.linkbait.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackAttachment
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

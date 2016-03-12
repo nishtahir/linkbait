@@ -1,5 +1,6 @@
-package com.nishtahir.linkbait.util
+package com.nishtahir.linkbait
 
+import com.nishtahir.linkbait.PlayAttachmentCreator
 import spock.lang.Specification
 
 /**

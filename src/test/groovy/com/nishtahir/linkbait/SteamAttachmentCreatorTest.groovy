@@ -1,5 +1,6 @@
-package com.nishtahir.linkbait.util
+package com.nishtahir.linkbait
 
+import com.nishtahir.linkbait.SteamAttachmentCreator
 import spock.lang.Specification
 
 class SteamAttachmentCreatorTest extends Specification {
