@@ -98,4 +98,18 @@ class UserServiceTest extends Specification {
         foundDatabaseUsers.size() == 1
         localUser == foundDatabaseUsers.first()
     }
+
+    def "UpvoteUser_WithExistingUser_UpvotesUser"() {
+        given: "an already existing user in the database"
+        final long expectedUpvotes = 11
+        User localUser = new User(slackUserId: "1234", username:"nish", upvotes:10, downvotes:5)
+        userService.createUser(localUser)
+
+        when: "he is upvoted"
+        userService.upvoteUser(localUser)
+
+        then: "he should have the same upvotes as local"
+        User databaseUser = userService.findUserBySlackUserId("1234").first()
+        expectedUpvotes == databaseUser.upvotes
+    }
 }
