@@ -51,7 +51,7 @@ class UserServiceTest extends Specification {
         when: "he is queried by his id"
         List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
 
-        then: "he should be same as local"
+        then: "the database user should exist"
         foundDatabaseUsers.size() == 1
         localUser == foundDatabaseUsers.first()
     }
