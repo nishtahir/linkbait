@@ -4,7 +4,7 @@ package com.nishtahir.linkbait.util
  */
 class ValidationUtils {
 
-    static final String URL_PATTERN = /(?<url>(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \-&\?=%+\.]*)*\/?)/
+    static final String URL_PATTERN = /(?<url>(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \-&\?=%+\.#]*)*\/?)/
 
     /**
      *

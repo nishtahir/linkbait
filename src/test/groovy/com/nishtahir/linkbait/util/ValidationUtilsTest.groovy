@@ -9,7 +9,7 @@ class ValidationUtilsTest extends Specification {
         ValidationUtils.isValidUrl("http://google.com")
         ValidationUtils.isValidUrl("https://www.google.com")
         //This is really bad. It caused the regex to lockup for some reason
-//        ValidationUtils.isValidUrl("https://en.wikipedia.org/wiki/Regular_expression#Examples")
+        ValidationUtils.isValidUrl("https://en.wikipedia.org/wiki/Regular_expression#Examples")
         ValidationUtils.isValidUrl("developer.android.com")
 
         !ValidationUtils.isValidUrl("8.8.8.8")
