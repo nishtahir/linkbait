@@ -80,7 +80,7 @@ class UserServiceTest extends Specification {
 
     def "FindUserByName_WithMissingUser_ReturnsEmptyList"() {
         when: "a non existing user is queried by his name"
-        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("nish")
+        List<User> foundDatabaseUsers = userService.findUserByName("nish")
 
         then: "he should not exist"
         foundDatabaseUsers.size() == 0
