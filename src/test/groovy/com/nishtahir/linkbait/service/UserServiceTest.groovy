@@ -93,7 +93,7 @@ class UserServiceTest extends Specification {
         when: "he is created in the database"
         userService.createUser(localUser)
 
-        then: "he should exist in the database and be same as local"
+        then: "he should exist in the database and be the same as local"
         List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
         foundDatabaseUsers.size() == 1
         localUser == foundDatabaseUsers.first()
