@@ -27,8 +27,19 @@ class UserServiceTest extends Specification {
         connectionSource.close()
     }
 
-    def "UpdateUser"() {
+    def "UpdateUser_WithExistingUser_UpdatesCorrectly"() {
+        given: "an already existing user in the database"
+        User localUser = new User(slackUserId: "1234", username:"nish", upvotes:10, downvotes:5)
+        userService.createUser(localUser)
 
+        when: "he is updated in the database"
+        localUser.upvotes = 7
+        localUser.downvotes = 10
+        userService.updateUser(localUser)
+
+        then: "he should be updated in the database as well"
+        User databaseUser = userService.findUserByName("nish").first()
+        localUser == databaseUser
     }
 
     def "FindUserBySlackUserId"() {
