@@ -56,6 +56,14 @@ class UserServiceTest extends Specification {
         localUser == foundDatabaseUsers.first()
     }
 
+    def "FindUserBySlackUserId_WithMissingUser_ReturnsEmptyList"() {
+        when: "a non existing user is queried by his id"
+        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
+
+        then: "he should not exist"
+        foundDatabaseUsers.size() == 0
+    }
+
     def "FindUserBySlackUserId"() {
 
     }
