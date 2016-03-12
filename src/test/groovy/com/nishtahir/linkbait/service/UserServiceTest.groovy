@@ -49,10 +49,11 @@ class UserServiceTest extends Specification {
         userService.createUser(localUser)
 
         when: "he is queried by his id"
-        User databaseUser = userService.findUserBySlackUserId("1234").first()
+        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
 
         then: "he should be same as local"
-        localUser == databaseUser
+        foundDatabaseUsers.size() == 1
+        localUser == foundDatabaseUsers.first()
     }
 
     def "FindUserBySlackUserId"() {
