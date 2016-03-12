@@ -24,6 +24,7 @@ class UserServiceTest extends Specification {
     }
 
     void cleanup() {
+        TableUtils.clearTable(connectionSource, User.class)
         connectionSource.close()
     }
 
@@ -39,6 +40,18 @@ class UserServiceTest extends Specification {
 
         then: "he should be updated in the database as well"
         User databaseUser = userService.findUserByName("nish").first()
+        localUser == databaseUser
+    }
+
+    def "FindUserBySlackUserId_WithExistingUser_ReturnsUser"() {
+        given: "an already existing user in the database"
+        User localUser = new User(slackUserId: "1234", username:"nish", upvotes:10, downvotes:5)
+        userService.createUser(localUser)
+
+        when: "he is queried by his id"
+        User databaseUser = userService.findUserBySlackUserId("1234").first()
+
+        then: "he should be same as local"
         localUser == databaseUser
     }
 
