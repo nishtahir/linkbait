@@ -64,6 +64,28 @@ class UserServiceTest extends Specification {
         foundDatabaseUsers.size() == 0
     }
 
+
+    def "FindUserByName_WithExistingUser_ReturnsUser"() {
+        given: "an already existing user in the database"
+        User localUser = new User(slackUserId: "1234", username:"nish", upvotes:10, downvotes:5)
+        userService.createUser(localUser)
+
+        when: "he is queried by his name"
+        List<User> foundDatabaseUsers = userService.findUserByName("nish")
+
+        then: "he should be same as local"
+        foundDatabaseUsers.size() == 1
+        localUser == foundDatabaseUsers.first()
+    }
+
+    def "FindUserByName_WithMissingUser_ReturnsEmptyList"() {
+        when: "a non existing user is queried by his name"
+        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("nish")
+
+        then: "he should not exist"
+        foundDatabaseUsers.size() == 0
+    }
+
     def "FindUserBySlackUserId"() {
 
     }
