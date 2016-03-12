@@ -38,8 +38,8 @@ class UserServiceTest extends Specification {
         localUser.downvotes = 10
         userService.updateUser(localUser)
 
-        then: "he should be updated in the database as well"
-        User databaseUser = userService.findUserByName("nish").first()
+        then: "the update should persist"
+        User databaseUser = userService.findUserBySlackUserId("1234").first()
         localUser == databaseUser
     }
 
