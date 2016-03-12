@@ -86,11 +86,16 @@ class UserServiceTest extends Specification {
         foundDatabaseUsers.size() == 0
     }
 
-    def "FindUserBySlackUserId"() {
+    def "CreateUser_WithNewUser_CreatesUser"() {
+        given: "a local user"
+        User localUser = new User(slackUserId: "1234", username:"nish", upvotes:10, downvotes:5)
 
-    }
+        when: "he is created in the database"
+        userService.createUser(localUser)
 
-    def "CreateUser"() {
-
+        then: "he should exist in the database and be same as local"
+        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
+        foundDatabaseUsers.size() == 1
+        localUser == foundDatabaseUsers.first()
     }
 }
