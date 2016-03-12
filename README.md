@@ -61,7 +61,8 @@ is run the start script passing in the args
 ./build/install/bin/islack-bot [args]
 ```
 
-#Contributors
+# Contributors
+
 Thanks to these wonderful people, that have helped make Linkbait possible
 
 * Andreas Backx aka [@AndreasBackx](https://twitter.com/AndreasBackx)
