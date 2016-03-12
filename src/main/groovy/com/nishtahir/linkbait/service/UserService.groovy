@@ -103,7 +103,7 @@ class UserService {
      * @param user
      */
     void revokeDownvoteFromUser(User user){
-        user.downvotes++
+        user.downvotes--
         updateUser(user)
     }
 }
