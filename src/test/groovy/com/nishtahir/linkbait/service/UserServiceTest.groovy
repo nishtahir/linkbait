@@ -108,21 +108,21 @@ class UserServiceTest extends Specification {
         when: "he is upvoted"
         userService.upvoteUser(localUser)
 
-        then: "he should have the same upvotes as local"
+        then: "the database user should have the expected upvotes"
         User databaseUser = userService.findUserBySlackUserId("1234").first()
         expectedUpvotes == databaseUser.upvotes
     }
 
-    def "RevokeUpvoteFromUser_WithExistingUser_RevokesUpvotesUser"() {
+    def "RevokeUpvoteFromUser_WithExistingUser_RevokesUpvoteFromUser"() {
         given: "an already existing user in the database"
         final long expectedUpvotes = 9
         User localUser = new User(slackUserId: "1234", username:"nish", upvotes:10, downvotes:5)
         userService.createUser(localUser)
 
-        when: "he is upvoted"
+        when: "his upvote is revoked"
         userService.revokeUpvoteFromUser(localUser)
 
-        then: "he should have the same upvotes as local"
+        then: "he should have the expected upvotes"
         User databaseUser = userService.findUserBySlackUserId("1234").first()
         expectedUpvotes == databaseUser.upvotes
     }
@@ -136,7 +136,7 @@ class UserServiceTest extends Specification {
         when: "he is downvoted"
         userService.downvoteUser(localUser)
 
-        then: "he should have the same downvotes as local"
+        then: "he should have the expected downvotes"
         User databaseUser = userService.findUserBySlackUserId("1234").first()
         expectedDownvotes == databaseUser.downvotes
     }
@@ -150,7 +150,7 @@ class UserServiceTest extends Specification {
         when: "his downvote is revoked"
         userService.revokeDownvoteFromUser(localUser)
 
-        then: "he should have the same downvotes as local"
+        then: "he should have the expected downvotes"
         User databaseUser = userService.findUserBySlackUserId("1234").first()
         expectedDownvotes == databaseUser.downvotes
     }
