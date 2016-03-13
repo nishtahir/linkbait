@@ -25,7 +25,7 @@ class LinkController implements IController {
             return JSONUtils.dataToPrettyJSON(service.linksPostedToday)
         });
 
-        get("/today/", { request, response ->
+        get("/today", { request, response ->
             Map<String, Object> map = [:]
             map.put("pageName", "Linkbait")
             map.put("Links", service.linksPostedToday)
@@ -35,25 +35,48 @@ class LinkController implements IController {
         /**
          *  Returns JSON with List of links posted this week.
          */
-        get("/week", { request, response ->
+        get("/week/json", { request, response ->
             response.type("application/json")
             return JSONUtils.dataToPrettyJSON(service.linksPostedThisWeek)
         });
 
+        get("/week", { request, response ->
+            Map<String, Object> map = [:]
+            map.put("pageName", "Linkbait")
+            map.put("Links", service.linksPostedThisWeek)
+            return new ModelAndView(map, "links")
+        }, new LinkbaitJadeTemplateEngine())
+
+
         /**
          *  Returns JSON with List of links posted this month.
          */
-        get("/month", { request, response ->
+        get("/month/json", { request, response ->
             response.type("application/json")
             return JSONUtils.dataToPrettyJSON(service.linksPostedThisMonth)
         });
 
+        get("/month", { request, response ->
+            Map<String, Object> map = [:]
+            map.put("pageName", "Linkbait")
+            map.put("Links", service.linksPostedThisMonth)
+            return new ModelAndView(map, "links")
+        }, new LinkbaitJadeTemplateEngine())
+
         /**
          *  Returns the top links from the most active categories
          */
-        get("/digest", { request, response ->
+        get("/digest/json", { request, response ->
             response.type("application/json")
             return JSONUtils.dataToPrettyJSON(service.weeklyDigest)
         });
+
+        get("/digest", { request, response ->
+            Map<String, Object> map = [:]
+            map.put("pageName", "Linkbait")
+            map.put("Links", service.weeklyDigest)
+            return new ModelAndView(map, "links")
+        }, new LinkbaitJadeTemplateEngine())
+
     }
 }

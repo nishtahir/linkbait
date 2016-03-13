@@ -2,7 +2,12 @@ doctype html
 html
   head
     include style.css
+    include script.js
   body
     ol#links
       for link in Links
-        li #{link.url}
+        li
+          div
+            a(href='#{link.url}') #{link.url}
+            p by #{link.publisher.username}
+            p(class='time_since', timestamp='#{link.timestamp}')
