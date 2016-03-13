@@ -55,4 +55,35 @@ class LinkServiceTest extends Specification {
         result.size() == 2
         !result.contains(recordWithTimestampThatIsntToday)
     }
+
+    def "GetDistinctChannels_WithAllInputInSingleChannel_ReturnsOneChannel"(){
+        when:
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "test"))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "test"))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "test"))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "test"))
+
+        List<String> channels = linkService.getDistinctChannels()
+
+
+        then:
+        channels.size() == 1
+        channels.get(0) == "test"
+    }
+
+    def "GetDistinctChannels_WithMultipleChannels_ReturnsCorrectNumberOfChannels"(){
+        when:
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "do"))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "you"))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "feel"))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "in"))
+        linkService.saveLink(new Link(timestamp:Calendar.getInstance().getTimeInMillis(), channel: "charge"))
+
+        List<String> channels = linkService.getDistinctChannels()
+
+
+        then:
+        channels.size() == 5
+        channels.sort() == ['do','you','feel','in','charge'].sort()
+    }
 }

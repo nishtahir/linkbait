@@ -51,7 +51,7 @@ class LinkService {
      * @param link Link to save
      * @return Item that was saved. If something else was there, that is returned instead.
      */
-    Link saveLink(Link link){
+    Link saveLink(Link link) {
         linkDao.createIfNotExists(link)
     }
 
@@ -110,7 +110,7 @@ class LinkService {
      * @param timestamp
      * @return
      */
-    Link downvoteLink(String timestamp){
+    Link downvoteLink(String timestamp) {
         Link link = findLink(timestamp)
         link?.downvotes++
         updateLink(link)
@@ -122,7 +122,7 @@ class LinkService {
      * @param timestamp
      * @return
      */
-    Link revokeDownvoteFromLink(String timestamp){
+    Link revokeDownvoteFromLink(String timestamp) {
         Link link = findLink(timestamp)
         link?.downvotes--
         updateLink(link)
@@ -160,12 +160,32 @@ class LinkService {
      * Returns a digest last week's top links sorted by votes
      * @return
      */
-    List<Link> getWeeklyDigest(){
-        def query = linkDao.queryBuilder()
-                .where().ge("timestamp", TimestampUtils.getStartOfPreviousWeek())
-                .and()
-                .le("timestamp", TimestampUtils.getStartOfCurrentWeek()).prepare()
-        List<Link> links = linkDao.query(query)
-        return links.sort(false) { a, b ->  b.upvotes <=> a.upvotes }
+    List<Link> getWeeklyDigest() {
+        List<Link> digest = new ArrayList<>()
+
+        def builder = linkDao.queryBuilder()
+        builder.limit(5L)
+        builder.orderBy("upvotes", false)
+
+        getDistinctChannels().each { channel ->
+            def query = builder.where()
+                    .ge("timestamp", TimestampUtils.getStartOfPreviousWeek())
+                    .and()
+                    .le("timestamp", TimestampUtils.getStartOfCurrentWeek())
+                    .and()
+                    .eq("channel", channel)
+                    .prepare()
+            digest.addAll(linkDao.query(query))
+        }
+        return digest
+    }
+
+    List<String> getDistinctChannels() {
+        List<String> channels = new ArrayList<>()
+        def query = linkDao.queryBuilder().distinct().selectColumns("channel").prepare()
+        linkDao.query(query).each {
+            channels.add(it.channel)
+        }
+        return channels
     }
 }
