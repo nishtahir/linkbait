@@ -135,7 +135,7 @@ class LinkService {
     List<Link> getLinksPostedToday() {
         def query = linkDao.queryBuilder()
                 .where().ge("timestamp", TimestampUtils.startOfCurrentDay).prepare()
-        return linkDao.query(query)
+        return linkDao.query(query).reverse()
     }
 
     /**
@@ -144,7 +144,7 @@ class LinkService {
     List<Link> getLinksPostedThisWeek() {
         def query = linkDao.queryBuilder()
                 .where().ge("timestamp", TimestampUtils.startOfCurrentWeek).prepare()
-        return linkDao.query(query)
+        return linkDao.query(query).reverse()
     }
 
     /**
@@ -153,7 +153,7 @@ class LinkService {
     List<Link> getLinksPostedThisMonth() {
         def query = linkDao.queryBuilder()
                 .where().ge("timestamp", TimestampUtils.startOfCurrentMonth).prepare()
-        return linkDao.query(query)
+        return linkDao.query(query).reverse()
     }
 
     /**
