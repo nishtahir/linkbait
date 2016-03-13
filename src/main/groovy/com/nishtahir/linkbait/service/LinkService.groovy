@@ -13,7 +13,7 @@ import com.nishtahir.linkbait.util.TimestampUtils
 class LinkService {
 
     /**
-     *
+     * Very zen.
      */
     Dao<Link, Double> linkDao
 
@@ -25,13 +25,16 @@ class LinkService {
     }
 
     /**
+     * Attempts to save a link to the DB. If something was already there with the same timestamp
+     * It returns that instead. Since slack identifies messages by timestamp, the chance of a collision
+     * is pretty slim
      *
-     * @param timestamp
-     * @param url
-     * @param publisher
-     * @return
+     * @param timestamp acts as id.
+     * @param url link to save
+     * @param publisher person that posted it
+     * @return Item that was saved. If something else was there, that is returned instead.
      */
-    def saveLink(String timestamp, String url, User publisher, String group, String channel) {
+    Link saveLink(String timestamp, String url, User publisher, String group, String channel) {
         linkDao.createIfNotExists(new Link(
                 timestamp: Double.valueOf(timestamp),
                 url: url,
@@ -41,20 +44,22 @@ class LinkService {
     }
 
     /**
+     * Attempts to save a link to the DB. If something was already there with the same timestamp
+     * It returns that instead. Since slack identifies messages by timestamp, the chance of a collision
+     * is pretty slim
      *
-     * @param link
-     * @return
+     * @param link Link to save
+     * @return Item that was saved. If something else was there, that is returned instead.
      */
-    def saveLink(Link link){
+    Link saveLink(Link link){
         linkDao.createIfNotExists(link)
     }
 
     /**
-     * Finds a single link
-     * @param timestamp
+     * @param timestamp id
      * @return
      */
-    def findLink(String timestamp) {
+    Link findLink(String timestamp) {
         linkDao.queryForId(Double.valueOf(timestamp));
     }
 
@@ -63,7 +68,7 @@ class LinkService {
      * @param link
      * @return
      */
-    def updateLink(Link link) {
+    void updateLink(Link link) {
         linkDao.update(link)
     }
 
@@ -72,7 +77,7 @@ class LinkService {
      * @param link
      * @return
      */
-    def deleteLink(Link link) {
+    void deleteLink(Link link) {
         linkDao.delete(link)
     }
 

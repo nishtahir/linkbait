@@ -1,29 +1,36 @@
 package com.nishtahir.linkbait.controller
 
+import com.nishtahir.linkbait.LinkbaitJadeTemplateEngine
 import com.nishtahir.linkbait.service.LinkService
 import com.nishtahir.linkbait.util.JSONUtils
 import groovy.transform.Canonical
+import spark.ModelAndView
+import spark.template.jade.JadeTemplateEngine
 
 import static spark.Spark.get
 
-/**
- * Created by nish on 2/20/16.
- */
 @Canonical
-class LinkController extends AbstractController{
+class LinkController implements IController {
 
     LinkService service
 
     @Override
-    void init(){
+    void init() {
 
         /**
          *  Returns JSON with List of links posted today.
          */
-        get("/today", { request, response ->
+        get("/today/json", { request, response ->
             response.type("application/json")
             return JSONUtils.dataToPrettyJSON(service.linksPostedToday)
         });
+
+        get("/today/", { request, response ->
+            Map<String, Object> map = [:]
+            map.put("pageName", "Linkbait")
+            map.put("Links", service.linksPostedToday)
+            return new ModelAndView(map, "links")
+        }, new LinkbaitJadeTemplateEngine())
 
         /**
          *  Returns JSON with List of links posted this week.

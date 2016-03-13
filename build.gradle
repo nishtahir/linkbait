@@ -42,6 +42,7 @@ dependencies {
     //JSoup
     compile 'org.jsoup:jsoup:1.8.3'
 
+    //Apache commons lang
     compile 'org.apache.commons:commons-lang3:3.4'
 
     // We use the latest groovy 2.x version for building this library
@@ -55,7 +56,11 @@ dependencies {
     //Spark java core
     compile 'com.sparkjava:spark-core:2.3'
 
+    //Steam storefront API
     compile 'com.github.go-ive:steam-api:3.0.0'
+
+    //Jade templating engine
+    compile 'com.sparkjava:spark-template-jade:2.3'
 
     // We use the awesome Spock testing and specification framework
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'

@@ -10,7 +10,7 @@ import static spark.Spark.get
  * Created by nish on 2/26/16.
  */
 @Canonical
-class UserController extends AbstractController {
+class UserController implements IController {
 
     UserService service
 

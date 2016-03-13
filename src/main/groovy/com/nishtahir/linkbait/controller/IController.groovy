@@ -3,11 +3,11 @@ package com.nishtahir.linkbait.controller
 /**
  * Interface for controllers used in Webservice
  */
-interface IController {
+trait IController {
 
     /**
      * Initialize routes
      */
-    void init()
+    abstract void init()
 
 }
