@@ -16,18 +16,18 @@ class RedditAutoCompleteHandler implements RequestHandler<String, SlackMessagePo
 
     @Override
     String parse(String message, String sessionId) {
-        Matcher matcher = (message =~ /\b(r\\/\w+)/)
+        Matcher matcher = (message =~ /(^|\s+)(?<sub>(r\/\w+\/?))(\s+|$)/)
         if (!matcher.find())
-            throw new RequestParseException("Not a valid subreddit")
+            throw new RequestParseException('Not a valid subreddit')
 
-        return matcher.group()
+        return matcher.group('sub')
     }
 
     @Override
     void handle(SlackSession session, SlackMessagePosted event) {
         try {
             String subreddit = parse(event.messageContent, session.sessionPersona().id)
-            session.sendMessageOverWebSocket(event.channel, "For the lazy, <https://www.reddit.com/${subreddit}/>", null)
+            session.sendMessage(event.channel, "For the lazy, <https://www.reddit.com/${subreddit}/|https://www.reddit.com/${subreddit}/>", null)
         } catch (RequestParseException ignore) {
 
         }
