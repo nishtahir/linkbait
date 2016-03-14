@@ -78,7 +78,7 @@ class App {
             SlackSession slackSession = SlackSessionFactory.createWebSocketSlackSession(apiToken)
             slackSession.addMessagePostedListener([
                     onEvent: { SlackMessagePosted event, SlackSession session ->
-                        if (event.sender == session.sessionPersona())
+                        if (event.sender.id == session.sessionPersona().id)
                             return
 
                         String message = event.messageContent
