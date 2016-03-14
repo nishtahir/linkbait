@@ -10,7 +10,7 @@ class Messages {
         "Does {{user}} deserve a taco?",
         "Shall i bestow a taco onto {{user}}?",
         "Time for a vote. {{user}} gets a taco. Yay or nay?",
-        "{{user}}, do you really think you should get a Taco?",
+        "{{user}}, do you really think you deserve a taco?",
         "Should {{user}} get a taco?",
         "It is within my power to do so {{user}}, but the others shall decide your fate.",
         "Shall I give {{user}} a taco?",

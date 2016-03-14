@@ -63,6 +63,8 @@ class TacoRequestHandler extends AbstractMessageRequestHandler {
             String recipient = parse(event.messageContent, session.sessionPersona().id)[0]
             if (recipient == 'me' || recipient == null) {
                 user = "<@${event.sender.id}>"
+            } else {
+                user = recipient
             }
 
             int chanceOfTaco = ThreadLocalRandom.current().nextInt(10)
