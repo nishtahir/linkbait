@@ -7,9 +7,6 @@ import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import spock.lang.Specification
 
-/**
- * Created by nish on 2/20/16.
- */
 class LinkServiceTest extends Specification {
 
     LinkService linkService

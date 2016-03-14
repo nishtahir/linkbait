@@ -11,6 +11,7 @@ import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import com.nishtahir.linkbait.request.HelpRequestHandler
 import com.nishtahir.linkbait.request.NReactionHandler
+import com.nishtahir.linkbait.request.RedditAutoCompleteHandler
 import com.nishtahir.linkbait.request.TacoRequestHandler
 import com.nishtahir.linkbait.service.LinkService
 import com.nishtahir.linkbait.service.UserService
@@ -91,6 +92,8 @@ class App {
                         HelpRequestHandler.instance.handle(session, event)
 
                         NReactionHandler.instance.handle(session,event)
+
+                        RedditAutoCompleteHandler.instance.handle(session, event)
 
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
                         if (url != null) {
