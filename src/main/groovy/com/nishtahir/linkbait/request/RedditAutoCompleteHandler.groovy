@@ -24,12 +24,13 @@ class RedditAutoCompleteHandler implements RequestHandler<String, SlackMessagePo
     }
 
     @Override
-    void handle(SlackSession session, SlackMessagePosted event) {
+    boolean handle(SlackSession session, SlackMessagePosted event) {
         try {
             String subreddit = parse(event.messageContent, session.sessionPersona().id)
             session.sendMessage(event.channel, "For the lazy... <https://www.reddit.com/${subreddit}/|https://www.reddit.com/${subreddit}/>", null)
+            return true
         } catch (RequestParseException ignore) {
-
+            return false
         }
     }
 }

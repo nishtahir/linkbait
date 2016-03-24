@@ -21,15 +21,16 @@ class HelpRequestHandler extends AbstractMessageRequestHandler {
     }
 
     @Override
-    void handle(SlackSession session, SlackMessagePosted event) {
+    boolean handle(SlackSession session, SlackMessagePosted event) {
         try {
             parse(event.messageContent, session.sessionPersona().id)
             session.sendMessageToUser(event.sender,
                     Messages.getHelpMessage(session.sessionPersona().userName),
                     null
             )
+            return true
         } catch (RequestParseException ignore) {
-
+            return false
         }
     }
 }

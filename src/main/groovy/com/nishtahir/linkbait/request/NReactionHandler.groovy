@@ -23,12 +23,13 @@ class NReactionHandler implements RequestHandler<Void, SlackMessagePosted> {
     }
 
     @Override
-    void handle(SlackSession session, SlackMessagePosted event) {
+    boolean handle(SlackSession session, SlackMessagePosted event) {
         try {
             parse(event.messageContent, session.sessionPersona().id)
             session.addReactionToMessage(event.channel, event.timestamp, ANDROID7)
+            return true
         } catch (RequestParseException ignore) {
-
+            return false
         }
     }
 }
