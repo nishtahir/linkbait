@@ -6,7 +6,7 @@ import org.apache.commons.io.FilenameUtils;
 import java.io.*;
 
 /**
- * Created by nish on 3/13/16.
+ * Fixes the filename extension bug in Jade
  */
 public class LinkbaitClasspathTemplateLoader extends ClasspathTemplateLoader {
 

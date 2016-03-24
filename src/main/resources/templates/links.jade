@@ -1,13 +1,27 @@
 doctype html
 html
   head
-    include style.css
-    include script.js
+    include styles/style.css
+    include styles/normalize.css   
+    include styles/skeleton.css
+
+    include scripts/script.js
   body
-    ol#links
-      for link in Links
-        li
-          div
-            a(href='#{link.url}') #{link.url}
-            p by #{link.publisher.username} in ##{link.channel}
-            p(class='time_since', timestamp='#{link.timestamp}')
+  
+    .container
+        .row
+            .section
+                h1 Top links #{when}
+  
+    .container
+        ol#links
+            for link in Links
+                li
+                    a(href='#{link.url}') #{link.url}
+                    p by #{link.publisher.username} in ##{link.channel}
+                    p(class='time_since', timestamp='#{link.timestamp}')
+    
+    .container
+        .row
+            .section
+                p Created with ♥ by Nish Tahir

@@ -5,6 +5,11 @@ import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
+import org.apache.tika.metadata.Metadata
+import org.apache.tika.metadata.TikaCoreProperties
+import org.apache.tika.parser.ParseContext
+import org.apache.tika.parser.html.HtmlParser
+import org.apache.tika.sax.BodyContentHandler
 import spock.lang.Specification
 
 class LinkServiceTest extends Specification {
@@ -82,5 +87,45 @@ class LinkServiceTest extends Specification {
         then:
         channels.size() == 5
         channels.sort() == ['do','you','feel','in','charge'].sort()
+    }
+
+    def "BoilerPipeTest"(){
+        when:
+//        URL url = new URL('http://www.theverge.com/2016/3/23/11293576/google-cloud-machine-learning-platform-available-developers')
+//        URL url = new URL('https://github.com/androidchat/androidchat.github.io')
+        URL url = new URL('http://www.engadget.com/2016/03/23/xkcd-creator-contributes-to-school-textbooks/')
+//        final BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR
+//        final HTMLHighlighter hh = HTMLHighlighter.newHighlightingInstance();
+//        println hh.process(url, extractor)
+//        InputSource inputSource = new InputSource( new StringReader( url.text ) );
+
+        BodyContentHandler handler = new BodyContentHandler();
+        Metadata metadata = new Metadata();
+
+        InputStream inputstream = new ByteArrayInputStream(url.text.bytes);
+        ParseContext pcontext = new ParseContext();
+
+        //Html parser
+        HtmlParser htmlparser = new HtmlParser();
+        htmlparser.parse(inputstream, handler, metadata,pcontext);
+
+        println metadata.get(TikaCoreProperties.TITLE)
+        println metadata.get("description")
+
+        println metadata.get(TikaCoreProperties.DESCRIPTION)
+//        System.out.println("Contents of the document:" + handler.toString());
+//        System.out.println("Metadata of the document:");
+//        String[] metadataNames = metadata.names();
+
+//        for(String name : metadataNames) {
+//            System.out.println(name + ":   " + metadata.get(name));
+//        }
+
+//        final TextDocument doc = new BoilerpipeSAXInput(inputSource).getTextDocument();
+
+//        println "Page title: " + doc.title
+//        println doc.content.take(200)
+        then:
+        true
     }
 }

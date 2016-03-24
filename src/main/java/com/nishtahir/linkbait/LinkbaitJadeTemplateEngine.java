@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Created by nish on 3/13/16.
+ * Need this class to load {@link LinkbaitClasspathTemplateLoader}
  */
 public class LinkbaitJadeTemplateEngine extends JadeTemplateEngine {
 
