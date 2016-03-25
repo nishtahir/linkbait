@@ -15,7 +15,7 @@ class HoundifyMessageRequestHandler extends AbstractMessageRequestHandler {
     @Override
     boolean handle(SlackSession session, SlackMessagePosted event) {
         try {
-            String text = parse(event.messageContent, session.sessionPersona().id)
+            String text = parse(event.messageContent, session.sessionPersona().id)[0]
 
             String response = HoundifyClient.doTextRequest(text)
             def root = new JsonSlurper().parseText(response)
