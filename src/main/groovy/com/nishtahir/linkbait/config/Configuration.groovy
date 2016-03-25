@@ -47,6 +47,14 @@ class Configuration {
      */Map< String, String> teams
 
     /**
+     * relevant yml
+     *
+     * houndify:
+     *  {houndify fields}
+     */
+    Houndify houndify
+
+    /**
      * upvote emoji property from config
      * @return
      */

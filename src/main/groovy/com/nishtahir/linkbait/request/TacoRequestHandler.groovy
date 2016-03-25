@@ -58,7 +58,7 @@ class TacoRequestHandler extends AbstractMessageRequestHandler {
     }
 
     @Override
-    void handle(SlackSession session, SlackMessagePosted event) {
+    boolean handle(SlackSession session, SlackMessagePosted event) {
         try {
             String recipient = parse(event.messageContent, session.sessionPersona().id)[0]
             if (recipient == 'me' || recipient == null) {
@@ -99,8 +99,9 @@ class TacoRequestHandler extends AbstractMessageRequestHandler {
                     }
                 }
             }
+            return true
         } catch (RequestParseException ignore) {
-
+            return false
         }
     }
     /**

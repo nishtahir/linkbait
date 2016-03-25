@@ -10,6 +10,7 @@ import com.nishtahir.linkbait.controller.UserController
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import com.nishtahir.linkbait.request.HelpRequestHandler
+import com.nishtahir.linkbait.request.HoundifyMessageRequestHandler
 import com.nishtahir.linkbait.request.NReactionHandler
 import com.nishtahir.linkbait.request.RedditAutoCompleteHandler
 import com.nishtahir.linkbait.request.TacoRequestHandler
@@ -89,24 +90,27 @@ class App {
                         // we'll have to check the first char of the id. C = Public channel
                         boolean isPublic = event.getChannel().getId()[0] == 'C'
 
-                        HelpRequestHandler.instance.handle(session, event)
+                        boolean helpHandled = HelpRequestHandler.instance.handle(session, event)
 
                         NReactionHandler.instance.handle(session,event)
 
-                        RedditAutoCompleteHandler.instance.handle(session, event)
+                        boolean redditHandled = RedditAutoCompleteHandler.instance.handle(session, event)
 
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
+                        boolean urlHandled = false;
                         if (url != null) {
 
                             //Check if playstore URL
                             String playId = ValidationUtils.getPlaystoreId(url)
                             if (playId != null) {
                                 session.sendMessage(event.channel, null, new PlayAttachmentCreator().getSlackAttachmentForUrl(url))
+                                urlHandled = true
                             }
 
                             long steamId = ValidationUtils.getSteamId(url)
                             if (steamId != -1) {
                                 session.sendMessage(event.channel, null, new SteamAttachmentCreator().getSlackAttachmentForUrl(url))
+                                urlHandled = true
                             }
                             if (isPublic) {
                                 session.addReactionToMessage(event.channel, timestamp, configuration.getUpvoteEmoji())
@@ -116,7 +120,12 @@ class App {
                                 session.addReactionToMessage(event.channel, timestamp, configuration.getDownvoteEmoji())
                             }
                         }
-                        TacoRequestHandler.instance.handle(session, event)
+                        boolean tacoHandled = TacoRequestHandler.instance.handle(session, event)
+
+                        // We fall through here at the end, if none of these events triggered, use houndify
+                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled) {
+                            HoundifyMessageRequestHandler.instance.handle(session, event)
+                        }
                     }
             ] as SlackMessagePostedListener);
 

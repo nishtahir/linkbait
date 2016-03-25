@@ -19,6 +19,7 @@ interface RequestHandler<T, E extends SlackEvent> {
      * In case of no {@link com.nishtahir.linkbait.exception.RequestParseException}, execute this.
      * @param parsed
      * @see com.nishtahir.linkbait.exception.RequestParseException
+     * @return true if the event was handled by this handler, false if not.
      */
-    void handle(SlackSession session, E event)
+    boolean handle(SlackSession session, E event)
 }
