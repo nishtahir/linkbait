@@ -21,6 +21,10 @@ run {
 
 dependencies {
 
+    compile 'org.apache.tika:tika-parsers:1.12'
+
+    compile 'com.syncthemall:boilerpipe:1.2.2'
+
     //Apache CLI
     compile 'commons-cli:commons-cli:1.3.1'
 

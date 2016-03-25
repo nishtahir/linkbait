@@ -28,6 +28,7 @@ class LinkController implements IController {
         get("/today", { request, response ->
             Map<String, Object> map = [:]
             map.put("pageName", "Linkbait")
+            map.put("when", "today")
             map.put("Links", service.linksPostedToday)
             return new ModelAndView(map, "links")
         }, new LinkbaitJadeTemplateEngine())
@@ -43,6 +44,7 @@ class LinkController implements IController {
         get("/week", { request, response ->
             Map<String, Object> map = [:]
             map.put("pageName", "Linkbait")
+            map.put("when", "this week")
             map.put("Links", service.linksPostedThisWeek)
             return new ModelAndView(map, "links")
         }, new LinkbaitJadeTemplateEngine())
@@ -59,6 +61,7 @@ class LinkController implements IController {
         get("/month", { request, response ->
             Map<String, Object> map = [:]
             map.put("pageName", "Linkbait")
+            map.put("when", "this month")
             map.put("Links", service.linksPostedThisMonth)
             return new ModelAndView(map, "links")
         }, new LinkbaitJadeTemplateEngine())
@@ -74,6 +77,7 @@ class LinkController implements IController {
         get("/digest", { request, response ->
             Map<String, Object> map = [:]
             map.put("pageName", "Linkbait")
+            map.put("when", "last week")
             map.put("Links", service.weeklyDigest)
             return new ModelAndView(map, "links")
         }, new LinkbaitJadeTemplateEngine())
