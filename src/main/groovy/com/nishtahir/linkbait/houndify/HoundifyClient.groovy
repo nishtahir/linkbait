@@ -23,7 +23,7 @@ public class HoundifyClient {
      * @return The JSON String reply from the API
      */
     static String doTextRequest(String input) {
-        URL url = new URL(App.configuration.houndify.url + "?query=" + URLEncoder.encode(input, "utf-8"))
+        URL url = new URL(App.configuration.houndify.url + "?query=" + URLEncoder.encode(input, "utf-8").replace("+", "%20"))
         String clientId = App.configuration.houndify.id
         String clientKey = App.configuration.houndify.key
 
