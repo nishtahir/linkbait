@@ -1,40 +1,15 @@
 group 'com.nishtahir.linkbait'
-version '1.0-SNAPSHOT'
+version '0.1.1'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'git-repo'
 
 sourceCompatibility = 1.8
-
-buildscript {
-    repositories {
-        maven { url "https://gitlab.com/nishtahir/linkbait-core/releases" }
-    }
-    dependencies {
-        classpath group: 'com.layer', name: 'gradle-git-repo-plugin', version: '2.0.2'
-    }
-}
 
 repositories {
     mavenLocal()
     mavenCentral()
-}
-
-publishing {
-    publications {
-        gitRepoPlugin(MavenPublication) {
-            groupId "com.nishtahir.linkbait"
-            artifactId 'linkbait-core'
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "file://.repository/${property("org")}/${property("repo")}/releases"
-        }
-    }
 }
 
 dependencies {

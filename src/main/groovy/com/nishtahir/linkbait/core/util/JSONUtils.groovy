@@ -1,7 +1,7 @@
 package com.nishtahir.linkbait.core.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.nishtahir.linkbait.core.Plugin
+import com.nishtahir.linkbait.core.model.Plugin
 import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 
