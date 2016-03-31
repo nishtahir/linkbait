@@ -9,6 +9,7 @@ import com.nishtahir.linkbait.controller.LinkController
 import com.nishtahir.linkbait.controller.UserController
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
+import com.nishtahir.linkbait.request.AprilFirstReactionHandler
 import com.nishtahir.linkbait.request.HelpRequestHandler
 import com.nishtahir.linkbait.request.HoundifyMessageRequestHandler
 import com.nishtahir.linkbait.request.NReactionHandler
@@ -93,7 +94,7 @@ class App {
                         boolean helpHandled = HelpRequestHandler.instance.handle(session, event)
 
                         NReactionHandler.instance.handle(session,event)
-
+                        AprilFirstReactionHandler.instance.handle(session,event)
                         boolean redditHandled = RedditAutoCompleteHandler.instance.handle(session, event)
 
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
