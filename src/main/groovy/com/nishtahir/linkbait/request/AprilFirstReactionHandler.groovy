@@ -56,6 +56,9 @@ class AprilFirstReactionHandler implements RequestHandler<Void, SlackMessagePost
 
     @Override
     boolean handle(SlackSession session, SlackMessagePosted event) {
+        if("hangout" != event.channel.name || "linkbait-testing" != event.channel.name){
+            return false
+        }
         try {
             int likelyhoodOfReaction = ThreadLocalRandom.current().nextInt(10)
             if(likelyhoodOfReaction > 7){
