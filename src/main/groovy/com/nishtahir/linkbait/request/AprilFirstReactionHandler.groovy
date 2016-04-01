@@ -5,6 +5,7 @@ import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
 
 import java.util.concurrent.ThreadLocalRandom
+
 /**
  * I'll leave it to you to guess what this is for
  */
@@ -56,21 +57,20 @@ class AprilFirstReactionHandler implements RequestHandler<Void, SlackMessagePost
 
     @Override
     boolean handle(SlackSession session, SlackMessagePosted event) {
-        if("hangout" != event.channel.name || "linkbait-testing" != event.channel.name){
-            return false
-        }
-        try {
-            int likelyhoodOfReaction = ThreadLocalRandom.current().nextInt(10)
-            if(likelyhoodOfReaction > 7){
-                for(i in 1 .. ThreadLocalRandom.current().nextInt(3, 10)){
-                    Timer timer = new Timer()
-                    timer.runAfter(i * 1000) {
-                        session.addReactionToMessage(event.channel, event.timestamp, emojis[ThreadLocalRandom.current().nextInt(emojis.length)])
+        if ('hangout'.equals(event.channel.name) || 'linkbait-testing'.equals(event.channel.name)) {
+            try {
+                int likelyhoodOfReaction = ThreadLocalRandom.current().nextInt(10)
+                if (likelyhoodOfReaction > 7) {
+                    for (i in 1..ThreadLocalRandom.current().nextInt(3, 10)) {
+                        Timer timer = new Timer()
+                        timer.runAfter(i * 1000) {
+                            session.addReactionToMessage(event.channel, event.timestamp, emojis[ThreadLocalRandom.current().nextInt(emojis.length)])
+                        }
                     }
                 }
+            } catch (RequestParseException ignore) {
 
             }
-        } catch (RequestParseException ignore) {
         }
         //Never interrupt regular tasks
         return false
