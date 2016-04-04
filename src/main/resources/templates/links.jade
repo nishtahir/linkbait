@@ -1,19 +1,21 @@
 doctype html
 html
   head
-    include styles/style.css
     include styles/normalize.css   
     include styles/skeleton.css
+    include styles/style.css
 
     include scripts/script.js
   body
   
-    .container
-        .row
-            .section
+  section.hero.u-full-width
+          .hero-image
+          .container.centered
+              .twelve.columns
                 h1 Top links #{when}
   
-    .container
+    section.u-full-width
+        .container
         ol#links
             for link in Links
                 li
@@ -21,7 +23,4 @@ html
                     p by #{link.publisher.username} in ##{link.channel}
                     p(class='time_since', timestamp='#{link.timestamp}')
     
-    .container
-        .row
-            .section
-                p Created with ♥ by Nish Tahir
+    include ./footer
