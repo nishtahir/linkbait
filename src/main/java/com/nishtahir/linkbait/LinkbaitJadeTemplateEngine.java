@@ -25,9 +25,9 @@ public class LinkbaitJadeTemplateEngine extends JadeTemplateEngine {
 
     public LinkbaitJadeTemplateEngine(String templateRoot) {
         configuration = new JadeConfiguration();
-        if (App.isDebug()) {
-            configuration.setCaching(false);
-        }
+//        if (App.isDebug()) {
+//            configuration.setCaching(false);
+//        }
         configuration.setTemplateLoader(new LinkbaitClasspathTemplateLoader(templateRoot));
     }
 
