@@ -219,10 +219,10 @@ class LinkService {
      * @return
      */
     public String getMetadataTitle(Metadata metadata) {
-        if (metadata.get(TikaCoreProperties.TITLE) != null) {
-            return metadata.get(TikaCoreProperties.TITLE)
-        } else if (metadata.get('twitter:title') != null) {
+        if (metadata.get('twitter:title') != null) {
             return metadata.get('twitter:title')
+        } else if (metadata.get(TikaCoreProperties.TITLE) != null) {
+            return metadata.get(TikaCoreProperties.TITLE)
         } else {
             return null
         }
@@ -235,20 +235,20 @@ class LinkService {
      */
     public String getMetadataDescription(Metadata metadata) {
         String description;
-        if (metadata.get(TikaCoreProperties.DESCRIPTION) != null) {
-            description = metadata.get(TikaCoreProperties.DESCRIPTION)
+        if (metadata.get('twitter:description') != null) {
+            description = metadata.get('twitter:description')
         } else if (metadata.get('description') != null) {
             description = metadata.get('description')
-        } else if (metadata.get('twitter:description') != null) {
-            description = metadata.get('twitter:description')
+        } else if (metadata.get(TikaCoreProperties.DESCRIPTION) != null) {
+            description = metadata.get(TikaCoreProperties.DESCRIPTION)
         } else {
             return null
         }
 
-        return description.length() > MAX_DESC_LENGTH ?: description.take(MAX_DESC_LENGTH) + "..."
+        return (description.length() > MAX_DESC_LENGTH) ? description.take(MAX_DESC_LENGTH) + "..." : description
     }
 
-    def addTitleAndDescriptionToTable(){
+    def addTitleAndDescriptionToTable() {
         linkDao.executeRaw("ALTER TABLE `link` ADD COLUMN title STRING;")
         linkDao.executeRaw("ALTER TABLE `link` ADD COLUMN description STRING;")
     }

@@ -15,13 +15,16 @@ html
                 h1 Top links #{when}
   
     section.u-full-width
-        .container
+        .container.centered
         ol#links
             for link in Links
                 li.link
-                    a(href='#{link.url}') #{link.title}
+                    if link.title != null
+                        a(href='#{link.url}') #{link.title}
+                    else 
+                        a(href='#{link.url}') #{link.url}
                     p #{link.description}
-                    p by #{link.publisher.username} in ##{link.channel}
+                    p.link-attribution by #{link.publisher.username} in ##{link.channel}
                     p(class='time_since', timestamp='#{link.timestamp}')
     
     include ./footer
