@@ -115,9 +115,13 @@ section {
     margin: 70px 0;
 }
 
-.service-icon{
+.service-icon {
     margin-bottom: 20px;
     text-align: center;
+}
+
+.link {
+
 }
 
 
@@ -127,16 +131,19 @@ body {
     color: #222222;
     font-family: sans-serif;
 }
-h1, h3{
+
+h1, h3 {
     font-family: sans-serif;
 }
+
 h4 {
     font-size: 22px;
 }
+
 h3 {
     font-size: 28px;
 }
 
-.footer{
+.footer {
     padding: 0;
 }

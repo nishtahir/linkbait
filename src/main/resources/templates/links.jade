@@ -18,8 +18,9 @@ html
         .container
         ol#links
             for link in Links
-                li
-                    a(href='#{link.url}') #{link.url}
+                li.link
+                    a(href='#{link.url}') #{link.title}
+                    p #{link.description}
                     p by #{link.publisher.username} in ##{link.channel}
                     p(class='time_since', timestamp='#{link.timestamp}')
     

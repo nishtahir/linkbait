@@ -3,7 +3,6 @@ package com.nishtahir.linkbait.model
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
 import groovy.transform.Canonical
-import groovy.transform.Sortable
 
 @Canonical
 @DatabaseTable
@@ -29,5 +28,11 @@ class Link {
 
     @DatabaseField
     String group;
+
+    @DatabaseField
+    String title;
+
+    @DatabaseField
+    String description;
 
 }
