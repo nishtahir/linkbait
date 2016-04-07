@@ -6,7 +6,6 @@ import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import org.apache.tika.metadata.Metadata
-import org.apache.tika.metadata.TikaCoreProperties
 import org.apache.tika.parser.ParseContext
 import org.apache.tika.parser.html.HtmlParser
 import org.apache.tika.sax.BodyContentHandler
@@ -93,7 +92,8 @@ class LinkServiceTest extends Specification {
         when:
 //        URL url = new URL('http://www.theverge.com/2016/3/23/11293576/google-cloud-machine-learning-platform-available-developers')
 //        URL url = new URL('https://github.com/androidchat/androidchat.github.io')
-        URL url = new URL('http://www.engadget.com/2016/03/23/xkcd-creator-contributes-to-school-textbooks/')
+        URL url = new URL('http://stackoverflow.com/questions/4749094/reloading-resources-loaded-by-getresourceasstream')
+//        URL url = new URL('http://www.engadget.com/2016/03/23/xkcd-creator-contributes-to-school-textbooks/')
 //        final BoilerpipeExtractor extractor = CommonExtractors.ARTICLE_EXTRACTOR
 //        final HTMLHighlighter hh = HTMLHighlighter.newHighlightingInstance();
 //        println hh.process(url, extractor)
@@ -102,19 +102,25 @@ class LinkServiceTest extends Specification {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
 
-        InputStream inputstream = new ByteArrayInputStream(url.text.bytes);
+        InputStream inputstream = new ByteArrayInputStream(url.getText(requestProperties: ['User-Agent': LinkService.USER_AGENT]).bytes);
         ParseContext pcontext = new ParseContext();
 
         //Html parser
         HtmlParser htmlparser = new HtmlParser();
         htmlparser.parse(inputstream, handler, metadata,pcontext);
 
-        println metadata.get(TikaCoreProperties.TITLE)
-        println metadata.get("description")
-
-        println metadata.get(TikaCoreProperties.DESCRIPTION)
+//        println metadata.get(TikaCoreProperties.TITLE)
+//        println metadata.get("description")
+//
+//        println metadata.get("twitter:description")
+//        println handler.toString()
+//
+        metadata.names().each {
+            println it
+//            println metadata.get(it) + '\n'
+        }
 //        System.out.println("Contents of the document:" + handler.toString());
-//        System.out.println("Metadata of the document:");
+//        System.out.println("getMetadataTitle of the document:");
 //        String[] metadataNames = metadata.names();
 
 //        for(String name : metadataNames) {
@@ -128,4 +134,5 @@ class LinkServiceTest extends Specification {
         then:
         true
     }
+
 }

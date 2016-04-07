@@ -3,7 +3,10 @@ package com.nishtahir.linkbait;
 import de.neuland.jade4j.template.ClasspathTemplateLoader;
 import org.apache.commons.io.FilenameUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 /**
  * Fixes the filename extension bug in Jade
@@ -35,6 +38,21 @@ public class LinkbaitClasspathTemplateLoader extends ClasspathTemplateLoader {
         name = templateRoot + name;
         String extension = FilenameUtils.getExtension(name);
         if ("".equals(extension)) name = name + suffix;
+
+//For debugging. Since Javac doesn't know about Groovy classes. This might not work
+//        if (App.isDebug()){
+//            ClassLoader ctxLoader = Thread.currentThread().getContextClassLoader();
+//            URL resURL = ctxLoader.getResource(name);
+//            URLConnection resConn = null;
+//            if (resURL != null) {
+//                resConn = resURL.openConnection();
+//                resConn.setUseCaches(false);
+//            }
+//            assert resConn != null;
+//            InputStream resIn = resConn.getInputStream();
+//            return  new InputStreamReader(resIn);
+//        }
+
         return new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(name), getEncoding());
     }
 }

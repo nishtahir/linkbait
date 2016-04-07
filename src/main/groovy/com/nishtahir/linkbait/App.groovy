@@ -5,6 +5,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.config.Configuration
+import com.nishtahir.linkbait.controller.LandingController
 import com.nishtahir.linkbait.controller.LinkController
 import com.nishtahir.linkbait.controller.UserController
 
@@ -61,6 +62,11 @@ class App {
      *
      */
     ConnectionSource connectionSource
+
+    /**
+     * Config option for debug mode
+     */
+    static boolean debug
 
     App() {
         initDatabase();
@@ -207,6 +213,8 @@ class App {
         userService = new UserService(connectionSource)
         linkService = new LinkService(connectionSource)
         vendService = new VendService(connectionSource, true)
+        
+        new LandingController().init()
         new LinkController(linkService).init()
         new UserController(userService).init()
         VendRequestHandler.instance.setVendService(vendService)
@@ -232,6 +240,7 @@ class App {
 
         cli.with {
             usage: '[-c] configuration.yml'
+            d longOpt: 'debug', 'Debug mode. Disables caching'
             p longOpt: 'port', 'port to listen on', args: 1
             c longOpt: 'configuration', 'configuration file', args: 1, required: true
         }
@@ -245,6 +254,7 @@ class App {
 
         //WebService Listening port
         options.p && Spark.port(options.p as Integer)
+        options.d && setDebug(true)
     }
 
     /**

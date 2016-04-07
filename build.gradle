@@ -1,7 +1,9 @@
-
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'application'
+
+group = 'com.nishtahir.linkbait'
+version = 0.1
 
 repositories {
     jcenter()

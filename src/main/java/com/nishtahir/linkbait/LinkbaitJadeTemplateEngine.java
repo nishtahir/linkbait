@@ -3,9 +3,7 @@ package com.nishtahir.linkbait;
 import de.neuland.jade4j.JadeConfiguration;
 import de.neuland.jade4j.template.JadeTemplate;
 import spark.ModelAndView;
-import spark.TemplateEngine;
 import spark.template.jade.JadeTemplateEngine;
-import spark.template.jade.loader.SparkClasspathTemplateLoader;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,6 +25,9 @@ public class LinkbaitJadeTemplateEngine extends JadeTemplateEngine {
 
     public LinkbaitJadeTemplateEngine(String templateRoot) {
         configuration = new JadeConfiguration();
+//        if (App.isDebug()) {
+//            configuration.setCaching(false);
+//        }
         configuration.setTemplateLoader(new LinkbaitClasspathTemplateLoader(templateRoot));
     }
 
