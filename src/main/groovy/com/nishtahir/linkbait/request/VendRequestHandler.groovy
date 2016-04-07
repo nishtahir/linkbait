@@ -39,11 +39,25 @@ class VendRequestHandler extends AbstractMessageRequestHandler {
             if (vendService == null) {
                 message = "It vends is currently disabled"
             } else if (action[0] == "append") {
-                message = "It duct tapes %s to %s".format(vendService.findRandomVend().item, vendService.findRandomVend().item)
-            } else if (action[0] == "send" && action.size() > 1) {
-                message = "It sends %s to %s".format(vendService.findRandomVend().item, action[1])
+                String item1 = vendService.findRandomVend().item
+                String item2 = vendService.findRandomVend().item
+                message = "It duct tapes $item1 to $item2"
+            } else if (action[0] == "send") {
+                String item = vendService.findRandomVend().item
+                String recipient
+
+                if (action[1] != null) {
+                    recipient = action[1]
+
+                } else {
+                    recipient = "<@${event.sender.id}>"
+                }
+
+                message = "It sends $item to $recipient"
             } else {
-                message = "It %ss %s".format(action[0].toString(), vendService.findRandomVend().item)
+                String act = action[0] + "s"
+                String item = vendService.findRandomVend().item
+                message = "It $act $item"
             }
 
             session.sendMessage(event.getChannel(), message, null)
