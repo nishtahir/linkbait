@@ -7,11 +7,14 @@ import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.config.Configuration
 import com.nishtahir.linkbait.controller.LinkController
 import com.nishtahir.linkbait.controller.UserController
+
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
+import com.nishtahir.linkbait.model.Vend
 import com.nishtahir.linkbait.request.*
 import com.nishtahir.linkbait.service.LinkService
 import com.nishtahir.linkbait.service.UserService
+import com.nishtahir.linkbait.service.VendService
 import com.nishtahir.linkbait.util.ValidationUtils
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
@@ -48,6 +51,11 @@ class App {
      *
      */
     UserService userService
+
+    /**
+     *
+     */
+    VendService vendService
 
     /**
      *
@@ -196,6 +204,7 @@ class App {
     void initApi() {
         userService = new UserService(connectionSource)
         linkService = new LinkService(connectionSource)
+        vendService = new VendService(connectionSource, true)
         new LinkController(linkService).init()
         new UserController(userService).init()
     }
@@ -208,6 +217,7 @@ class App {
         connectionSource = new JdbcConnectionSource(configuration.connection.url)
         TableUtils.createTableIfNotExists(connectionSource, Link.class)
         TableUtils.createTableIfNotExists(connectionSource, User.class)
+        TableUtils.createTableIfNotExists(connectionSource, Vend.class)
     }
 
     /**
