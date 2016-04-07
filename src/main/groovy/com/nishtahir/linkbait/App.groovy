@@ -126,8 +126,10 @@ class App {
                         }
                         boolean tacoHandled = TacoRequestHandler.instance.handle(session, event)
 
+                        boolean vendHandled = VendRequestHandler.instance.handle(session, event)
+
                         // We fall through here at the end, if none of these events triggered, use houndify
-                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled) {
+                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled && !vendHandled) {
                             HoundifyMessageRequestHandler.instance.handle(session, event)
                         }
                     }
@@ -207,6 +209,7 @@ class App {
         vendService = new VendService(connectionSource, true)
         new LinkController(linkService).init()
         new UserController(userService).init()
+        VendRequestHandler.instance.setVendService(vendService)
     }
 
     /**

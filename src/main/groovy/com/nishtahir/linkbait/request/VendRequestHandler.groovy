@@ -1,11 +1,17 @@
 package com.nishtahir.linkbait.request
 
 import com.nishtahir.linkbait.exception.RequestParseException
+import com.nishtahir.linkbait.service.VendService
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
 
 @Singleton
 class VendRequestHandler extends AbstractMessageRequestHandler {
+    VendService vendService
+
+     def setVendService(VendService vendService) {
+         this.vendService = vendService
+     }
 
     @Override
     Tuple parse(String message, String sessionId) {
@@ -28,8 +34,19 @@ class VendRequestHandler extends AbstractMessageRequestHandler {
         try {
             Tuple action = parse(event.messageContent, session.sessionPersona().id)
 
-            // TODO: Get objects from a vendlist somewhere
-            session.sendMessage(event.getChannel(), String.format("It %ss a vended object", action[0]), null)
+
+            String message
+            if (vendService == null) {
+                message = "It vends is currently disabled"
+            } else if (action[0] == "append") {
+                message = "It duct tapes %s to %s".format(vendService.findRandomVend().item, vendService.findRandomVend().item)
+            } else if (action[0] == "send" && action.size() > 1) {
+                message = "It sends %s to %s".format(vendService.findRandomVend().item, action[1])
+            } else {
+                message = "It %ss %s".format(action[0].toString(), vendService.findRandomVend().item)
+            }
+
+            session.sendMessage(event.getChannel(), message, null)
 
             return true
         } catch (RequestParseException ignored) {
