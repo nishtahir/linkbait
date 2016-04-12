@@ -19,12 +19,13 @@ html
         ol#links
             for link in Links
                 li.link
-                    if link.title != null
+                    if link.title != null && link.title != ""
                         a(href='#{link.url}') #{link.title}
-                    else 
+                    else
                         a(href='#{link.url}') #{link.url}
                     p #{link.description}
                     p.link-attribution by #{link.publisher.username} in ##{link.channel}
                     p(class='time_since', timestamp='#{link.timestamp}')
-    
+                    if link.url =~ ".*(\.(jpg|jpeg|png|gif)$)"
+                        img(src='#{link.url}', alt='#{title}')
     include ./footer
