@@ -5,16 +5,15 @@ import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.support.ConnectionSource
 import com.nishtahir.linkbait.model.Vend
 
+import java.util.concurrent.ThreadLocalRandom
+
 class VendService {
     final String DEFAULT_VEND_LIST_URL = "https://raw.githubusercontent.com/EugeneKay/it-vends/vending/vendlist.php"
 
     Dao<Vend, String> vendDao
-    Random random
 
     VendService(ConnectionSource connectionSource) {
         vendDao = DaoManager.createDao(connectionSource, Vend.class)
-
-        random = new Random()
     }
 
     VendService(ConnectionSource connectionSource, boolean checkDefaultList) {
@@ -70,6 +69,10 @@ class VendService {
         }
     }
 
+    def removeVend(Vend vend) {
+        vendDao.delete(vend)
+    }
+
     def updateVend(Vend vend) {
         vendDao.update(vend)
     }
@@ -79,7 +82,7 @@ class VendService {
         // Let's say there's a 5 in 10 chance of a common vend, 3 in 10 of uncommon and 2 in 10 of rare
         Vend.Rarity rarity
 
-        int chance = random.nextInt(10 - 1) + 1
+        int chance = ThreadLocalRandom.current().nextInt(10 - 1) + 1
 
         if (chance < 6) {
             rarity = Vend.Rarity.COMMON
@@ -90,7 +93,7 @@ class VendService {
         }
 
         List<Vend> vends = findVendsByRarity(rarity)
-        return vends.get(random.nextInt(vends.size()))
+        return vends.get(ThreadLocalRandom.current().nextInt(vends.size()))
     }
 
     List<Vend> findVends() {
