@@ -69,6 +69,19 @@ class VendServiceTest extends Specification {
         allVends.get(0).rarity == Vend.Rarity.COMMON
     }
 
+    def "removeVend_WithExistingVend_RemovesVend"() {
+        given:
+        String item = "a Nexus 6"
+        Vend localVend = new Vend(item: item, rarity: Vend.Rarity.UNCOMMON, publisher: localUser)
+        vendService.createVend(localVend)
+
+        when:
+        vendService.removeVend(localVend)
+
+        then: "should not be able to find this vend"
+        vendService.findVendByItem(item) == null
+    }
+
     def "findRandomVend_FindsRandomVend"() {
         given:
         Vend commonVend = new Vend(item: "a Pepsi", rarity: Vend.Rarity.COMMON, publisher: localUser)
