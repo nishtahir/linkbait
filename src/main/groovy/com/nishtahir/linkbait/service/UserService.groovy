@@ -35,9 +35,8 @@ class UserService {
      * @param slackUserId
      * @return
      */
-    def findUserBySlackUserId(String slackUserId) {
-        def query = userDao.queryBuilder().where().eq("slackUserId", slackUserId).prepare();
-        userDao.query(query)
+    User findUserBySlackUserId(String slackUserId) {
+        userDao.queryForFirst(userDao.queryBuilder().where().eq("slackUserId", slackUserId).prepare())
     }
 
     /**
@@ -46,8 +45,7 @@ class UserService {
      * @return
      */
     def findUserByName(String username) {
-        def query = userDao.queryBuilder().where().eq("username", username).prepare();
-        userDao.query(query)
+        userDao.queryForFirst(userDao.queryBuilder().where().eq("username", username).prepare())
     }
 
     /**
@@ -93,7 +91,7 @@ class UserService {
      * Adds a downvote to a user. Evil >:D
      * @param user
      */
-    void downvoteUser(User user){
+    void downvoteUser(User user) {
         user.downvotes++
         updateUser(user)
     }
@@ -102,7 +100,7 @@ class UserService {
      * removes a downvote from a user. Dodged a bullet there
      * @param user
      */
-    void revokeDownvoteFromUser(User user){
+    void revokeDownvoteFromUser(User user) {
         user.downvotes--
         updateUser(user)
     }

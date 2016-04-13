@@ -86,9 +86,10 @@ class VendService {
      * @param vend
      */
     def createOrPromoteVend(Vend vend) {
-        if (findVendByItem(vend.item)) {
-            vend.promote()
-            updateVend(vend)
+        def existingVend = findVendByItem(vend.item)
+        if (existingVend) {
+            existingVend.promote()
+            updateVend(existingVend)
         } else {
             createVend(vend)
         }

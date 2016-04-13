@@ -81,12 +81,9 @@ class VendManipulationRequestHandler extends AbstractMessageRequestHandler {
     }
 
     private boolean addVend(String item, String slackUserId, String slackRealName) {
-        List<User> possibleUsers = userService.findUserBySlackUserId(slackUserId)
-        User user
-        if (possibleUsers.size() == 0) {
-            userService.createUser(new User(slackUserId: slackUserId, username: slackRealName))
-        } else {
-            user = possibleUsers.first()
+        User user = userService.findUserBySlackUserId(slackUserId)
+        if (user == null) {
+            user = userService.createUser(new User(slackUserId: slackUserId, username: slackRealName))
         }
 
         Vend vend = new Vend(item: item, rarity: Vend.Rarity.RARE, publisher: user)

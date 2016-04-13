@@ -7,7 +7,7 @@ import groovy.transform.ToString
 
 @Canonical
 @DatabaseTable
-@ToString(includePackage = false)
+@ToString(includePackage = false,includeNames = true, excludes = 'slackUserId')
 class User {
 
     @DatabaseField(id = true)

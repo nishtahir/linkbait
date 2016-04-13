@@ -39,7 +39,7 @@ class UserServiceTest extends Specification {
         userService.updateUser(localUser)
 
         then: "the update should persist"
-        User databaseUser = userService.findUserBySlackUserId("1234").first()
+        User databaseUser = userService.findUserBySlackUserId("1234")
         localUser == databaseUser
     }
 
@@ -49,19 +49,18 @@ class UserServiceTest extends Specification {
         userService.createUser(localUser)
 
         when: "he is queried by his id"
-        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
+        def foundDatabaseUser = userService.findUserBySlackUserId("1234")
 
         then: "the database user should exist and be the same as local"
-        foundDatabaseUsers.size() == 1
-        localUser == foundDatabaseUsers.first()
+        localUser == foundDatabaseUser
     }
 
     def "FindUserBySlackUserId_WithNonExistingUser_ReturnsEmptyList"() {
         when: "a non existing user is queried by his id"
-        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
+        def foundDatabaseUser = userService.findUserBySlackUserId("1234")
 
         then: "he should not exist"
-        foundDatabaseUsers.size() == 0
+        foundDatabaseUser == null
     }
 
 
@@ -71,19 +70,18 @@ class UserServiceTest extends Specification {
         userService.createUser(localUser)
 
         when: "he is queried by his name"
-        List<User> foundDatabaseUsers = userService.findUserByName("nish")
+        def foundDatabaseUser = userService.findUserByName("nish")
 
         then: "the database user should exist and be the same as local"
-        foundDatabaseUsers.size() == 1
-        localUser == foundDatabaseUsers.first()
+        localUser == foundDatabaseUser
     }
 
     def "FindUserByName_WithMissingUser_ReturnsEmptyList"() {
         when: "a non existing user is queried by his name"
-        List<User> foundDatabaseUsers = userService.findUserByName("nish")
+        def foundDatabaseUser = userService.findUserByName("nish")
 
         then: "he should not exist"
-        foundDatabaseUsers.size() == 0
+        foundDatabaseUser == null
     }
 
     def "CreateUser_WithNewUser_CreatesUser"() {
@@ -94,9 +92,8 @@ class UserServiceTest extends Specification {
         userService.createUser(localUser)
 
         then: "he should exist in the database and be the same as local"
-        List<User> foundDatabaseUsers = userService.findUserBySlackUserId("1234")
-        foundDatabaseUsers.size() == 1
-        localUser == foundDatabaseUsers.first()
+        def foundDatabaseUser = userService.findUserBySlackUserId("1234")
+        localUser == foundDatabaseUser
     }
 
     def "UpvoteUser_WithExistingUser_UpvotesUser"() {
@@ -109,7 +106,7 @@ class UserServiceTest extends Specification {
         userService.upvoteUser(localUser)
 
         then: "the database user should have the expected upvotes"
-        User databaseUser = userService.findUserBySlackUserId("1234").first()
+        User databaseUser = userService.findUserBySlackUserId("1234")
         expectedUpvotes == databaseUser.upvotes
     }
 
@@ -123,7 +120,7 @@ class UserServiceTest extends Specification {
         userService.revokeUpvoteFromUser(localUser)
 
         then: "he should have the expected upvotes"
-        User databaseUser = userService.findUserBySlackUserId("1234").first()
+        User databaseUser = userService.findUserBySlackUserId("1234")
         expectedUpvotes == databaseUser.upvotes
     }
 
@@ -137,7 +134,7 @@ class UserServiceTest extends Specification {
         userService.downvoteUser(localUser)
 
         then: "he should have the expected downvotes"
-        User databaseUser = userService.findUserBySlackUserId("1234").first()
+        User databaseUser = userService.findUserBySlackUserId("1234")
         expectedDownvotes == databaseUser.downvotes
     }
 
@@ -151,7 +148,7 @@ class UserServiceTest extends Specification {
         userService.revokeDownvoteFromUser(localUser)
 
         then: "he should have the expected downvotes"
-        User databaseUser = userService.findUserBySlackUserId("1234").first()
+        User databaseUser = userService.findUserBySlackUserId("1234")
         expectedDownvotes == databaseUser.downvotes
     }
 }
