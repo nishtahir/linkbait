@@ -39,11 +39,11 @@ class VendRequestHandler extends AbstractMessageRequestHandler {
             if (vendService == null) {
                 message = "It vends is currently disabled"
             } else if (action[0] == "append") {
-                String item1 = vendService.findRandomVend().item
-                String item2 = vendService.findRandomVend().item
+                String item1 = vendService.getRandomVend().item
+                String item2 = vendService.getRandomVend().item
                 message = "It duct tapes $item1 to $item2"
             } else if (action[0] == "send") {
-                String item = vendService.findRandomVend().item
+                String item = vendService.getRandomVend().item
                 String recipient
 
                 if (action[1] != null) {
@@ -56,7 +56,7 @@ class VendRequestHandler extends AbstractMessageRequestHandler {
                 message = "It sends $item to $recipient"
             } else {
                 String act = action[0] + "s"
-                String item = vendService.findRandomVend().item
+                String item = vendService.getRandomVend().item
                 message = "It $act $item"
             }
 

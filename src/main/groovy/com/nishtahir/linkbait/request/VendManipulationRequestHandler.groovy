@@ -67,7 +67,7 @@ class VendManipulationRequestHandler extends AbstractMessageRequestHandler {
 
                 Vend vend = vendService.findVendByItem(item)
                 if (vend != null) {
-                    vendService.removeVend(vend)
+                    vendService.deleteVend(vend)
                     session.sendMessage(event.channel, "Vend removed", null)
                 } else {
                     session.sendMessage(event.channel, "Unable to find that vend", null)
@@ -84,19 +84,13 @@ class VendManipulationRequestHandler extends AbstractMessageRequestHandler {
         List<User> possibleUsers = userService.findUserBySlackUserId(slackUserId)
         User user
         if (possibleUsers.size() == 0) {
-            user = new User()
-            user.slackUserId = slackUserId
-            user.username = slackRealName
-            userService.createUser(user)
+            userService.createUser(new User(slackUserId: slackUserId, username: slackRealName))
         } else {
             user = possibleUsers.first()
         }
 
-        Vend vend = new Vend()
-        vend.item = item
-        vend.rarity = Vend.Rarity.RARE
-        vend.publisher = user
-        vendService.createVend(vend)
+        Vend vend = new Vend(item: item, rarity: Vend.Rarity.RARE, publisher: user)
+        vendService.createOrPromoteVend(vend)
         return true
     }
 }

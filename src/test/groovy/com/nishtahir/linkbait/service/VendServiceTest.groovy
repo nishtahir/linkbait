@@ -56,11 +56,11 @@ class VendServiceTest extends Specification {
     def "createVend_WithExistingVend_UpdatesVend"() {
         given:
         String item = "a hot pocket"
-        Vend localVend = new Vend(item: item, rarity: Vend.Rarity.UNCOMMON, publisher: localUser)
-        vendService.createVend(localVend)
+        Vend vend = new Vend(item: item, rarity: Vend.Rarity.UNCOMMON, publisher: localUser)
+        vendService.createOrPromoteVend(vend)
 
         when:
-        vendService.createVend(new Vend(item: item, rarity: Vend.Rarity.UNCOMMON, publisher: localUser))
+        vendService.createOrPromoteVend(vend)
 
         then: "there should only be one common vend since the existing one was updated"
         List<Vend> allVends = vendService.findVends()
@@ -76,7 +76,7 @@ class VendServiceTest extends Specification {
         vendService.createVend(localVend)
 
         when:
-        vendService.removeVend(localVend)
+        vendService.deleteVend(localVend)
 
         then: "should not be able to find this vend"
         vendService.findVendByItem(item) == null
@@ -93,7 +93,7 @@ class VendServiceTest extends Specification {
 
         expect:
         for (int _ = 0; _ < 10; _++) {
-            vendService.findRandomVend() != null
+            vendService.getRandomVend() != null
         }
     }
 

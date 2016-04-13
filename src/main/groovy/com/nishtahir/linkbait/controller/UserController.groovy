@@ -1,7 +1,7 @@
 package com.nishtahir.linkbait.controller
 
 import com.nishtahir.linkbait.service.UserService
-import com.nishtahir.linkbait.util.JSONUtils
+import com.nishtahir.linkbait.util.JsonUtils
 import groovy.transform.Canonical
 
 import static spark.Spark.get
@@ -24,9 +24,9 @@ class UserController implements IController {
 
             String username = request.queryParams("name");
             if (username != null) {
-                return JSONUtils.dataToPrettyJSON(service.findUserByName(username))
+                return JsonUtils.dataToPrettyJson(service.findUserByName(username))
             } else {
-                return JSONUtils.dataToPrettyJSON(service.users)
+                return JsonUtils.dataToPrettyJson(service.users)
             }
         });
     }

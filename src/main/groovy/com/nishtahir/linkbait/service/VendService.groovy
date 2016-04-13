@@ -10,10 +10,30 @@ import java.util.concurrent.ThreadLocalRandom
 class VendService {
     final String DEFAULT_VEND_LIST_URL = "https://raw.githubusercontent.com/EugeneKay/it-vends/vending/vendlist.php"
 
+    /**
+     *
+     */
     Dao<Vend, String> vendDao
 
+    /**
+     * Silly hack to get a list containing enum values corresponding to the rarity of items
+     * This allows us to avoid nasty if, else statements later.
+     * Instead we can just pick an arbitrary item out of the list
+     */
+    List<Vend.Rarity> rarityIndexList = []
+
+    /**
+     *
+     * @param connectionSource
+     */
     VendService(ConnectionSource connectionSource) {
         vendDao = DaoManager.createDao(connectionSource, Vend.class)
+
+        Vend.Rarity.values().each { rarity ->
+            (0..rarity.index).each {
+                rarityIndexList.add(rarity)
+            }
+        }
     }
 
     VendService(ConnectionSource connectionSource, boolean checkDefaultList) {
@@ -46,74 +66,79 @@ class VendService {
                         rarity = Vend.Rarity.UNCOMMON
                     }
 
-                    createVend(new Vend(item: item, rarity: rarity, publisher: null))
+                    createOrPromoteVend(new Vend(item: item, rarity: rarity, publisher: null))
                 }
             }
         }
     }
 
-    def createVend(Vend vend) {
-        Vend existingVend = findVendByItem(vend.item)
+    /**
+     * Creates new vend if it does not already exist
+     * @param vend vend to create
+     * @return created vend
+     */
+    Vend createVend(Vend vend) {
+        vendDao.createIfNotExists(vend)
+    }
 
-        if (existingVend) {
-            if (vend.rarity == Vend.Rarity.RARE) {
-                existingVend.rarity = Vend.Rarity.UNCOMMON
-            } else if (vend.rarity == Vend.Rarity.UNCOMMON) {
-                existingVend.rarity = Vend.Rarity.COMMON
-            }
-
-            updateVend(existingVend)
-            return existingVend
+    /**
+     * Create a new Vend or promote an existing vend rarity
+     * @param vend
+     */
+    def createOrPromoteVend(Vend vend) {
+        if (findVendByItem(vend.item)) {
+            vend.promote()
+            updateVend(vend)
         } else {
-            return vendDao.createIfNotExists(vend)
+            createVend(vend)
         }
     }
 
-    def removeVend(Vend vend) {
+    /**
+     * @param vend vend to delete.
+     */
+    void deleteVend(Vend vend) {
         vendDao.delete(vend)
     }
 
-    def updateVend(Vend vend) {
+    /**
+     * @param vend vend to update
+     */
+    void updateVend(Vend vend) {
         vendDao.update(vend)
     }
 
-    Vend findRandomVend() {
-        // It's time to vend, we need something
-        // Let's say there's a 5 in 10 chance of a common vend, 3 in 10 of uncommon and 2 in 10 of rare
-        Vend.Rarity rarity
-
-        int chance = ThreadLocalRandom.current().nextInt(10 - 1) + 1
-
-        if (chance < 6) {
-            rarity = Vend.Rarity.COMMON
-        } else if (chance < 8) {
-            rarity = Vend.Rarity.UNCOMMON
-        } else {
-            rarity = Vend.Rarity.RARE
-        }
-
+    /**
+     * @return Randomly selected Vend
+     */
+    Vend getRandomVend() {
+        Vend.Rarity rarity = rarityIndexList[ThreadLocalRandom.current().nextInt(rarityIndexList.size())]
         List<Vend> vends = findVendsByRarity(rarity)
         return vends.get(ThreadLocalRandom.current().nextInt(vends.size()))
     }
 
+    /**
+     * @return all available vends.
+     */
     List<Vend> findVends() {
         return vendDao.queryForAll()
     }
 
+    /**
+     * @param item Item to search for.
+     * @return first matching Item.
+     */
     Vend findVendByItem(String item) {
-        def query = vendDao.queryBuilder()
+        return vendDao.queryForFirst(vendDao.queryBuilder()
                 .where()
                 .eq("item", item)
-                .prepare()
-        List<Vend> vends = vendDao.query(query)
-
-        if (vends.size() > 0) {
-            return vends.get(0)
-        } else {
-            return null
-        }
+                .prepare())
     }
 
+    /**
+     * @param rarity see {@link Vend.Rarity}
+     * @return All vends of a given Rarity.
+     */
     List<Vend> findVendsByRarity(Vend.Rarity rarity) {
         def query = vendDao.queryBuilder()
                 .where()
@@ -121,4 +146,6 @@ class VendService {
                 .prepare()
         return vendDao.query(query)
     }
+
+
 }

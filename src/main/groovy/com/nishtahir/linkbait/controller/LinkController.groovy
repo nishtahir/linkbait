@@ -2,10 +2,9 @@ package com.nishtahir.linkbait.controller
 
 import com.nishtahir.linkbait.LinkbaitJadeTemplateEngine
 import com.nishtahir.linkbait.service.LinkService
-import com.nishtahir.linkbait.util.JSONUtils
+import com.nishtahir.linkbait.util.JsonUtils
 import groovy.transform.Canonical
 import spark.ModelAndView
-import spark.template.jade.JadeTemplateEngine
 
 import static spark.Spark.get
 
@@ -22,7 +21,7 @@ class LinkController implements IController {
          */
         get("/today/json", { request, response ->
             response.type("application/json")
-            return JSONUtils.dataToPrettyJSON(service.linksPostedToday)
+            return JsonUtils.dataToPrettyJson(service.linksPostedToday)
         });
 
         get("/today", { request, response ->
@@ -38,7 +37,7 @@ class LinkController implements IController {
          */
         get("/week/json", { request, response ->
             response.type("application/json")
-            return JSONUtils.dataToPrettyJSON(service.linksPostedThisWeek)
+            return JsonUtils.dataToPrettyJson(service.linksPostedThisWeek)
         });
 
         get("/week", { request, response ->
@@ -55,7 +54,7 @@ class LinkController implements IController {
          */
         get("/month/json", { request, response ->
             response.type("application/json")
-            return JSONUtils.dataToPrettyJSON(service.linksPostedThisMonth)
+            return JsonUtils.dataToPrettyJson(service.linksPostedThisMonth)
         });
 
         get("/month", { request, response ->
@@ -71,7 +70,7 @@ class LinkController implements IController {
          */
         get("/digest/json", { request, response ->
             response.type("application/json")
-            return JSONUtils.dataToPrettyJSON(service.weeklyDigest)
+            return JsonUtils.dataToPrettyJson(service.weeklyDigest)
         });
 
         get("/digest", { request, response ->
