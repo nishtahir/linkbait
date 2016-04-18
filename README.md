@@ -4,14 +4,14 @@ Core library for building plugins for [Linkbait](https://gitlab.com/nishtahir/li
 
 # Usage
 
-This library is made available in through the following maven repository. Simply include it in your build script like so.
+This library is made available in through JitPack. Simply include it in your build script like so.
 ```
 repositories {
-    maven { url = 'https://gitlab.com/nishtahir/linkbait-core/raw/releases/'}
+	maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    compile 'com.nishtahir.linkbait:linkbait-core:0.1.1'
+    compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'
 }
 ```
 
