@@ -13,6 +13,8 @@
          mavenCentral()
          maven { url "https://jitpack.io" }
      }
+
+     buildDir = new File(rootProject.projectDir, "build/" + project.name)
  }
 
 project(':linkbait-android-reactor'){
@@ -25,12 +27,3 @@ project(':linkbait-android-reactor'){
         }
     }
 }
-
- distributions {
-     main {
-         baseName = 'linkbait'
-         contents {
-             from { 'src/readme' }
-         }
-     }
- }
