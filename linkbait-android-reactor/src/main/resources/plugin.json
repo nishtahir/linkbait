@@ -1,0 +1,8 @@
+{
+  "version": "1.0",
+  "title": "Android reactor",
+  "description": "Reacts using appropriate reactions for android versions",
+  "author": "Nish Tahir",
+  "url": "",
+  "handler": "com.nishtahir.linkbait.AndroidReactionHandler"
+}
