@@ -10,7 +10,7 @@
  */
 
 include 'linkbait-server'
-include 'linkbait-vote'
-include 'linkbait-android-reactor'
+include 'plugin-vote'
+include 'plugin-android-reactor'
 
 rootProject.name = 'linkbait'
