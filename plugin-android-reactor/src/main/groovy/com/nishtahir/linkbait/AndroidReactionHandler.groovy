@@ -25,9 +25,10 @@ class AndroidReactionHandler implements RequestHandler<String, SlackMessagePoste
     String parse(final String message, final String sessionId) {
 
         def matcher = (message.toLowerCase() =~ /.*?\b(${getPatternContent()})\b.*?/)
-        !matcher.find() && { throw new RequestParseException("This message wasn't aimed at the bot.") }
-
-        return matcher.group(1).charAt(0)
+        if (matcher.find()) {
+            return matcher.group(1).charAt(0)
+        }
+        throw new RequestParseException("This message wasn't aimed at the bot.")
     }
 
     @Override
@@ -43,13 +44,14 @@ class AndroidReactionHandler implements RequestHandler<String, SlackMessagePoste
         return false
     }
 
-    /**
-     *
-     * @return
-     */
+/**
+ *
+ * @return
+ */
     private String getPatternContent() {
         reactions.inject([]) { result, entry ->
             result << "$entry.key|$entry.value"
         }.join('|')
     }
+
 }
