@@ -14,6 +14,16 @@ apply plugin: 'distribution'
 sourceCompatibility = 1.8
 version = '0.1'
 
+// Property that says it's a plugin. Used in deployment
+ext.isPlugin = true
+
+evaluationDependsOn(':linkbait-server')
+
+//Do whatever needs to be done here before the Jar
+//Is copied into the install directory of the server
+install.doLast {
+}
+
 // In this section you declare the dependencies for your production and test code
 dependencies {
     // We use the latest groovy 2.x version for building this library

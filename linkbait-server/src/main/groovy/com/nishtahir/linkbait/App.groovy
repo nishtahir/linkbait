@@ -70,8 +70,13 @@ class App {
 
     App() {
         initDatabase();
+        initPlugins();
         initSlackBot()
         initApi()
+    }
+
+    void initPlugins() {
+        PluginLoader.instance.loadPluginsFromPath();
     }
 
     static void main(String[] args) {

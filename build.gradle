@@ -6,24 +6,36 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * user guide available at https://docs.gradle.org/2.11/userguide/tutorial_java_projects.html
  */
- apply plugin: 'distribution'
+apply plugin: 'distribution'
 
- subprojects {
-     repositories {
-         mavenCentral()
-         maven { url "https://jitpack.io" }
-     }
+allprojects {
+    task install(dependsOn: ['build', 'installDist']){
 
-     buildDir = new File(rootProject.projectDir, "build/" + project.name)
- }
+    }
+}
 
-project(':linkbait-android-reactor'){
-    task copyJarToServer << {
-        doLast {
-            copy {
-                from '$buildDir/libs/linkbait-android-reactor-0.1.jar'
-                into ''
+subprojects {
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+
+    buildDir = new File(rootProject.projectDir, "build/" + project.name)
+
+    install {
+        //After evaluating the projects, check if plugin
+        //then copy jar file into install directory of server
+        afterEvaluate { Project project ->
+            if (project.isPlugin) {
+                doLast {
+                    copy {
+                        from "$project.buildDir/libs"
+                        into "$rootProject.buildDir/linkbait-server/install/linkbait-server/plugins"
+                        include '**/*.jar'
+                    }
+                }
             }
         }
     }
 }
+

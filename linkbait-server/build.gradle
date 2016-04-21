@@ -5,6 +5,8 @@ apply plugin: 'application'
 group = 'com.nishtahir.linkbait'
 version = 0.2
 
+ext.isPlugin = false
+
 mainClassName = "com.nishtahir.linkbait.App"
 
 run {
@@ -15,6 +17,10 @@ run {
     if(execArgs != null){
         args execArgs.split()
     }
+}
+
+install.doLast {
+
 }
 
 dependencies {
