@@ -1,6 +1,6 @@
 package com.nishtahir.linkbait.request
 
-import com.nishtahir.linkbait.exception.RequestParseException
+import com.nishtahir.linkbait.core.exception.RequestParseException
 import spock.lang.Specification
 
 class RedditAutoCompleteHandlerTest extends Specification {

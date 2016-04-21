@@ -6,29 +6,50 @@ import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
 
 /**
- * React with a tasty snack whenever Android N is mentioned.
+ * React with a tasty snack whenever Android an android  is mentioned.
  */
-@Singleton
-class AndroidReactionHandler implements RequestHandler<Void, SlackMessagePosted> {
+class AndroidReactionHandler implements RequestHandler<String, SlackMessagePosted> {
 
-    private static final String ANDROID7 = 'nutella'
+    static final def reactions = [
+            n: 'nutella',
+            m: 'marshmallow',
+            l: 'lollipop',
+            k: 'kitkat',
+            j: 'jellybean',
+            i: 'ics',
+            h: 'honeycomb',
+            g: 'gingerbread'
+    ]
 
     @Override
-    Void parse(String message, String sessionId) {
-        def matcher = (message =~ /.*?\bN\b.*?/)
+    String parse(final String message, final String sessionId) {
 
-        if (!matcher.find())
-            throw new RequestParseException("This message wasn't aimed at the bot.")
+        def matcher = (message.toLowerCase() =~ /.*?\b(${getPatternContent()})\b.*?/)
+        !matcher.find() && { throw new RequestParseException("This message wasn't aimed at the bot.") }
+
+        return matcher.group(1).charAt(0)
     }
 
     @Override
     boolean handle(SlackSession session, SlackMessagePosted event) {
         try {
-            parse(event.messageContent, session.sessionPersona().id)
-            session.addReactionToMessage(event.channel, event.timestamp, ANDROID7)
-            return true
+            String result = reactions.get(parse(event.messageContent, session.sessionPersona().id))
+            if (result != null) {
+                session.addReactionToMessage(event.channel, event.timestamp, result)
+                return true
+            }
         } catch (RequestParseException ignore) {
-            return false
         }
+        return false
+    }
+
+    /**
+     *
+     * @return
+     */
+    private String getPatternContent() {
+        reactions.inject([]) { result, entry ->
+            result << "$entry.key|$entry.value"
+        }.join('|')
     }
 }

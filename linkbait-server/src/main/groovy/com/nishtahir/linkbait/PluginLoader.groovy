@@ -1,11 +1,10 @@
 package com.nishtahir.linkbait
 
+import com.nishtahir.linkbait.core.request.RequestHandler
 import com.nishtahir.linkbait.model.Plugin
-import com.nishtahir.linkbait.request.RequestHandler
 import com.nishtahir.linkbait.util.JsonUtils
+import groovy.io.FileType
 import groovy.transform.Canonical
-import org.apache.commons.io.FileUtils
-
 /**
  * Class loader to loadPluginsFromPath language tools dynamically
  * at runtime, this helps decouple to the project into
@@ -23,13 +22,13 @@ class PluginLoader {
      * @param path path to plugin folder
      * @throws FileNotFoundException
      */
-    public void loadPluginsFromPath(URI path) throws FileNotFoundException {
-        File file = new File(path);
-        if (!file.exists()) {
-            throw new FileNotFoundException("Path not found");
-        }
+    public void loadPluginsFromPath(String path) throws FileNotFoundException {
         try {
-            loadPlugin(file);
+            new File(path).eachFile(FileType.FILES) {
+                if(it.name.endsWith(".jar")) {
+                    loadPlugin(it)
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace()
         }
@@ -40,8 +39,8 @@ class PluginLoader {
      * @param files
      * @throws Exception
      */
-    public void loadPlugin(URL[] files) throws Exception {
-        URLClassLoader child = new URLClassLoader(files, this.getClass().getClassLoader())
+    public void loadPlugin(File file) throws Exception {
+        URLClassLoader child = new URLClassLoader([file.toURI().toURL()] as URL[], this.getClass().getClassLoader())
         String json = child.getResourceAsStream(PLUGIN_FILE).text
         Plugin plugin = JsonUtils.jsonToPlugin(json)
 
@@ -50,26 +49,5 @@ class PluginLoader {
         handlers.add(instance);
     }
 
-    /**
-     *
-     * @param file
-     * @throws Exception
-     */
-    public void loadPlugin(File file) throws Exception {
-        if (file.isDirectory()) {
-            FileUtils.listFiles(file, getExtensions(), false).each {
-                loadPlugin(it)
-            }
-        } else {
-            loadPlugin([file.toURI().toURL()] as URL[])
-        }
-    }
-
-    /**
-     * @return File extensions for plugins to loadPluginsFromPath
-     */
-    public static String[] getExtensions() {
-        return ["jar"]
-    }
 }
 

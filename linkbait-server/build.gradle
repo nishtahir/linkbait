@@ -25,6 +25,9 @@ install.doLast {
 
 dependencies {
 
+    //Linkbait core project
+    compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'
+
     compile 'org.apache.tika:tika-parsers:1.12'
 
     compile 'com.syncthemall:boilerpipe:1.2.2'

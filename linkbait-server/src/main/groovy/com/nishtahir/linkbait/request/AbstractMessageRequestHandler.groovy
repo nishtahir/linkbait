@@ -1,6 +1,7 @@
 package com.nishtahir.linkbait.request
 
-import com.nishtahir.linkbait.exception.RequestParseException
+import com.nishtahir.linkbait.core.exception.RequestParseException
+import com.nishtahir.linkbait.core.request.RequestHandler
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
 
 /**

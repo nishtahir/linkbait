@@ -20,7 +20,8 @@ class Configuration {
     /**
      * relevant yml
      *
-     * version: {version number}*/
+     * version: {version number}
+     */
     String version
 
     /**
@@ -38,6 +39,13 @@ class Configuration {
      *  {connection fields}
      */
     Connection connection
+
+    /**
+     * path to plugins
+     *
+     * plugins: {path}
+     */
+    String plugins
 
     /**
      * relevant yml

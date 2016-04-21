@@ -1,10 +1,11 @@
 package com.nishtahir.linkbait.request
 
-import com.nishtahir.linkbait.exception.RequestParseException
+import com.nishtahir.linkbait.core.exception.RequestParseException
 import com.nishtahir.linkbait.houndify.HoundifyClient
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
 import groovy.json.JsonSlurper
+
 /**
  * Created by maxke on 24.03.2016.
  * Handles an arbitrary message

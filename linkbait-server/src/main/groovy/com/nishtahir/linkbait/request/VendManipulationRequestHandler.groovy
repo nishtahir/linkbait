@@ -1,6 +1,6 @@
 package com.nishtahir.linkbait.request
 
-import com.nishtahir.linkbait.exception.RequestParseException
+import com.nishtahir.linkbait.core.exception.RequestParseException
 import com.nishtahir.linkbait.model.User
 import com.nishtahir.linkbait.model.Vend
 import com.nishtahir.linkbait.service.UserService

@@ -75,10 +75,6 @@ class App {
         initApi()
     }
 
-    void initPlugins() {
-        PluginLoader.instance.loadPluginsFromPath();
-    }
-
     static void main(String[] args) {
         parseOptions(args)
         new App()
@@ -107,7 +103,9 @@ class App {
 
                         boolean helpHandled = HelpRequestHandler.instance.handle(session, event)
 
-                        NReactionHandler.instance.handle(session,event)
+                        PluginLoader.instance.handlers.each { handler ->
+                            handler.handle(session,event)
+                        }
                   //      AprilFirstReactionHandler.instance.handle(session,event)
                         boolean redditHandled = RedditAutoCompleteHandler.instance.handle(session, event)
 
@@ -239,6 +237,13 @@ class App {
         TableUtils.createTableIfNotExists(connectionSource, Link.class)
         TableUtils.createTableIfNotExists(connectionSource, User.class)
         TableUtils.createTableIfNotExists(connectionSource, Vend.class)
+    }
+
+    /**
+     * Load plugins
+     */
+    void initPlugins() {
+        PluginLoader.instance.loadPluginsFromPath(configuration.plugins);
     }
 
     /**
