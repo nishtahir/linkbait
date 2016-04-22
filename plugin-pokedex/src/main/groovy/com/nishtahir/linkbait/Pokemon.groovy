@@ -31,4 +31,8 @@ class Pokemon {
     @DatabaseField
     String thumbnail
 
+    @DatabaseField
+    int color_id
+
+
 }

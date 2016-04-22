@@ -8,7 +8,7 @@ import com.nishtahir.linkbait.config.Configuration
 import com.nishtahir.linkbait.controller.LandingController
 import com.nishtahir.linkbait.controller.LinkController
 import com.nishtahir.linkbait.controller.UserController
-
+import com.nishtahir.linkbait.core.exception.RequestParseException
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import com.nishtahir.linkbait.model.Vend
@@ -104,7 +104,11 @@ class App {
                         boolean helpHandled = HelpRequestHandler.instance.handle(session, event)
 
                         boolean pluginHandled = PluginLoader.instance.handlers.any { handler ->
-                            return handler.handle(session,event)
+                            try{
+                                return handler.handle(session,event)
+                            } catch (RequestParseException ignore){
+                                return false
+                            }
                         }
                   //      AprilFirstReactionHandler.instance.handle(session,event)
                         boolean redditHandled = RedditAutoCompleteHandler.instance.handle(session, event)
