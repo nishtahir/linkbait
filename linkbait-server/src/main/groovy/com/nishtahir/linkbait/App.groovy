@@ -103,8 +103,8 @@ class App {
 
                         boolean helpHandled = HelpRequestHandler.instance.handle(session, event)
 
-                        PluginLoader.instance.handlers.each { handler ->
-                            handler.handle(session,event)
+                        boolean pluginHandled = PluginLoader.instance.handlers.any { handler ->
+                            return handler.handle(session,event)
                         }
                   //      AprilFirstReactionHandler.instance.handle(session,event)
                         boolean redditHandled = RedditAutoCompleteHandler.instance.handle(session, event)
@@ -141,7 +141,7 @@ class App {
                         boolean vendHandled = !vendManipulationHandled && VendRequestHandler.instance.handle(session, event)
 
                         // We fall through here at the end, if none of these events triggered, use houndify
-                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled) {
+                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled && !pluginHandled) {
                             HoundifyMessageRequestHandler.instance.handle(session, event)
                         }
                     }

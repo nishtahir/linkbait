@@ -31,12 +31,12 @@ class PluginLoader {
      */
     public void loadPluginsFromPath(String path) throws FileNotFoundException {
         new File(path).eachFile(FileType.FILES) {
-            try {
-                if (it.name.endsWith(".jar")) {
+            if (it.name.endsWith(".jar")) {
+                try {
                     loadPlugin(it)
+                } catch (Exception e) {
+                    e.printStackTrace()
                 }
-            } catch (Exception e) {
-                e.printStackTrace()
             }
         }
     }
