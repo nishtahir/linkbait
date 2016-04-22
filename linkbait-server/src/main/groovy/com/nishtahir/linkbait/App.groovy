@@ -127,10 +127,10 @@ class App {
                             }
                             if (isPublic) {
                                 session.addReactionToMessage(event.channel, timestamp, configuration.getUpvoteEmoji())
-                                //Saving stuff usually takes a bit of time... might be nice delay
+                                session.addReactionToMessage(event.channel, timestamp, configuration.getDownvoteEmoji())
+
                                 User user = userService.createUser(new User(username: senderUsername, slackUserId: event.sender.id))
                                 linkService.saveLink(timestamp, url, user, group, channelName)
-                                session.addReactionToMessage(event.channel, timestamp, configuration.getDownvoteEmoji())
                             }
                         }
                         boolean tacoHandled = TacoRequestHandler.instance.handle(session, event)

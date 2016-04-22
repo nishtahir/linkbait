@@ -15,8 +15,14 @@ import groovy.transform.Canonical
 @Canonical
 class PluginLoader {
 
+    /**
+     * Name of plugin file to load.
+     */
     public static final PLUGIN_FILE = 'plugin.json'
 
+    /**
+     * List of handlers loaded from plugins.
+     */
     List<RequestHandler> handlers = [];
 
     /**
