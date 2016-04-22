@@ -5,6 +5,7 @@ import com.nishtahir.linkbait.model.Plugin
 import com.nishtahir.linkbait.util.JsonUtils
 import groovy.io.FileType
 import groovy.transform.Canonical
+
 /**
  * Class loader to loadPluginsFromPath language tools dynamically
  * at runtime, this helps decouple to the project into
@@ -23,14 +24,14 @@ class PluginLoader {
      * @throws FileNotFoundException
      */
     public void loadPluginsFromPath(String path) throws FileNotFoundException {
-        try {
-            new File(path).eachFile(FileType.FILES) {
-                if(it.name.endsWith(".jar")) {
+        new File(path).eachFile(FileType.FILES) {
+            try {
+                if (it.name.endsWith(".jar")) {
                     loadPlugin(it)
                 }
+            } catch (Exception e) {
+                e.printStackTrace()
             }
-        } catch (Exception e) {
-            e.printStackTrace()
         }
     }
 
@@ -47,6 +48,7 @@ class PluginLoader {
         Class<RequestHandler> clazz = (Class<RequestHandler>) Class.forName(plugin.handler, true, child)
         RequestHandler instance = clazz.newInstance()
         handlers.add(instance);
+        println "Loaded: ${plugin}"
     }
 
 }
