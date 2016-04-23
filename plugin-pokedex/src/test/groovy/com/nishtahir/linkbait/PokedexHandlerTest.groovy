@@ -15,6 +15,30 @@ class PokedexHandlerTest extends Specification {
         handler.pokemonService.findPokemon("charmander").id == '4'
     }
 
+    def "Query_WithPrefix_ReturnsCorrectResult"() {
+        given:
+        PokedexHandler handler = new PokedexHandler()
+
+        expect:
+        handler.pokemonService.findPokemon("charm").id == '4'
+    }
+
+    def "Query_WithSuffix_ReturnsCorrectResult"() {
+        given:
+        PokedexHandler handler = new PokedexHandler()
+
+        expect:
+        handler.pokemonService.findPokemon("mander").id == '4'
+    }
+
+    def "Query_WithTypo_ReturnsMostLikelyResult"() {
+        given:
+        PokedexHandler handler = new PokedexHandler()
+
+        expect:
+        handler.pokemonService.findPokemon("chramadner").id == '4'
+    }
+
     def "Parse_WithValidInput_ReturnsCorrectResult"() {
         given:
         PokedexHandler handler = new PokedexHandler()
