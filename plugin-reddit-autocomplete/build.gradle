@@ -14,6 +14,7 @@ ext.isPlugin = true
 
 evaluationDependsOn(':linkbait-server')
 
+install.dependsOn('compileRuby')
 install.dependsOn('shadowJar')
 install.doLast {
 }

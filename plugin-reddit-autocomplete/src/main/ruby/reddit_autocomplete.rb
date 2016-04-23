@@ -26,9 +26,9 @@ class RedditAutoCompleteHandler
 
   java_signature 'boolean handle(SlackSession, SlackEvent)'
   def handle(session, event)
-    subreddit = parse(session.getMessageContent(), session.sessionPersona().id)
+    subreddit = parse(event.getMessageContent(), session.sessionPersona().id)
     puts 'message: #{session.getMessageContent()}'
-    if subreddit.to_z == ''
+    if subreddit.to_s == ''
         puts 'subreddit is empty'
         return false
     end

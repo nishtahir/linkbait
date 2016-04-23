@@ -44,9 +44,9 @@ public class RedditAutoCompleteHandler extends RubyObject implements RequestHand
             "\n" +
             "  java_signature 'boolean handle(SlackSession, SlackEvent)'\n" +
             "  def handle(session, event)\n" +
-            "    subreddit = parse(session.getMessageContent(), session.sessionPersona().id)\n" +
+            "    subreddit = parse(event.getMessageContent(), session.sessionPersona().id)\n" +
             "    puts 'message: #{session.getMessageContent()}'\n" +
-            "    if subreddit.to_z == ''\n" +
+            "    if subreddit.to_s == ''\n" +
             "        puts 'subreddit is empty'\n" +
             "        return false\n" +
             "    end\n" +
