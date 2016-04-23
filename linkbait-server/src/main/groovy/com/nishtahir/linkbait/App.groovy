@@ -8,7 +8,7 @@ import com.nishtahir.linkbait.config.Configuration
 import com.nishtahir.linkbait.controller.LandingController
 import com.nishtahir.linkbait.controller.LinkController
 import com.nishtahir.linkbait.controller.UserController
-
+import com.nishtahir.linkbait.core.exception.RequestParseException
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import com.nishtahir.linkbait.model.Vend
@@ -103,8 +103,12 @@ class App {
 
                         boolean helpHandled = HelpRequestHandler.instance.handle(session, event)
 
-                        PluginLoader.instance.handlers.each { handler ->
-                            handler.handle(session,event)
+                        boolean pluginHandled = PluginLoader.instance.handlers.any { handler ->
+                            try{
+                                return handler.handle(session,event)
+                            } catch (RequestParseException ignore){
+                                return false
+                            }
                         }
                   //      AprilFirstReactionHandler.instance.handle(session,event)
                         boolean redditHandled = RedditAutoCompleteHandler.instance.handle(session, event)
@@ -127,10 +131,10 @@ class App {
                             }
                             if (isPublic) {
                                 session.addReactionToMessage(event.channel, timestamp, configuration.getUpvoteEmoji())
-                                //Saving stuff usually takes a bit of time... might be nice delay
+                                session.addReactionToMessage(event.channel, timestamp, configuration.getDownvoteEmoji())
+
                                 User user = userService.createUser(new User(username: senderUsername, slackUserId: event.sender.id))
                                 linkService.saveLink(timestamp, url, user, group, channelName)
-                                session.addReactionToMessage(event.channel, timestamp, configuration.getDownvoteEmoji())
                             }
                         }
                         boolean tacoHandled = TacoRequestHandler.instance.handle(session, event)
@@ -141,7 +145,7 @@ class App {
                         boolean vendHandled = !vendManipulationHandled && VendRequestHandler.instance.handle(session, event)
 
                         // We fall through here at the end, if none of these events triggered, use houndify
-                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled) {
+                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled && !pluginHandled) {
                             HoundifyMessageRequestHandler.instance.handle(session, event)
                         }
                     }
