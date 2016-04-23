@@ -7,6 +7,9 @@
  * user guide available at https://docs.gradle.org/2.11/userguide/tutorial_groovy_projects.html
  */
 
+plugins {
+    id "com.github.johnrengelman.shadow" version "1.2.3"
+}
 // Apply the groovy plugin to add support for Groovy
 apply plugin: 'groovy'
 apply plugin: 'distribution'
@@ -19,6 +22,7 @@ ext.isPlugin = true
 
 evaluationDependsOn(':linkbait-server')
 
+install.dependsOn('shadowJar')
 install.dependsOn(['build'])
 
 //Do whatever needs to be done here before the Jar
@@ -43,6 +47,9 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-jdbc:4.48'
 
     compile 'commons-io:commons-io:2.4'
+
+    // I would have used Apache Commons Text, but there is only a SNAPSHOT build somewhere...
+    compile 'info.debatty:java-string-similarity:0.13'
 
     // We use the awesome Spock testing and specification framework
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
