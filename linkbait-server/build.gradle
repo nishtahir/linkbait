@@ -19,6 +19,8 @@ run {
     }
 }
 
+install.dependsOn(['build', 'installDist'])
+
 install.doLast {
 
 }

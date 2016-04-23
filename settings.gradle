@@ -13,5 +13,6 @@ include 'linkbait-server'
 include 'plugin-vote'
 include 'plugin-pokedex'
 include 'plugin-android-reactor'
+include 'plugin-reddit-autocomplete'
 
 rootProject.name = 'linkbait'

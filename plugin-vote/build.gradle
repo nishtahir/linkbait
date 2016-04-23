@@ -19,6 +19,7 @@ ext.isPlugin = true
 
 evaluationDependsOn(':linkbait-server')
 
+install.dependsOn('build')
 install.doLast {
 }
 

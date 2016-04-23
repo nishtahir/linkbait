@@ -19,6 +19,8 @@ ext.isPlugin = true
 
 evaluationDependsOn(':linkbait-server')
 
+install.dependsOn(['build'])
+
 //Do whatever needs to be done here before the Jar
 //Is copied into the install directory of the server
 install.doLast {

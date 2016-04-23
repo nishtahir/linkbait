@@ -21,6 +21,7 @@ evaluationDependsOn(':linkbait-server')
 
 //Do whatever needs to be done here before the Jar
 //Is copied into the install directory of the server
+install.dependsOn('build')
 install.doLast {
 }
 

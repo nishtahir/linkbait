@@ -1,0 +1,44 @@
+plugins {
+    id "com.github.jruby-gradle.base" version "1.2.1"
+    id "com.github.jruby-gradle.jar" version "1.1.0"
+    id "com.github.johnrengelman.shadow" version "1.2.3"
+}
+
+apply plugin: 'java'
+
+import com.github.jrubygradle.JRubyExec
+version = '0.1'
+
+// Property that says it's a plugin. Used in deployment
+ext.isPlugin = true
+
+evaluationDependsOn(':linkbait-server')
+
+install.dependsOn('shadowJar')
+install.doLast {
+}
+
+/*
+* I couldn't figure out how to package and jar
+* the ruby directly so until then
+* *.rb --> *.java --> *.jar with dependencies
+*/
+def sourceDir = 'src/main/ruby/'
+def outputDir = 'src/main/java/'
+
+task compileRuby(type: JRubyExec) {
+    File output = new File(outputDir)
+    output.delete()
+    output.mkdirs()
+
+    jrubyArgs '-S', 'jrubyc', '--java', '-t', output.path
+    script sourceDir + 'reddit_autocomplete.rb'
+}
+
+dependencies {
+    //JRuby
+    compile 'org.jruby:jruby-complete:9.0.5.0'
+
+    compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'
+    testCompile 'junit:junit:4.12'
+}

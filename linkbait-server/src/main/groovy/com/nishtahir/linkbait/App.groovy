@@ -110,8 +110,6 @@ class App {
                                 return false
                             }
                         }
-                  //      AprilFirstReactionHandler.instance.handle(session,event)
-                        boolean redditHandled = RedditAutoCompleteHandler.instance.handle(session, event)
 
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
                         boolean urlHandled = false;
