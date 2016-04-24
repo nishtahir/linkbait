@@ -60,12 +60,20 @@ class ImdbHandler(): MessageRequestHandler() {
 
         val attachment = SlackAttachment()
         attachment.title = movie.Title
+        attachment.titleLink = "http://www.imdb.com/title/${movie.imdbID}"
         attachment.fallback = movie.Title
         attachment.text = movie.Plot
-        attachment.addField("Year", movie.Year, true)
-        attachment.addField("Genre", movie.Genre, true)
-        attachment.addField("Metascore", movie.Metascore, true)
-        attachment.addField("IMDb rating", movie.imdbRating, true)
+        attachment.addField("Year", "<http://www.imdb.com/year/${movie.Year}|${movie.Year}>", true)
+
+        val genres = movie.Genre.split(",")
+        var linkedGenres = ""
+        genres.forEach { genre -> linkedGenres += "<http://www.imdb.com/genre/${genre.trim().toLowerCase()}|$genre>, " }
+        linkedGenres = linkedGenres.dropLast(2) // ", "
+        attachment.addField("Genre", linkedGenres, true)
+
+        attachment.addField("Metascore", "<http://www.imdb.com/title/${movie.imdbID}/criticreviews|${movie.Metascore}>", true)
+        attachment.addField("IMDb rating", "<http://www.imdb.com/title/${movie.imdbID}/reviews|${movie.imdbRating}>", true)
+        attachment.addField("Awards", "<http://www.imdb.com/title/${movie.imdbID}/awards|${movie.Awards}>", true)
         // Sadly IMDb prevents hotlinking of the poster, so no thumbnail for us :(
 
         session.sendMessage(event.channel, "", attachment)
