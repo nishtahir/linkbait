@@ -8,7 +8,6 @@ import com.nishtahir.linkbait.config.Configuration
 import com.nishtahir.linkbait.controller.LandingController
 import com.nishtahir.linkbait.controller.LinkController
 import com.nishtahir.linkbait.controller.UserController
-import com.nishtahir.linkbait.core.exception.RequestParseException
 import com.nishtahir.linkbait.model.Link
 import com.nishtahir.linkbait.model.User
 import com.nishtahir.linkbait.model.Vend
@@ -106,7 +105,10 @@ class App {
                         boolean pluginHandled = PluginLoader.instance.handlers.any { handler ->
                             try{
                                 return handler.handle(session,event)
-                            } catch (RequestParseException ignore){
+                            } catch (Throwable ignore){
+                                // What should come out of here should usually be,
+                                // RequestParseException - "this message wasn't aimed at the *"
+                                // Anything else indicates a bigger problem with the plugin
                                 return false
                             }
                         }
