@@ -45,8 +45,8 @@ dependencies {
     compile 'org.xerial.thirdparty:nestedvm:1.0'
 
     //Jackson
-    compile 'com.fasterxml.jackson.core:jackson-core:2.6.3'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
 
     //ORMLite
     compile 'com.j256.ormlite:ormlite-core:4.48'

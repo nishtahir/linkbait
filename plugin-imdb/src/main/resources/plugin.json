@@ -1,0 +1,8 @@
+{
+  "version": "1.0",
+  "title": "IMDb",
+  "description": "Tries to find info about movies and TV shows. Uses IMDb and OMDb API.",
+  "author": "Max Keller",
+  "url": "",
+  "handler": "de.langerhans.linkbait.imdb.ImdbHandler"
+}
