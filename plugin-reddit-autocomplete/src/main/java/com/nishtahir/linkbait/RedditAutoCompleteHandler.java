@@ -51,6 +51,7 @@ public class RedditAutoCompleteHandler extends RubyObject implements RequestHand
             "        return false\n" +
             "    end\n" +
             "    session.sendMessage(event.getChannel(), \"For the lazy... <https://www.reddit.com/#{subreddit}/|https://www.reddit.com/#{subreddit}/>\", nil)\n" +
+            "    return true\n" +
             "  end\n" +
             "\n" +
             "end\n" +

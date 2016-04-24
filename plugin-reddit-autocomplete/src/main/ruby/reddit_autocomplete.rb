@@ -33,6 +33,7 @@ class RedditAutoCompleteHandler
         return false
     end
     session.sendMessage(event.getChannel(), "For the lazy... <https://www.reddit.com/#{subreddit}/|https://www.reddit.com/#{subreddit}/>", nil)
+    return true
   end
 
 end
