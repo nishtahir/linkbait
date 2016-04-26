@@ -155,6 +155,21 @@ class LinkService {
     }
 
     /**
+     *
+     * @param group slack group to query
+     * @return list of links posted today
+     */
+    List<Link> getLinksPostedToday(String group) {
+        def query = linkDao.queryBuilder()
+                .where()
+                .eq("group", group)
+                .and()
+                .ge("timestamp", TimestampUtils.startOfCurrentDay)
+                .prepare()
+        return linkDao.query(query).reverse()
+    }
+
+    /**
      * @return list of links posted this week.
      */
     List<Link> getLinksPostedThisWeek() {
@@ -164,11 +179,37 @@ class LinkService {
     }
 
     /**
+     * @return list of links posted this week.
+     */
+    List<Link> getLinksPostedThisWeek(String group) {
+        def query = linkDao.queryBuilder()
+                .where()
+                .eq("group", group)
+                .and()
+                .ge("timestamp", TimestampUtils.startOfCurrentWeek)
+                .prepare()
+        return linkDao.query(query).reverse()
+    }
+
+    /**
      * @return list of links posted this month.
      */
     List<Link> getLinksPostedThisMonth() {
         def query = linkDao.queryBuilder()
                 .where().ge("timestamp", TimestampUtils.startOfCurrentMonth).prepare()
+        return linkDao.query(query).reverse()
+    }
+
+    /**
+     * @return list of links posted this month.
+     */
+    List<Link> getLinksPostedThisMonth(String group) {
+        def query = linkDao.queryBuilder()
+                .where()
+                .eq("group", group)
+                .and()
+                .ge("timestamp", TimestampUtils.startOfCurrentMonth)
+                .prepare()
         return linkDao.query(query).reverse()
     }
 
@@ -185,6 +226,32 @@ class LinkService {
 
         getDistinctChannels().each { channel ->
             def query = builder.where()
+                    .ge("timestamp", TimestampUtils.getStartOfPreviousWeek())
+                    .and()
+                    .le("timestamp", TimestampUtils.getStartOfCurrentWeek())
+                    .and()
+                    .eq("channel", channel)
+                    .prepare()
+            digest.addAll(linkDao.query(query))
+        }
+        return digest
+    }
+
+    /**
+     * Returns a digest last week's top links sorted by votes
+     * @return
+     */
+    List<Link> getWeeklyDigest(String group) {
+        List<Link> digest = new ArrayList<>()
+
+        def builder = linkDao.queryBuilder()
+        builder.limit(5L)
+        builder.orderBy("upvotes", false)
+
+        getDistinctChannels().each { channel ->
+            def query = builder.where()
+                    .eq("group", group)
+                    .and()
                     .ge("timestamp", TimestampUtils.getStartOfPreviousWeek())
                     .and()
                     .le("timestamp", TimestampUtils.getStartOfCurrentWeek())

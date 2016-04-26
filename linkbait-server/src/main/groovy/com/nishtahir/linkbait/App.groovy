@@ -145,7 +145,7 @@ class App {
                         boolean vendHandled = !vendManipulationHandled && VendRequestHandler.instance.handle(session, event)
 
                         // We fall through here at the end, if none of these events triggered, use houndify
-                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled && !pluginHandled) {
+                        if (!helpHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled && !pluginHandled) {
                             HoundifyMessageRequestHandler.instance.handle(session, event)
                         }
                     }
@@ -223,7 +223,7 @@ class App {
         userService = new UserService(connectionSource)
         linkService = new LinkService(connectionSource)
         vendService = new VendService(connectionSource, true)
-        
+
         new LandingController().init()
         new LinkController(linkService).init()
         new UserController(userService).init()
