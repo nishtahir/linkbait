@@ -273,12 +273,12 @@ class LinkService {
     }
 
     public Map parseUrlMetadata(String url) {
-        Metadata metadata = new Metadata();
-        InputStream inputStream = new ByteArrayInputStream(url.toURL().getText(requestProperties: ['User-Agent': USER_AGENT]).bytes)
-
         String title = ""
         String description = ""
+        Metadata metadata = new Metadata();
+
         try {
+            InputStream inputStream = new ByteArrayInputStream(url.toURL().getText(requestProperties: ['User-Agent': USER_AGENT]).bytes)
             new HtmlParser().parse(inputStream, new BodyContentHandler(), metadata, new ParseContext())
             title = getMetadataTitle(metadata)
             description = getMetadataDescription(metadata)
