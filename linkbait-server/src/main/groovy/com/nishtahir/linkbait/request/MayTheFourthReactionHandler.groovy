@@ -27,7 +27,8 @@ class MayTheFourthReactionHandler implements RequestHandler<Void, SlackMessagePo
             "deathstar2",
             "rwing",
             "milleniumfalcon",
-            "jarjarbinks"
+            "jarjarbinks",
+            "darth_vader"
     ]
 
     @Override
@@ -40,8 +41,8 @@ class MayTheFourthReactionHandler implements RequestHandler<Void, SlackMessagePo
         if ('hangout'.equals(event.channel.name) || 'linkbait-testing'.equals(event.channel.name)) {
             try {
                 int likelyhoodOfReaction = ThreadLocalRandom.current().nextInt(10)
-                if (likelyhoodOfReaction > 7) {
-                    for (i in 1..ThreadLocalRandom.current().nextInt(1, 3)) {
+                if (likelyhoodOfReaction > 6) {
+                    for (i in 1..ThreadLocalRandom.current().nextInt(1, 4)) {
                         Timer timer = new Timer()
                         timer.runAfter(i * 1000) {
                             session.addReactionToMessage(event.channel, event.timestamp, emojis[ThreadLocalRandom.current().nextInt(emojis.length)])
