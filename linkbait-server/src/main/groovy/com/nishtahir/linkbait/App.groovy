@@ -113,7 +113,7 @@ class App {
                             }
                         }
 
-                        MayTheFourthReactionHandler.instance.handle(session, event)
+                        //MayTheFourthReactionHandler.instance.handle(session, event)
 
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
                         boolean urlHandled = false;
