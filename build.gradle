@@ -9,6 +9,7 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 install {
@@ -27,7 +28,7 @@ install {
 
 dependencies {
     //Simple slack API
-    compile 'com.ullink.slack:simpleslackapi:0.5.0'
+    compile 'com.github.Ullink:simple-slack-api:bab9587'
 
     //Jackson
     compile 'com.fasterxml.jackson.core:jackson-core:2.6.3'
