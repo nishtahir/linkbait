@@ -1,6 +1,5 @@
 package com.nishtahir.linkbait
 
-import ch.qos.logback.classic.Logger
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
@@ -34,7 +33,7 @@ class App {
     /**
      * This is not a logger.
      */
-    static final Logger logger = LoggerFactory.getLogger(App.class)
+    static final logger = LoggerFactory.getLogger(App.class)
 
     /**
      * Application configuration.

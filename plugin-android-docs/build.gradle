@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2"
+    }
+}
+
+plugins {
+    id "com.github.johnrengelman.shadow" version "1.2.3"
+}
+
+repositories {
+    maven {
+        url "http://repository.jetbrains.com/all"
+    }
+}
+
+apply plugin: 'kotlin'
+version '0.1'
+
+// Property that says it's a plugin. Used in deployment
+ext.isPlugin = true
+
+evaluationDependsOn(':linkbait-server')
+
+install.dependsOn('shadowJar')
+
+//Do whatever needs to be done here before the Jar
+//Is copied into the install directory of the server
+install.doLast {
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
+
+    //Linkbait core project
+    compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'
+
+    //Jackson
+    compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.3'
+
+    testCompile 'org.jetbrains.spek:spek:0.1.195'
+}
