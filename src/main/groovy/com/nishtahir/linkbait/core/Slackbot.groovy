@@ -76,7 +76,7 @@ class Slackbot extends AbstractBot {
                 ReactionEvent reactionEvent = new ReactionEvent(id: event.messageID,
                         channel: event.channel.id,
                         sender: event.user.id,
-                        message: event.emojiName,
+                        reaction: event.emojiName,
                         added: true)
                 eventBus.post(reactionEvent)
             }

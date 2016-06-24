@@ -4,7 +4,7 @@ import groovy.transform.Canonical
 import groovy.transform.ToString
 
 /**
- * Event called when a message is sent
+ * Event a reaction occurs
  */
 @Canonical
 @ToString
@@ -16,17 +16,17 @@ class ReactionEvent {
     String id
 
     /**
-     *  Channel the message originated
+     *  Channel the reaction originated
      */
     String channel
 
     /**
-     * Sender of the message
+     * person that reacted
      */
     String sender
 
     /**
-     * Message content
+     * Reaction
      */
     String reaction
 
