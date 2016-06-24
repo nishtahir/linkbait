@@ -7,6 +7,7 @@ import com.ullink.slack.simpleslackapi.events.SlackMessagePosted
 /**
  * {@link RequestHandler} subclass specifically targeted to the bot in a message.
  */
+@Deprecated
 abstract class MessageRequestHandler implements RequestHandler<String, SlackMessagePosted> {
 
     @Override
