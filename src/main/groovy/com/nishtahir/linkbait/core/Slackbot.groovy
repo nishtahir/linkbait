@@ -60,7 +60,7 @@ class SlackBot extends AbstractBot {
             @Override
             void onEvent(SlackMessagePosted event, SlackSession session) {
                 MessageEvent messageEvent = new MessageEvent(id: event.timestamp,
-                        channel: event.channel.id,
+                        channel: event.channel.name,
                         sender: event.sender.id,
                         message: event.messageContent)
                 eventBus.post(messageEvent)
@@ -70,7 +70,7 @@ class SlackBot extends AbstractBot {
             @Override
             void onEvent(ReactionAdded event, SlackSession session) {
                 ReactionEvent reactionEvent = new ReactionEvent(id: event.messageID,
-                        channel: event.channel.id,
+                        channel: event.channel.name,
                         sender: event.user.id,
                         message: event.emojiName,
                         added: true)
