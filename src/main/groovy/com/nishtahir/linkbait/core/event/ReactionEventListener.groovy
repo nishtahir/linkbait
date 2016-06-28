@@ -12,5 +12,5 @@ interface ReactionEventListener {
      * @param event
      */
     @Subscribe
-    public void handleMessageEvent(MessageEvent event);
+    public void handleReactionEvent(ReactionEvent event);
 }

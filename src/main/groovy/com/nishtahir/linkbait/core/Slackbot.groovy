@@ -19,24 +19,25 @@ import groovy.transform.ToString
  */
 @Canonical
 @ToString
-class Slackbot extends AbstractBot {
+class SlackBot extends AbstractBot {
+
     /**
-     *
+     *  Where all the communication magic happens
      */
     SlackSession session
 
     /**
-     *
+     *  Provided by Slack for access to the team
      */
     String apiToken
 
     /**
-     *
+     * Bus to carry all of the sweet sweet messages across
      */
     EventBus eventBus
 
 
-    Slackbot(String apiToken, String owner) {
+    SlackBot(String apiToken, String owner) {
         this.apiToken = apiToken;
         init(apiToken, owner)
     }
