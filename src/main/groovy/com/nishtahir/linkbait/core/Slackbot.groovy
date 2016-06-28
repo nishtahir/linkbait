@@ -74,7 +74,7 @@ class SlackBot extends AbstractBot {
                 ReactionEvent reactionEvent = new ReactionEvent(id: event.messageID,
                         channel: event.channel.name,
                         sender: event.user.id,
-                        message: event.emojiName,
+                        reaction: event.emojiName,
                         added: true)
                 if (event.getUser().id != session.sessionPersona().id) {
                     eventBus.post(reactionEvent)
@@ -85,7 +85,7 @@ class SlackBot extends AbstractBot {
             @Override
             void onEvent(ReactionRemoved event, SlackSession session) {
                 ReactionEvent reactionEvent = new ReactionEvent(id: event.messageID,
-                        channel: event.channel.id,
+                        channel: event.channel.name,
                         sender: event.user.id,
                         reaction: event.emojiName,
                         added: true)
