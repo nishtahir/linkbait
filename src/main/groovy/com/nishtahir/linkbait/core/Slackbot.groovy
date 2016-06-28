@@ -2,6 +2,7 @@ package com.nishtahir.linkbait.core
 
 import com.google.common.eventbus.EventBus
 import com.nishtahir.linkbait.core.event.MessageEvent
+import com.nishtahir.linkbait.core.event.Messenger
 import com.nishtahir.linkbait.core.event.ReactionEvent
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
@@ -24,22 +25,28 @@ class SlackBot extends AbstractBot {
     /**
      *  Where all the communication magic happens
      */
-    SlackSession session
+    private SlackSession session
 
     /**
      *  Provided by Slack for access to the team
      */
-    String apiToken
+    private String apiToken
+
+    /**
+     *
+     */
+    private Messenger messenger
 
     /**
      * Bus to carry all of the sweet sweet messages across
      */
-    EventBus eventBus
-
 
     SlackBot(String apiToken, String owner) {
         this.apiToken = apiToken;
-        init(apiToken, owner)
+        this.owner = owner
+
+        eventBus = new EventBus(owner)
+        init(apiToken)
     }
 
     /**
@@ -47,8 +54,7 @@ class SlackBot extends AbstractBot {
      * @param apiToken for slack
      * @param owner identifies the eventbus and other properties
      */
-    private void init(String apiToken, String owner) {
-        eventBus = new EventBus(owner)
+    private void init(String apiToken) {
         session = SlackSessionFactory.createWebSocketSlackSession(apiToken);
         session.addMessagePostedListener(new SlackMessagePostedListener() {
             @Override
@@ -98,4 +104,24 @@ class SlackBot extends AbstractBot {
         session?.disconnect()
     }
 
+    @Override
+    Messenger getMessenger() {
+        if (messenger == null) {
+            messenger = new SlackMessenger()
+        }
+        return messenger
+    }
+
+    /**
+     * Messenger implementation for slack.
+     * This allows other parts of the app access to certain actions
+     */
+    class SlackMessenger implements Messenger {
+
+
+        @Override
+        void sendMessage(String channel, String message) {
+            session?.sendMessage(session.findChannelByName(channel), message)
+        }
+    }
 }

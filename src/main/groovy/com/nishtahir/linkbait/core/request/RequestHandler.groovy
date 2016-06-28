@@ -7,6 +7,7 @@ import com.ullink.slack.simpleslackapi.events.SlackEvent
  * Base class for making requests to the bot.
  * @param <T> Information passed through from {@link RequestHandler#parse} to {@link RequestHandler#parse}.
  * @param <E> Subclass of {@link SlackEvent}.
+ * @deprecated
  */
 interface RequestHandler<T, E extends SlackEvent> {
 

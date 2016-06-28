@@ -1,9 +1,22 @@
 package com.nishtahir.linkbait.core
 
+import com.google.common.eventbus.EventBus
+import com.nishtahir.linkbait.core.event.Messenger
+
 /**
- * Created by nish on 6/23/16.
+ * Base implementation for a bot
  */
 abstract class AbstractBot {
+
+    /**
+     * Bot owner
+     */
+    String owner
+
+    /**
+     * Associated event bus
+     */
+    protected EventBus eventBus
 
     /**
      * Starts a slack session
@@ -14,4 +27,10 @@ abstract class AbstractBot {
      * Stops the slack session
      */
     abstract void stop();
+
+    /**
+     * Message passer
+     * @return
+     */
+    abstract Messenger getMessenger();
 }
