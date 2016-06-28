@@ -63,7 +63,9 @@ class SlackBot extends AbstractBot {
                         channel: event.channel.name,
                         sender: event.sender.id,
                         message: event.messageContent)
-                eventBus.post(messageEvent)
+                if (event.sender.id != session.sessionPersona().id) {
+                    eventBus.post(messageEvent)
+                }
             }
         })
         session.addReactionAddedListener(new ReactionAddedListener() {
@@ -74,7 +76,9 @@ class SlackBot extends AbstractBot {
                         sender: event.user.id,
                         message: event.emojiName,
                         added: true)
-                eventBus.post(reactionEvent)
+                if (event.getUser().id != session.sessionPersona().id) {
+                    eventBus.post(reactionEvent)
+                }
             }
         })
         session.addReactionRemovedListener(new ReactionRemovedListener() {
@@ -85,7 +89,9 @@ class SlackBot extends AbstractBot {
                         sender: event.user.id,
                         reaction: event.emojiName,
                         added: true)
-                eventBus.post(reactionEvent)
+                if (event.getUser().id != session.sessionPersona().id) {
+                    eventBus.post(reactionEvent)
+                }
             }
         })
     }
