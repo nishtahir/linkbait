@@ -29,6 +29,22 @@ abstract class AbstractBot {
     abstract void stop();
 
     /**
+     * Registers to event bus
+     * @param handler
+     */
+    public void registerHandler(Object handler) {
+        eventBus.register(handler)
+    }
+
+    /**
+     * unregisters from event bus
+     * @param handler
+     */
+    public void unregisterHandler(Object handler) {
+        eventBus.unregister(handler)
+    }
+
+    /**
      * Message passer
      * @return
      */
