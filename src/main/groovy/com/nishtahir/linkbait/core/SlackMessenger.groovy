@@ -15,6 +15,6 @@ class SlackMessenger implements Messenger {
 
     @Override
     void sendMessage(String channel, String message) {
-        session?.sendMessage(session.findChannelByName(channel), message)
+        session?.sendMessage(session.findChannelByName(channel), message, null)
     }
 }
