@@ -1,6 +1,7 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.core.event.Messenger
+import com.ullink.slack.simpleslackapi.SlackChannel
 import com.ullink.slack.simpleslackapi.SlackSession
 import groovy.transform.Canonical
 
@@ -15,6 +16,7 @@ class SlackMessenger implements Messenger {
 
     @Override
     void sendMessage(String channel, String message) {
-        session?.sendMessage(session.findChannelByName(channel), message, null)
+        SlackChannel slackChannel  = session.findChannelByName(channel)
+        session?.sendMessage(slackChannel, message)
     }
 }
