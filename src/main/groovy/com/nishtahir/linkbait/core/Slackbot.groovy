@@ -107,21 +107,9 @@ class SlackBot extends AbstractBot {
     @Override
     Messenger getMessenger() {
         if (messenger == null) {
-            messenger = new SlackMessenger()
+            messenger = new SlackMessenger(session: session)
         }
         return messenger
     }
 
-    /**
-     * Messenger implementation for slack.
-     * This allows other parts of the app access to certain actions
-     */
-    class SlackMessenger implements Messenger {
-
-
-        @Override
-        void sendMessage(String channel, String message) {
-            session?.sendMessage(session.findChannelByName(channel), message)
-        }
-    }
 }
