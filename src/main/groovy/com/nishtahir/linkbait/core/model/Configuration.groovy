@@ -27,5 +27,5 @@ public interface Configuration {
      * Plugin repository
      * @return
      */
-    String getPluginRepository()
+    File getPluginRepository()
 }
