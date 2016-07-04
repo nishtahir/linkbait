@@ -1,0 +1,25 @@
+{
+  "name": "Linkbait",
+  "authors": [
+    "Nish Tahir <nishtahir@outlook.com>"
+  ],
+  "description": "A slackbot with superpowers",
+  "main": "",
+  "keywords": [
+    "slack",
+    "bot"
+  ],
+  "license": "Apache 2",
+  "homepage": "linkbait.online",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.0.0"
+  }
+}
