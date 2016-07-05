@@ -118,4 +118,13 @@ class SlackBot extends AbstractBot {
         return messenger
     }
 
+    @Override
+    protected void doStart() {
+
+    }
+
+    @Override
+    protected void doStop() {
+
+    }
 }

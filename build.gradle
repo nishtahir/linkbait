@@ -5,7 +5,7 @@ apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'maven'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.7
 
 ext.aetherVersion = "1.0.0.v20140518"
 ext.mavenVersion = "3.1.0"

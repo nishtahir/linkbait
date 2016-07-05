@@ -1,12 +1,13 @@
 package com.nishtahir.linkbait.core
 
 import com.google.common.eventbus.EventBus
+import com.google.common.util.concurrent.AbstractService
 import com.nishtahir.linkbait.core.event.Messenger
 
 /**
  * Base implementation for a bot
  */
-abstract class AbstractBot {
+abstract class AbstractBot extends AbstractService {
 
     /**
      * Bot owner
