@@ -1,6 +1,5 @@
 # Linkbait
 
-
 ## Getting started
 
 ## Basic usage
@@ -152,6 +151,13 @@ Thanks to these wonderful people, that have helped make Linkbait possible
 * Max Keller aka [@langer_hans](https://twitter.com/langer_hans)
 * Aki Kanellis aka [@AkiKanellis](https://twitter.com/AkiKanellis)
 * Ben Butzow aka [@cr5315](https://twitter.com/cr5315)
+
+# Related projects
+
+* [linkbait server](https://gitlab.com/nishtahir/linkbait-server)
+
+* [linkbait core](https://gitlab.com/nishtahir/linkbait-core)
+
 
 LICENSE
 =======
