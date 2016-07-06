@@ -68,7 +68,7 @@ idea {
 
 dependencies {
 
-    compile 'com.gitlab.nishtahir:linkbait-core:c1d0d83'
+    compile 'com.gitlab.nishtahir:linkbait-core:351cbc2'
 
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
