@@ -1,7 +1,20 @@
 image: java:8-jdk
 
-before_script:
-    - chmod +x gradlew
-build:
-  script:
-    - ./gradlew build
+default-job:
+    before_script:
+        - chmod +x gradlew
+    build:
+      script:
+        - ./gradlew build
+
+release-job:
+    before_script:
+        - chmod +x gradlew
+    build:
+      script:
+        - ./gradlew build
+    artifacts:
+      enabled: true
+      path: build/distributions/*.tar
+    only:
+        - release
