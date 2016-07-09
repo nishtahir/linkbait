@@ -1,9 +1,11 @@
 package com.nishtahir.linkbait.plugin
 
 import com.google.common.eventbus.Subscribe
+import ro.fortsoft.pf4j.ExtensionPoint
 
 /**
- *
+ * Base of any event. Contains a collection of
+ * generic fields that any event should have.
  */
 abstract class Event {
 
@@ -25,7 +27,8 @@ abstract class Event {
 }
 
 /**
- * Event called when a message is sent
+ * Nice bundle of sticks put together when a
+ * message is received.
  */
 class MessageEvent : Event() {
 
@@ -36,13 +39,13 @@ class MessageEvent : Event() {
 }
 
 /**
- *
+ * Receives notifications when messages are received.
  */
-interface MessageEventListener {
+interface MessageEventListener : ExtensionPoint {
 
     /**
-     *
-     * @param event
+     * Invoked when messages are received.
+     * @param event message event received.
      */
     @Subscribe
     fun handleMessageEvent(event: MessageEvent)
@@ -64,9 +67,9 @@ class ReactionEvent : Event() {
 }
 
 /**
- *
+ * Receives notifications when reactions happen.
  */
-interface ReactionEventListener {
+interface ReactionEventListener : ExtensionPoint {
 
     /**
      *

@@ -4,8 +4,21 @@ import ro.fortsoft.pf4j.Plugin
 import ro.fortsoft.pf4j.PluginWrapper
 
 /**
- * Created by nish on 7/9/16.
+ * Base implementation of a plugin
  */
-class LinkbaitPlugin : Plugin {
-    constructor(wrapper: PluginWrapper?) : super(wrapper)
+abstract class LinkbaitPlugin(wrapper: PluginWrapper?) : Plugin(wrapper) {
+
+    /**
+     *
+     */
+    override fun start() {
+        super.start()
+    }
+
+    /**
+     *
+     */
+    override fun stop() {
+        super.stop()
+    }
 }
