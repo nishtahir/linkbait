@@ -62,7 +62,7 @@ val connectionSource: JdbcConnectionSource = Injekt.get()
 
 val configuration: ServerConfiguration = Injekt.get()
 
-val webAppDirectory = "web"
+val webAppDirectory = File("web")
 
 /**
  * Do cleanup and other nice things here.
@@ -120,7 +120,9 @@ private fun run() {
  */
 fun initializeServer() {
     Spark.port(configuration.port)
-    Spark.staticFileLocation("public")
+
+
+    Spark.staticFiles.externalLocation(webAppDirectory.absolutePath)
     Spark.externalStaticFileLocation(configuration.staticFileDirectory)
 }
 
@@ -181,7 +183,7 @@ fun initializeRoutes() {
  */
 fun renderContent(htmlFile: String): String? {
     try {
-        val path = Paths.get(File("$webAppDirectory/$htmlFile").toURI())
+        val path = Paths.get(File("${webAppDirectory.absolutePath}/$htmlFile").toURI())
         return String(Files.readAllBytes(path), Charset.defaultCharset())
     } catch (e: IOException) {
     } catch (e: URISyntaxException) {

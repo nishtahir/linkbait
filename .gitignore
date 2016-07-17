@@ -99,7 +99,7 @@ fabric.properties
 
 # *.iml
 # modules.xml
-# .idea/misc.xml 
+# .idea/misc.xml
 # *.ipr
 
 
@@ -238,4 +238,21 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
+### Vagrant ###
+.vagrant/
+
+### Semantic ###
+node_modules
+semantic/dist/*
+semantic/gulpfile.js
+semantic/src/definitions
+semantic/src/semantic.less
+semantic/src/theme.less
+semantic/src/themes
+semantic/tasks
+!semantic/dist/semantic.min.css
+!semantic/dist/semantic.min.js
+
+### Other ###
+.idea/
 /data
