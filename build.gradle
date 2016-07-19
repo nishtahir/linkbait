@@ -39,9 +39,6 @@ dokka {
 
 
 dependencies {
-
-    compile 'ro.fortsoft.pf4j:pf4j:1.0.0'
-
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2-1"

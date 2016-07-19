@@ -1,24 +1,28 @@
 package com.nishtahir.linkbait.plugin
 
-import ro.fortsoft.pf4j.Plugin
-import ro.fortsoft.pf4j.PluginWrapper
-
 /**
  * Base implementation of a plugin
  */
-abstract class LinkbaitPlugin(wrapper: PluginWrapper?) : Plugin(wrapper) {
+abstract class LinkbaitPlugin {
 
     /**
      *
      */
-    override fun start() {
-        super.start()
+    fun start(context: PluginContext) {
+
     }
 
     /**
      *
      */
-    override fun stop() {
-        super.stop()
+    fun stop(context: PluginContext) {
+
+    }
+
+    /**
+     *
+     */
+    fun onPluginStateChanged(){
+
     }
 }
