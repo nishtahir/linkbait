@@ -6,23 +6,17 @@ package com.nishtahir.linkbait.plugin
 abstract class LinkbaitPlugin {
 
     /**
-     *
+     * @param context
      */
-    fun start(context: PluginContext) {
+    abstract fun start(context: PluginContext)
 
-    }
+    /**
+     *  @param context
+     */
+    abstract fun stop(context: PluginContext)
 
     /**
      *
      */
-    fun stop(context: PluginContext) {
-
-    }
-
-    /**
-     *
-     */
-    fun onPluginStateChanged(){
-
-    }
+    abstract fun onPluginStateChanged()
 }
