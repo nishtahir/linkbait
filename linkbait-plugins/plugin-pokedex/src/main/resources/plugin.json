@@ -1,8 +1,0 @@
-{
-  "version": "1.0",
-  "title": "Pokedex",
-  "description": "Floods people with Pokedex entries of glorious pokemon",
-  "author": "Nish Tahir",
-  "url": "",
-  "handler": "com.nishtahir.linkbait.PokedexHandler"
-}
