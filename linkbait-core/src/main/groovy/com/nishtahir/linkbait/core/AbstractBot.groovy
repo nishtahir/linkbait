@@ -2,19 +2,36 @@ package com.nishtahir.linkbait.core
 
 import com.google.common.eventbus.EventBus
 import com.google.common.util.concurrent.AbstractExecutionThreadService
-import com.nishtahir.linkbait.plugin.MessageEventListener
 import com.nishtahir.linkbait.plugin.Messenger
-import ro.fortsoft.pf4j.ExtensionPoint
-import ro.fortsoft.pf4j.PluginManager
+import com.nishtahir.linkbait.plugin.PluginContext
+import com.nishtahir.linkbait.plugin.model.Configuration
+import com.nishtahir.linkbait.plugin.model.EventListener
+import org.jetbrains.annotations.NotNull
+
 /**
  * Base implementation for a bot
  */
-abstract class AbstractBot extends AbstractExecutionThreadService {
+abstract class AbstractBot extends AbstractExecutionThreadService implements PluginContext {
+
+    /**
+     *
+     */
+    Configuration configuration
+
+    /**
+     *
+     */
+    abstract Messenger messenger
 
     /**
      * Bot owner
      */
     String owner
+
+    /**
+     *
+     */
+    PluginLoader loader
 
     /**
      * Associated event bus
@@ -23,16 +40,12 @@ abstract class AbstractBot extends AbstractExecutionThreadService {
 
     /**
      *
-     */
-    PluginManager pluginManager;
-
-    /**
-     *
-     * @param pluginManager
      * @param configuration
      */
-    AbstractBot(PluginManager pluginManager) {
-        this.pluginManager = pluginManager
+    AbstractBot(@NotNull Configuration configuration) {
+        this.configuration = configuration
+        loader = new PluginLoader(configuration)
+        loader.loadPluginsFromJar(configuration.getPluginDirectory())
     }
 
     /**
@@ -41,27 +54,20 @@ abstract class AbstractBot extends AbstractExecutionThreadService {
      */
     @Override
     protected void startUp() throws Exception {
-        super.startUp()
-        pluginManager.loadPlugins()
+
     }
 
     @Override
     protected void run() throws Exception {
-        pluginManager.startPlugins()
-        List<ExtensionPoint> messageEventListeners = pluginManager.getExtensions(MessageEventListener.class);
-        messageEventListeners.each {
-            registerHandler(it)
+        loader.handlers.each {
+            it.start(this)
         }
-
     }
 
     @Override
     protected void shutDown() throws Exception {
-        super.shutDown()
-        pluginManager.stopPlugins()
-        List<MessageEventListener> messageEventListeners = pluginManager.getExtensions(MessageEventListener.class);
-        messageEventListeners.each {
-            unregisterHandler(it)
+        loader.handlers.each {
+            it.stop(this)
         }
     }
 
@@ -69,21 +75,17 @@ abstract class AbstractBot extends AbstractExecutionThreadService {
      * Registers to event bus
      * @param handler
      */
-    public void registerHandler(Object handler) {
-        eventBus.register(handler)
+    @Override
+    void registerListener(@NotNull EventListener listener) {
+        eventBus.register(listener)
     }
 
     /**
      * unregisters from event bus
      * @param handler
      */
-    public void unregisterHandler(Object handler) {
-        eventBus.unregister(handler)
+    @Override
+    void unregisterListener(@NotNull EventListener listener) {
+        eventBus.unregister(listener)
     }
-
-    /**
-     * Message passer
-     * @return
-     */
-    abstract Messenger getMessenger();
 }

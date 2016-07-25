@@ -1,7 +1,7 @@
 package com.nishtahir.linkbait.core
 
-import com.nishtahir.linkbait.core.model.Configuration
 import com.nishtahir.linkbait.core.util.Booter
+import groovy.transform.Canonical
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.artifact.Artifact
@@ -20,11 +20,12 @@ import org.slf4j.LoggerFactory
 /**
  * This has a big job. Downloads plugins from the plugin repository.
  */
+@Canonical
 class DependencyResolver {
 
-    Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
+    File repository
 
-    Configuration configuration
+    private Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
 
     /**
      *
@@ -60,13 +61,13 @@ class DependencyResolver {
      * @param version
      * @return
      */
-    public List<File> resolveArtifactWithDependencies(String groupId, String artifactId, String version) {
-        String artifactIdentifier = "$groupId:$artifactId:$version"
+    public List<File> resolveArtifactWithDependencies(com.nishtahir.linkbait.core.model.Dependency dependency) {
+        String artifactIdentifier = dependency.toString()
+
         LOG.debug("Resolving artifact with dependencies: $artifactIdentifier")
 
-
         RepositorySystem repositorySystem = Booter.newRepositorySystem();
-        RepositorySystemSession session = Booter.newRepositorySystemSession(repositorySystem);
+        RepositorySystemSession session = Booter.newRepositorySystemSession(repositorySystem, repository);
 
         Artifact artifact = new DefaultArtifact(artifactIdentifier);
         DependencyFilter classpathFilter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);

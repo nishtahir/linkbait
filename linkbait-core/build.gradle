@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.gitlab.nishtahir:linkbait-plugin-api:-SNAPSHOT'
+    compile project(':linkbait-plugin-api')
 
     //Simple slack API
     compile 'com.github.Ullink:simple-slack-api:-SNAPSHOT'

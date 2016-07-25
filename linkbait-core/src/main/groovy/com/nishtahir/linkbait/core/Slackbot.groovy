@@ -1,10 +1,10 @@
 package com.nishtahir.linkbait.core
 
 import com.google.common.eventbus.EventBus
-import com.nishtahir.linkbait.core.model.Configuration
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.ReactionEvent
+import com.nishtahir.linkbait.plugin.model.Configuration
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
 import com.ullink.slack.simpleslackapi.events.ReactionRemoved
@@ -15,8 +15,6 @@ import com.ullink.slack.simpleslackapi.listeners.ReactionRemovedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import groovy.transform.Canonical
 import groovy.transform.ToString
-import ro.fortsoft.pf4j.DefaultPluginManager
-
 /**
  *
  */
@@ -44,8 +42,8 @@ class SlackBot extends AbstractBot {
      */
 
     SlackBot(Configuration configuration, String apiToken, String owner) {
-        super(new DefaultPluginManager(configuration.pluginDirectory))
-        this.apiToken = apiToken;
+        super(configuration)
+        this.apiToken = apiToken
         this.owner = owner
 
         eventBus = new EventBus(owner)
@@ -100,14 +98,6 @@ class SlackBot extends AbstractBot {
     }
 
     @Override
-    Messenger getMessenger() {
-        if (messenger == null) {
-            messenger = new SlackMessenger(session: session)
-        }
-        return messenger
-    }
-
-    @Override
     protected void startUp() throws Exception {
         super.startUp()
         session.connect();
@@ -128,6 +118,24 @@ class SlackBot extends AbstractBot {
     protected void shutDown() throws Exception {
         super.shutDown()
         session.disconnect();
+    }
+
+    @Override
+    Messenger getMessenger() {
+        if (messenger == null) {
+            messenger = new SlackMessenger(session: session)
+        }
+        return messenger
+    }
+
+    @Override
+    void setMessenger(Messenger messenger) {
+        this.messenger = messenger
+    }
+
+    @Override
+    void getPluginState() {
+
     }
 
 }

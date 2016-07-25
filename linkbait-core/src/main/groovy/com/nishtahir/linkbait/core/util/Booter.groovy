@@ -28,23 +28,15 @@ class Booter {
     /**
      *
      * @param system
-     * @return
-     */
-    public static DefaultRepositorySystemSession newRepositorySystemSession(RepositorySystem system) {
-        return newRepositorySystemSession(system, new File(DEFAULT_REPO));
-    }
-
-    /**
-     *
-     * @param system
      * @param repository
      * @return
      */
-    public static DefaultRepositorySystemSession newRepositorySystemSession(RepositorySystem system, File repository) {
+    static DefaultRepositorySystemSession newRepositorySystemSession(RepositorySystem system,
+                                                                     File repository = new File(DEFAULT_REPO)) {
         DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
         LocalRepository localRepo = new LocalRepository(repository);
         session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
-        return session;
+        return session
     }
 
     /**
@@ -59,18 +51,10 @@ class Booter {
 
     /**
      *
-     * @return
-     */
-    private static RemoteRepository newCentralRepository() {
-        return new RemoteRepository.Builder("central", "default", "http://central.maven.org/maven2/").build();
-    }
-
-    /**
-     * 
      * @param url
      * @return
      */
-    private static RemoteRepository newCentralRepository(String url){
+    private static RemoteRepository newCentralRepository(String url = "http://central.maven.org/maven2/") {
         return new RemoteRepository.Builder("central", "default", url).build();
     }
 
