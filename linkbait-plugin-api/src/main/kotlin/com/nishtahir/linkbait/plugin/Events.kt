@@ -2,6 +2,7 @@ package com.nishtahir.linkbait.plugin
 
 import com.google.common.eventbus.Subscribe
 import com.nishtahir.linkbait.plugin.model.Event
+import com.nishtahir.linkbait.plugin.model.EventListener
 
 
 /**
@@ -19,7 +20,7 @@ class MessageEvent : Event() {
 /**
  * Receives notifications when messages are received.
  */
-interface MessageEventListener {
+interface MessageEventListener : EventListener{
 
     /**
      * Invoked when messages are received.
@@ -47,7 +48,7 @@ class ReactionEvent : Event() {
 /**
  * Receives notifications when reactions happen.
  */
-interface ReactionEventListener {
+interface ReactionEventListener : EventListener{
 
     /**
      *

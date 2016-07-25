@@ -5,8 +5,13 @@ import java.io.File
 /**
  * Created by nish on 7/19/16.
  */
-interface  Configuration {
+interface Configuration {
 
-    fun getStaticFileDirectory() : File
+    fun getStaticFileDirectory(): File
 
+    fun getPluginDirectory(): File
+
+    fun getTemporaryFileDirectory(): File
+
+    fun getPluginRepository(): File
 }

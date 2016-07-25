@@ -3,7 +3,7 @@ package com.nishtahir.linkbait.plugin
 /**
  * Base implementation of a plugin
  */
-abstract class LinkbaitPlugin {
+abstract class Plugin {
 
     /**
      * @param context

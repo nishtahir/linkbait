@@ -18,7 +18,7 @@ interface Messenger {
      *  @param messageId ID of message to react
      *  @param reaction Reaction to react with
      */
-    fun addReaction(channel: String?, messageId: String, reaction: String)
+    fun addReaction(channel: String, messageId: String, reaction: String)
 
     /**
      *  Removes all reaction videos on YouTube. Works 100%.
@@ -28,5 +28,10 @@ interface Messenger {
      *  @param messageId ID of message to react
      *  @param reaction Reaction to remove
      */
-    fun removeReaction(channel: String?, messageId: String, reaction: String)
+    fun removeReaction(channel: String, messageId: String, reaction: String)
+
+    /**
+     *
+     */
+    fun sendAttachment(channel: String, attachment : Attachment)
 }
