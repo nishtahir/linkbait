@@ -60,6 +60,11 @@ class TacoRequestHandler extends AbstractMessageRequestHandler {
     @Override
     boolean handle(SlackSession session, SlackMessagePosted event) {
         try {
+            if (event.channel.direct) {
+                session.sendMessage(event.channel, "You can't request tacos in direct message channels!", null)
+                return true
+            }
+
             String recipient = parse(event.messageContent, session.sessionPersona().id)[0]
             if (recipient == 'me' || recipient == null) {
                 user = "<@${event.sender.id}>"

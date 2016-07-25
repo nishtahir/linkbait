@@ -15,5 +15,6 @@ include 'plugin-pokedex'
 include 'plugin-android-reactor'
 include 'plugin-reddit-autocomplete'
 include 'plugin-imdb'
+include 'plugin-android-docs'
 
 rootProject.name = 'linkbait'

@@ -1,0 +1,8 @@
+{
+  "version": "1.0",
+  "title": "Android Docs",
+  "description": "Allows searching the Android SDK reference for relevant information (If there is such thing as relevant docs...).",
+  "author": "Max Keller",
+  "url": "",
+  "handler": "de.langerhans.linkbait.android.AndroidHandler"
+}

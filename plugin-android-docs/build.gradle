@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2"
     }
 }
 
@@ -33,7 +33,7 @@ install.doLast {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.1"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
 
     //Linkbait core project
     compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'

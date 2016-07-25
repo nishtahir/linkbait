@@ -1,6 +1,5 @@
 package com.nishtahir.linkbait
 
-import ch.qos.logback.classic.Logger
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
@@ -34,7 +33,7 @@ class App {
     /**
      * This is not a logger.
      */
-    static final Logger logger = LoggerFactory.getLogger(App.class)
+    static final logger = LoggerFactory.getLogger(App.class)
 
     /**
      * Application configuration.
@@ -113,6 +112,8 @@ class App {
                             }
                         }
 
+                        //MayTheFourthReactionHandler.instance.handle(session, event)
+
                         final String url = ValidationUtils.getUrlFromSlackLink(message)
                         boolean urlHandled = false;
                         if (url != null) {
@@ -145,7 +146,7 @@ class App {
                         boolean vendHandled = !vendManipulationHandled && VendRequestHandler.instance.handle(session, event)
 
                         // We fall through here at the end, if none of these events triggered, use houndify
-                        if(!helpHandled && !redditHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled && !pluginHandled) {
+                        if (!helpHandled && !urlHandled && !tacoHandled && !vendHandled && !vendManipulationHandled && !pluginHandled) {
                             HoundifyMessageRequestHandler.instance.handle(session, event)
                         }
                     }
@@ -223,7 +224,7 @@ class App {
         userService = new UserService(connectionSource)
         linkService = new LinkService(connectionSource)
         vendService = new VendService(connectionSource, true)
-        
+
         new LandingController().init()
         new LinkController(linkService).init()
         new UserController(userService).init()

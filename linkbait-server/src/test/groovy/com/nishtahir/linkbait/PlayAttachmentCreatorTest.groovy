@@ -1,24 +1,20 @@
 package com.nishtahir.linkbait
 
-import com.nishtahir.linkbait.PlayAttachmentCreator
 import spock.lang.Specification
 
 /**
- * Created by nish on 2/27/16.
+ * Probably not the best idea to do network requests here. Should fix.
  */
 class PlayAttachmentCreatorTest extends Specification {
     def "GetAppDetailsFromPlayStore_withFreeApp_ReturnsExpectedOutput"() {
         given:
-        String url = PlayAttachmentCreator.getUrlFromPlayId('net.broapp.app')
+        String url = PlayAttachmentCreator.getUrlFromPlayId('com.netflix.mediaclient')
         Map values = PlayAttachmentCreator.getAppDetailsFromPlayStore(url)
 
         expect:
-        values['title'] == 'BroApp'
-        values['author'] == 'Factorial Products Pty. Ltd.'
-        values['desc'].startsWith('BroApp is your clever relationship wingman. ' +
-                'It automatically messages your girlfriend sweet things so you can spend more time with the Bros. ' +
-                'Select your girlfriend\'s number, add some sweet messages, and set the time of day when you want those messages sent. ' +
-                'BroApp takes care of the rest.')
+        values['title'] == 'Netflix'
+        values['author'] == 'Netflix, Inc.'
+        values['desc'].startsWith('Netflix is the world’s leading subscription service for watching TV episodes and movies on your phone. This Netflix mobile application delivers the best experience anywhere, anytime.')
 
         values['price'] == 'Free'
     }
