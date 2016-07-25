@@ -1,13 +1,15 @@
 package com.nishtahir.linkbait.core
 
 import com.google.common.eventbus.EventBus
-import com.google.common.util.concurrent.AbstractService
-import com.nishtahir.linkbait.core.event.Messenger
-
+import com.google.common.util.concurrent.AbstractExecutionThreadService
+import com.nishtahir.linkbait.plugin.MessageEventListener
+import com.nishtahir.linkbait.plugin.Messenger
+import ro.fortsoft.pf4j.ExtensionPoint
+import ro.fortsoft.pf4j.PluginManager
 /**
  * Base implementation for a bot
  */
-abstract class AbstractBot extends AbstractService {
+abstract class AbstractBot extends AbstractExecutionThreadService {
 
     /**
      * Bot owner
@@ -20,14 +22,48 @@ abstract class AbstractBot extends AbstractService {
     protected EventBus eventBus
 
     /**
-     * Starts a slack session
+     *
      */
-    abstract void start();
+    PluginManager pluginManager;
 
     /**
-     * Stops the slack session
+     *
+     * @param pluginManager
+     * @param configuration
      */
-    abstract void stop();
+    AbstractBot(PluginManager pluginManager) {
+        this.pluginManager = pluginManager
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Override
+    protected void startUp() throws Exception {
+        super.startUp()
+        pluginManager.loadPlugins()
+    }
+
+    @Override
+    protected void run() throws Exception {
+        pluginManager.startPlugins()
+        List<ExtensionPoint> messageEventListeners = pluginManager.getExtensions(MessageEventListener.class);
+        messageEventListeners.each {
+            registerHandler(it)
+        }
+
+    }
+
+    @Override
+    protected void shutDown() throws Exception {
+        super.shutDown()
+        pluginManager.stopPlugins()
+        List<MessageEventListener> messageEventListeners = pluginManager.getExtensions(MessageEventListener.class);
+        messageEventListeners.each {
+            unregisterHandler(it)
+        }
+    }
 
     /**
      * Registers to event bus

@@ -1,10 +1,7 @@
 package com.nishtahir.linkbait.core.util
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.nishtahir.linkbait.core.model.Plugin
 import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
-
 /**
  * Utility class to work with JSON.
  */
@@ -26,12 +23,4 @@ class JSONUtils {
         return JsonOutput.prettyPrint(dataToJSON(data))
     }
 
-    /**
-     *
-     * @param data
-     * @return
-     */
-    static Plugin jsonToPlugin(String data) {
-        return new ObjectMapper().readValue(data, Plugin.class)
-    }
 }

@@ -1,9 +1,10 @@
 package com.nishtahir.linkbait.core
 
 import com.google.common.eventbus.EventBus
-import com.nishtahir.linkbait.core.event.MessageEvent
-import com.nishtahir.linkbait.core.event.Messenger
-import com.nishtahir.linkbait.core.event.ReactionEvent
+import com.nishtahir.linkbait.core.model.Configuration
+import com.nishtahir.linkbait.plugin.MessageEvent
+import com.nishtahir.linkbait.plugin.Messenger
+import com.nishtahir.linkbait.plugin.ReactionEvent
 import com.ullink.slack.simpleslackapi.SlackSession
 import com.ullink.slack.simpleslackapi.events.ReactionAdded
 import com.ullink.slack.simpleslackapi.events.ReactionRemoved
@@ -14,6 +15,7 @@ import com.ullink.slack.simpleslackapi.listeners.ReactionRemovedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import groovy.transform.Canonical
 import groovy.transform.ToString
+import ro.fortsoft.pf4j.DefaultPluginManager
 
 /**
  *
@@ -41,7 +43,8 @@ class SlackBot extends AbstractBot {
      * Bus to carry all of the sweet sweet messages across
      */
 
-    SlackBot(String apiToken, String owner) {
+    SlackBot(Configuration configuration, String apiToken, String owner) {
+        super(new DefaultPluginManager(configuration.pluginDirectory))
         this.apiToken = apiToken;
         this.owner = owner
 
@@ -96,20 +99,6 @@ class SlackBot extends AbstractBot {
         })
     }
 
-    /**
-     * Starts a slack session
-     */
-    public void start() {
-        session?.connect()
-    }
-
-    /**
-     * Stops the slack session
-     */
-    public void stop() {
-        session?.disconnect()
-    }
-
     @Override
     Messenger getMessenger() {
         if (messenger == null) {
@@ -119,12 +108,26 @@ class SlackBot extends AbstractBot {
     }
 
     @Override
-    protected void doStart() {
-
+    protected void startUp() throws Exception {
+        super.startUp()
+        session.connect();
     }
 
     @Override
-    protected void doStop() {
-
+    protected void run() throws Exception {
+        super.run();
+        while (isRunning()) {
+            //Don't know if this is a good idea, but
+            //it seemed wrong to let the process run in an
+            //unmanaged infinite loop
+            Thread.sleep(500);
+        }
     }
+
+    @Override
+    protected void shutDown() throws Exception {
+        super.shutDown()
+        session.disconnect();
+    }
+
 }

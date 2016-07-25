@@ -1,6 +1,15 @@
 group 'com.nishtahir.linkbait'
 version '0.1.2'
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2-1"
+    }
+}
+
 apply plugin: 'groovy'
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -17,6 +26,8 @@ repositories {
 }
 
 dependencies {
+    compile 'com.gitlab.nishtahir:linkbait-plugin-api:-SNAPSHOT'
+
     //Simple slack API
     compile 'com.github.Ullink:simple-slack-api:-SNAPSHOT'
 
@@ -50,6 +61,8 @@ dependencies {
     compile "org.apache.maven.wagon:wagon-ssh:${wagonVersion}"
 
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2-1"
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
