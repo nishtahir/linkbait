@@ -33,8 +33,14 @@ class PokedexServiceTest : Spek({
 
         it("should find exact matches by id") {
             val test = findPokemon(151)
-            assertEquals("mew", test?.name)
-            assertEquals("151", test?.id)
+            assertEquals("mew", test.name)
+            assertEquals("151", test.id)
+        }
+
+
+        it("should return missingno when id is not found") {
+            val test = findPokemon(9001)
+            assertEquals(missingNo, test)
         }
     }
 })

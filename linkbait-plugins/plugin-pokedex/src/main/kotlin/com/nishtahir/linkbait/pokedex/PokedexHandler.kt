@@ -14,25 +14,39 @@ class PokedexHandler(val context: PluginContext) : MessageEventListener {
 
     @Subscribe
     override fun handleMessageEvent(event: MessageEvent) {
-        val pokemon = findPokemon(event.message)
-        pokemon?.let { pokemon ->
-            val attachment = Attachment(
-                    title = pokemon.name.capitalize().orEmpty(),
-                    body = pokemon.description.orEmpty(),
-                    color = getColor(pokemon.color),
-                    thumbnailUrl = pokemon.thumbnail)
+        if(event.isDirectedAtBot){
+            val tokens = event.message.split("""\s+""".toRegex())
+            if("pokedex" == tokens[0]){
 
-            attachment.additionalFields = mapOf(
-                    "Id" to pokemon.id,
-                    "Height" to pokemon.height.toString(),
-                    "Weight" to pokemon.weight.toString(),
-                    "Abilities" to pokemon.getAbilities().joinToString(),
-                    "Type" to pokemon.getType().joinToString()
-            )
 
-            context.getMessenger().sendAttachment(event.channel, attachment);
+                val pokemon = findPokemon(parseTextInput(tokens[1]))
+                pokemon?.let { pokemon ->
+                    val attachment = Attachment(
+                            title = pokemon.name.capitalize().orEmpty(),
+                            body = pokemon.description.orEmpty(),
+                            color = getColorHex(pokemon.color),
+                            thumbnailUrl = pokemon.thumbnail)
+
+                    attachment.additionalFields = mapOf(
+                            "Id" to pokemon.id,
+                            "Height" to "${pokemon.height/10.0}m",
+                            "Weight" to "${pokemon.weight/10.0}kg",
+                            "Abilities" to pokemon.getAbilities().joinToString(),
+                            "Type" to pokemon.getType().joinToString()
+                    )
+
+                    context.getMessenger().sendAttachment(event.channel, attachment);
+                }
+            }
+        }
+    }
+
+    fun parseTextInput(input : String) : Any {
+        if(input.matches("""\d+""".toRegex())){
+            return input.toInt()
         }
 
+        return input
     }
 
 }

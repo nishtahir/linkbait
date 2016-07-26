@@ -9,16 +9,32 @@ import uy.kohesive.injekt.api.get
 import java.util.*
 
 val pokemonColorMap = mapOf(
-        "black"  to "705746", // black
-        "blue"   to "6390F0", // blue
-        "brown"  to "E2BF65", // brown
-        "gray"   to "B7B7CE", // gray
-        "green"  to "7AC74C", // green
-        "pink"   to "D685AD", // pink
+        "black" to "705746", // black
+        "blue" to "6390F0", // blue
+        "brown" to "E2BF65", // brown
+        "gray" to "B7B7CE", // gray
+        "green" to "7AC74C", // green
+        "pink" to "D685AD", // pink
         "purple" to "A98FF3", // purple
-        "red"    to "C22E28", // red
-        "white"  to "FFFFFF", // white
+        "red" to "C22E28", // red
+        "white" to "FFFFFF", // white
         "yellow" to "F7D02C" // yellow
+)
+
+
+/**
+ * MissingNo stats gotten from
+ * http://bulbapedia.bulbagarden.net/wiki/MissingNo.
+ */
+val missingNo: Pokemon = Pokemon(
+        id = "????",
+        name = "Mi̥̮̖ss̹̺̘͉i͉̭̦̹̙n̘̟̝̦͎g̦͕̠ͅn̟̭o̤̲̮̹̞͔̰",
+        weight = 35070,
+        height = 100,
+        type = "Bird, Normal",
+        color = "purple",
+        thumbnail = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/MissingNo.png/150px-MissingNo.png",
+        description = "31, 32, 50, 52, 56, 61, 62, 63, 67, 68, 69, 79, 80, 81, 86, 87, 94, 95, 115, 121, 122, 127, 134, 135, 137, 140, 146, 156, 159, 160, 161, 162, 172, 174, 175 or 181."
 )
 
 val connectionSource: JdbcConnectionSource = Injekt.get()
@@ -43,14 +59,30 @@ fun findPokemon(name: String): Pokemon? {
     }
 }
 
-fun findPokemon(id : Int) : Pokemon? {
+fun findPokemon(obj: Any) : Pokemon? {
+    when (obj){
+        is Int -> return findPokemon(obj)
+        is String -> return findPokemon(obj)
+        else -> return null
+    }
+}
+
+/**
+ * @param id ID of Pokemon to find.
+ * @return Pokemon with matching ID or MissingNo if not found.
+ */
+fun findPokemon(id: Int): Pokemon {
     val query = pokemonDao.queryBuilder()
             .where()
             .eq("id", id)
             .prepare()
-    return pokemonDao.queryForFirst(query)
+    return pokemonDao.queryForFirst(query) ?: missingNo
 }
 
+/**
+ * Fuzzy match pokemon search
+ * @param name Name of pokemon to find
+ */
 fun findPokemonLike(name: String): Pokemon? {
     val query = pokemonDao.queryBuilder()
             .where()
@@ -81,8 +113,9 @@ fun findPokemonFuzzy(name: String): Pokemon? {
 }
 
 /**
- * @param colorId id of color to get. This should match Ids in db
+ * @param color Color to get.
+ * @return Hex matching pokemon color
  */
-fun getColor(colorId: String = "gray"): String {
-    return pokemonColorMap[colorId].orEmpty()
+fun getColorHex(color: String = "gray"): String {
+    return pokemonColorMap[color].orEmpty()
 }
