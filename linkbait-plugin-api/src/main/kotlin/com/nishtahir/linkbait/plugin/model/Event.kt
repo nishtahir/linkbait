@@ -21,4 +21,9 @@ abstract class Event {
      */
     var channel: String = ""
 
+    /**
+     *
+     */
+    var isDirectedAtBot : Boolean = false
+
 }

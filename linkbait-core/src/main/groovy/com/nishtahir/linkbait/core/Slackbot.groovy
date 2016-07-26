@@ -15,6 +15,7 @@ import com.ullink.slack.simpleslackapi.listeners.ReactionRemovedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import groovy.transform.Canonical
 import groovy.transform.ToString
+
 /**
  *
  */
@@ -60,11 +61,20 @@ class SlackBot extends AbstractBot {
         session.addMessagePostedListener(new SlackMessagePostedListener() {
             @Override
             void onEvent(SlackMessagePosted event, SlackSession session) {
-                MessageEvent messageEvent = new MessageEvent(id: event.timestamp,
-                        channel: event.channel.name,
-                        sender: event.sender.id,
-                        message: event.messageContent)
                 if (event.sender.id != session.sessionPersona().id) {
+                    MessageEvent messageEvent = new MessageEvent(id: event.timestamp,
+                            channel: event.channel.name,
+                            sender: event.sender.id,
+                    )
+
+                    def matcher = (event.messageContent =~ /^(?i)(<@${session.sessionPersona().id}>:?)\s+(?<text>(.*))/)
+                    if (matcher.find()) {
+                        messageEvent.directedAtBot = true
+                        messageEvent.message = matcher.group('text')
+                    } else {
+                        messageEvent.directedAtBot = false
+                        messageEvent.message = event.messageContent
+                    }
                     eventBus.post(messageEvent)
                 }
             }
