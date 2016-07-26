@@ -1,8 +1,0 @@
-{
-  "version": "1.0",
-  "title": "Reddit autocomplete",
-  "description": "A JRuby plugin that auto completes reddit links.",
-  "author": "Nish Tahir",
-  "url": "",
-  "handler": "com.nishtahir.linkbait.RedditAutoCompleteHandler"
-}

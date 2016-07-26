@@ -23,17 +23,6 @@ jar.doFirst() {
     }
 }
 
-task plugin(type: Jar) {
-    baseName = 'PluginPokedex'
-    version = '1.0'
-    into('classes'){
-        with jar
-    }
-
-    extension('zip')
-}
-assemble.dependsOn plugin
-
 kapt {
     generateStubs = true
 }

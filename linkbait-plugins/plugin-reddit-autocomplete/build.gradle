@@ -1,45 +1,32 @@
-plugins {
-    id "com.github.jruby-gradle.base" version "1.2.1"
-    id "com.github.jruby-gradle.jar" version "1.1.0"
-    id "com.github.johnrengelman.shadow" version "1.2.3"
-}
-
 apply plugin: 'java'
+apply plugin: 'groovy'
 
-import com.github.jrubygradle.JRubyExec
-version = '0.1'
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'RedditAutocomplete'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'com.nishtahir.linkbait.reddit.RedditAutocomplete',
+                'Plugin-Id': 'com.nishtahir.linkbait.reddit.RedditAutocomplete',
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'Nish Tahir',
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
 
-// Property that says it's a plugin. Used in deployment
-ext.isPlugin = true
-
-evaluationDependsOn(':linkbait-server')
-
-install.dependsOn('compileRuby')
-install.dependsOn('shadowJar')
-install.doLast {
+    }
 }
 
-/*
-* I couldn't figure out how to package and jar
-* the ruby directly so until then
-* *.rb --> *.java --> *.jar with dependencies
-*/
-def sourceDir = 'src/main/ruby/'
-def outputDir = 'src/main/java/'
-
-task compileRuby(type: JRubyExec) {
-    File output = new File(outputDir)
-    output.delete()
-    output.mkdirs()
-
-    jrubyArgs '-S', 'jrubyc', '--java', '-t', output.path
-    script sourceDir + 'reddit_autocomplete.rb'
-}
-
+/**
+ * Important! Use exact versions.
+ */
 dependencies {
-    //JRuby
-    compile 'org.jruby:jruby-complete:9.0.5.0'
+    compile project(':linkbait-plugin-api')
 
-    compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
+
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     testCompile 'junit:junit:4.12'
 }
