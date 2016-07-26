@@ -1,9 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
+/**
+ *
+ */
 jar.doFirst() {
-    baseName = 'PluginPokedex'
-    version = '1.0'
     manifest {
         attributes 'Plugin-Class': 'com.nishtahir.linkbait.pokedex.PokedexPlugin',
                 'Plugin-Id': 'com.nishtahir.linkbait.pokedex.PokedexPlugin',
@@ -22,7 +23,7 @@ jar.doFirst() {
 
 task plugin(type: Jar) {
     baseName = 'PluginPokedex'
-    version = '0.1.0'
+    version = '1.0'
     into('classes'){
         with jar
     }
@@ -54,9 +55,9 @@ dependencies {
     // I would have used Apache Commons Text, but there is only a SNAPSHOT build somewhere...
     compile 'info.debatty:java-string-similarity:0.13'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2-1"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.3"
 
-    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.2-1"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.2-1"
+    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.3"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.3"
     testCompile "org.jetbrains.spek:spek:1.0.25"
 }
