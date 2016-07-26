@@ -43,8 +43,12 @@ fun findPokemon(name: String): Pokemon? {
     }
 }
 
-fun findPokemonById(id : Int) : Pokemon? {
-
+fun findPokemon(id : Int) : Pokemon? {
+    val query = pokemonDao.queryBuilder()
+            .where()
+            .eq("id", id)
+            .prepare()
+    return pokemonDao.queryForFirst(query)
 }
 
 fun findPokemonLike(name: String): Pokemon? {

@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class PokedexServiceTest : Spek({
-    Injekt.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/test/resources/linkbait-pokedex.sqlite"))
+    Injekt.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/linkbait-pokedex.sqlite"))
 
     describe("Database connection") {
         it("should not be null") {
@@ -19,16 +19,22 @@ class PokedexServiceTest : Spek({
     }
 
     describe("Pokemon") {
-        it("should find exact matches") {
+        it("should find exact matches by name") {
             val test = findPokemon("Jolteon")
             assertEquals("jolteon", test?.name)
             assertEquals("135", test?.id)
         }
 
-        it("should find like matches") {
+        it("should find like matches by name") {
             val test = findPokemon("Jlten")
             assertEquals("jolteon", test?.name)
             assertEquals("135", test?.id)
+        }
+
+        it("should find exact matches by id") {
+            val test = findPokemon(151)
+            assertEquals("mew", test?.name)
+            assertEquals("151", test?.id)
         }
     }
 })
