@@ -62,6 +62,8 @@ class SlackMessenger implements Messenger {
     static SlackAttachment convertAttachmentToSlackAttachment(@NotNull Attachment attachment) {
         SlackAttachment result = new SlackAttachment()
         result.title = attachment.title
+        result.titleLink = attachment.titleUrl
+        result.imageUrl = attachment.imageUrl
         result.text = attachment.body
         result.color = attachment.color
         result.thumbUrl = attachment.thumbnailUrl
