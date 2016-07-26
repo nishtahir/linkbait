@@ -15,13 +15,13 @@ import kotlin.test.assertEquals
 class PokedexHandlerTest : Spek({
 
     Injekt.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/linkbait-pokedex.sqlite"))
-
+    Injekt.addFactory { PokedexService() }
     val context: PluginContext = MockContext()
     val handler: PokedexHandler = PokedexHandler(context)
     val messenger: MockMessenger = context.getMessenger() as MockMessenger
 
     describe("a message event ") {
-
+        val service: PokedexService = Injekt.get()
 
         given("handle event") {
 
@@ -71,7 +71,7 @@ class PokedexHandlerTest : Spek({
 
 
                 handler.handleMessageEvent(messageEvent)
-                assertEquals(messenger.attachment?.title, missingNo.name)
+                assertEquals(messenger.attachment?.title, service.missingNo.name)
             }
         }
 

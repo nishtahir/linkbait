@@ -2,7 +2,7 @@
  * Script to include kotlin
  */
 buildscript {
-    ext.kotlin_version = '1.0.3'
+    ext.kotlin_version = '1.0.2'
     ext.dokka_version = '0.9.8'
     ext.spek_version = '1.0.25'
     repositories {

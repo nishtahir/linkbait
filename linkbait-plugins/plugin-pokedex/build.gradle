@@ -5,6 +5,8 @@ apply plugin: 'kotlin'
  *
  */
 jar.doFirst() {
+    baseName = 'PluginPokedex'
+    version = '1.0'
     manifest {
         attributes 'Plugin-Class': 'com.nishtahir.linkbait.pokedex.PokedexPlugin',
                 'Plugin-Id': 'com.nishtahir.linkbait.pokedex.PokedexPlugin',
@@ -42,7 +44,7 @@ kapt {
 dependencies {
     compile project(':linkbait-plugin-api')
 
-    compile "uy.kohesive.injekt:injekt-core:1.16.1"
+    compile 'uy.kohesive.injekt:injekt-core:2.0.0-ALPHA-03'
 
     compile 'org.xerial:sqlite-jdbc:3.8.11.2'
     compile 'org.xerial.thirdparty:nestedvm:1.0'
@@ -55,9 +57,9 @@ dependencies {
     // I would have used Apache Commons Text, but there is only a SNAPSHOT build somewhere...
     compile 'info.debatty:java-string-similarity:0.13'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.3"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
 
-    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.3"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.3"
+    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.2"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.2"
     testCompile "org.jetbrains.spek:spek:1.0.25"
 }

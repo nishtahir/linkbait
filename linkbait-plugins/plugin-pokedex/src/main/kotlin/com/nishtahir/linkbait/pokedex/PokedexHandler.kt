@@ -5,6 +5,7 @@ import com.nishtahir.linkbait.plugin.Attachment
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.MessageEventListener
 import com.nishtahir.linkbait.plugin.PluginContext
+import uy.kohesive.injekt.Injekt
 
 
 /**
@@ -12,25 +13,27 @@ import com.nishtahir.linkbait.plugin.PluginContext
  */
 class PokedexHandler(val context: PluginContext) : MessageEventListener {
 
+    val service: PokedexService = Injekt.get()
+
     @Subscribe
     override fun handleMessageEvent(event: MessageEvent) {
-        if(event.isDirectedAtBot){
+        if (event.isDirectedAtBot) {
             val tokens = event.message.split("""\s+""".toRegex())
-            if("pokedex" == tokens[0]){
+            if ("pokedex" == tokens[0]) {
 
 
-                val pokemon = findPokemon(parseTextInput(tokens[1]))
+                val pokemon = service.findPokemon(parseTextInput(tokens[1]))
                 pokemon?.let { pokemon ->
                     val attachment = Attachment(
                             title = pokemon.name.capitalize().orEmpty(),
                             body = pokemon.description.orEmpty(),
-                            color = getColorHex(pokemon.color),
+                            color = service.getColorHex(pokemon.color),
                             thumbnailUrl = pokemon.thumbnail)
 
                     attachment.additionalFields = mapOf(
                             "Id" to pokemon.id,
-                            "Height" to "${pokemon.height/10.0}m",
-                            "Weight" to "${pokemon.weight/10.0}kg",
+                            "Height" to "${pokemon.height / 10.0}m",
+                            "Weight" to "${pokemon.weight / 10.0}kg",
                             "Abilities" to pokemon.getAbilities().joinToString(),
                             "Type" to pokemon.getType().joinToString()
                     )
@@ -41,8 +44,8 @@ class PokedexHandler(val context: PluginContext) : MessageEventListener {
         }
     }
 
-    fun parseTextInput(input : String) : Any {
-        if(input.matches("""\d+""".toRegex())){
+    fun parseTextInput(input: String): Any {
+        if (input.matches("""\d+""".toRegex())) {
             return input.toInt()
         }
 
