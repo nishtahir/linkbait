@@ -1,6 +1,6 @@
 package com.nishtahir.linkbait.model
 
-import com.nishtahir.linkbait.core.model.Configuration
+import com.nishtahir.linkbait.plugin.model.Configuration
 import java.io.File
 
 
@@ -32,7 +32,7 @@ class ServerConfiguration : Configuration {
      */
     var port = 4567
 
-    override fun getTemporaryFileDirectory(): File? {
+    override fun getTemporaryFileDirectory(): File {
         val dir = File(temporaryFileDirectory)
         if (!dir.exists()) {
             dir.mkdirs()
@@ -40,7 +40,7 @@ class ServerConfiguration : Configuration {
         return dir
     }
 
-    override fun getPluginRepository(): File? {
+    override fun getPluginRepository(): File {
         val dir = File(pluginRepository)
         if (!dir.exists()) {
             dir.mkdirs()
@@ -48,7 +48,7 @@ class ServerConfiguration : Configuration {
         return dir
     }
 
-    override fun getStaticFileDirectory(): File? {
+    override fun getStaticFileDirectory(): File {
         val dir = File(staticFileDirectory)
         if (!dir.exists()) {
             dir.mkdirs()
@@ -56,7 +56,7 @@ class ServerConfiguration : Configuration {
         return dir
     }
 
-    override fun getPluginDirectory(): File? {
+    override fun getPluginDirectory(): File {
         val dir = File(pluginDirectory)
         if (!dir.exists()) {
             dir.mkdirs()
