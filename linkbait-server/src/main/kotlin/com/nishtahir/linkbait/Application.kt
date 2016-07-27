@@ -62,7 +62,7 @@ val connectionSource: JdbcConnectionSource = Injekt.get()
 
 val configuration: ServerConfiguration = Injekt.get()
 
-val webAppDirectory = File("web")
+val webAppDirectory = File("linkbait-www")
 
 /**
  * Do cleanup and other nice things here.
@@ -121,9 +121,8 @@ private fun run() {
 fun initializeServer() {
     Spark.port(configuration.port)
 
-
     Spark.staticFiles.externalLocation(webAppDirectory.absolutePath)
-    Spark.externalStaticFileLocation(configuration.staticFileDirectory)
+//    Spark.externalStaticFileLocation(configuration.staticFileDirectory)
 }
 
 /**

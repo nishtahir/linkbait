@@ -33,18 +33,34 @@ class ServerConfiguration : Configuration {
     var port = 4567
 
     override fun getTemporaryFileDirectory(): File? {
-        return File(temporaryFileDirectory)
+        val dir = File(temporaryFileDirectory)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
     }
 
     override fun getPluginRepository(): File? {
-        return File(pluginRepository)
+        val dir = File(pluginRepository)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
     }
 
     override fun getStaticFileDirectory(): File? {
-        return File(staticFileDirectory)
+        val dir = File(staticFileDirectory)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
     }
 
     override fun getPluginDirectory(): File? {
-        return File(pluginDirectory)
+        val dir = File(pluginDirectory)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
     }
 }

@@ -8,9 +8,6 @@ class RedditAutoCompletePlugin extends Plugin {
 
     RedditAutoCompleteListener listener
 
-    RedditAutoCompletePlugin() {
-    }
-
     @Override
     void start(@NotNull PluginContext context) {
         if (listener == null) {
