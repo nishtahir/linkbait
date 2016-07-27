@@ -2,19 +2,16 @@ package com.nishtahir.linkbait.pokedex
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import org.jetbrains.spek.api.Spek
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.addSingleton
-import uy.kohesive.injekt.api.get
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class PokedexServiceSpec : Spek({
-    Injekt.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/linkbait-pokedex.sqlite"))
-    val service : PokedexService = PokedexService()
+    InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/linkbait-pokedex.sqlite"))
+    val service: PokedexService = PokedexService()
 
     describe("Database connection") {
         it("should not be null") {
-            val test: JdbcConnectionSource = Injekt.get()
+            val test: JdbcConnectionSource = InjektModule.scope.get()
             assertNotNull(test)
         }
     }

@@ -8,20 +8,21 @@ import com.nishtahir.linkbait.plugin.PluginContext
 import com.nishtahir.linkbait.plugin.model.Configuration
 import com.nishtahir.linkbait.plugin.model.EventListener
 import org.jetbrains.spek.api.Spek
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.addSingleton
+
 import kotlin.test.assertEquals
 
 class PokedexHandlerTest : Spek({
 
-    Injekt.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/linkbait-pokedex.sqlite"))
-    Injekt.addFactory { PokedexService() }
+    InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/linkbait-pokedex.sqlite"))
+    InjektModule.scope.addFactory { PokedexService() }
+
     val context: PluginContext = MockContext()
+
     val handler: PokedexHandler = PokedexHandler(context)
     val messenger: MockMessenger = context.getMessenger() as MockMessenger
 
     describe("a message event ") {
-        val service: PokedexService = Injekt.get()
+        val service: PokedexService = InjektModule.scope.get()
 
         given("handle event") {
 

@@ -4,5 +4,6 @@ include 'linkbait-plugin-api'
 include 'linkbait-plugins/plugin-pokedex'
 include 'linkbait-plugins/plugin-reddit-autocomplete'
 include 'linkbait-plugins/plugin-store-bot'
+include 'linkbait-plugins/plugin-hey-snackfood'
 
 rootProject.name = 'linkbait'

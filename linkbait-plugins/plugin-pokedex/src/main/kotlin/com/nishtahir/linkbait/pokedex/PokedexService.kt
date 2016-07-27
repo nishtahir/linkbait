@@ -4,8 +4,6 @@ import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.jdbc.JdbcConnectionSource
 import info.debatty.java.stringsimilarity.JaroWinkler
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.get
 import java.util.*
 
 class PokedexService {
@@ -38,7 +36,7 @@ class PokedexService {
             description = "31, 32, 50, 52, 56, 61, 62, 63, 67, 68, 69, 79, 80, 81, 86, 87, 94, 95, 115, 121, 122, 127, 134, 135, 137, 140, 146, 156, 159, 160, 161, 162, 172, 174, 175 or 181."
     )
 
-    val connectionSource: JdbcConnectionSource = Injekt.get()
+    val connectionSource: JdbcConnectionSource = InjektModule.scope.get()
 
     val pokemonDao: Dao<Pokemon, Double> = DaoManager.createDao(connectionSource, Pokemon::class.java)
 

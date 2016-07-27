@@ -13,7 +13,7 @@ import uy.kohesive.injekt.Injekt
  */
 class PokedexHandler(val context: PluginContext) : MessageEventListener {
 
-    val service: PokedexService = Injekt.get()
+    val service: PokedexService = InjektModule.scope.get()
 
     @Subscribe
     override fun handleMessageEvent(event: MessageEvent) {

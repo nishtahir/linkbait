@@ -54,14 +54,14 @@ abstract class AbstractBot extends AbstractExecutionThreadService implements Plu
      */
     @Override
     protected void startUp() throws Exception {
-
+        loader.handlers.each {
+            it.start(this)
+        }
     }
 
     @Override
     protected void run() throws Exception {
-        loader.handlers.each {
-            it.start(this)
-        }
+
     }
 
     @Override

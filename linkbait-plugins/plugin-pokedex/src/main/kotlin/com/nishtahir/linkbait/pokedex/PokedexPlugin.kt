@@ -8,6 +8,7 @@ import uy.kohesive.injekt.InjektMain
 import uy.kohesive.injekt.api.InjektRegistrar
 import uy.kohesive.injekt.api.InjektScope
 import uy.kohesive.injekt.api.addSingleton
+import uy.kohesive.injekt.registry.default.DefaultRegistrar
 import java.io.File
 import java.io.InputStream
 
@@ -27,15 +28,14 @@ class PokedexPlugin : Plugin() {
      */
     var pokedexHandler: PokedexHandler? = null
 
-    companion object : InjektMain() {
-        override fun InjektScope.registerInjectables() {
-            val dex: File = copyInputStreamToTempFile(
-                    PokedexPlugin::class.java.classLoader.getResourceAsStream("linkbait-pokedex.sqlite"))
-            addSingleton(JdbcConnectionSource("jdbc:sqlite:${dex.absolutePath}"))
-            addFactory { PokedexService() }
-        }
+    companion object {
+
 
         init {
+            val dex: File = copyInputStreamToTempFile(
+                    PokedexPlugin::class.java.classLoader.getResourceAsStream("linkbait-pokedex.sqlite"))
+            InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:${dex.absolutePath}"))
+            InjektModule.scope.addFactory { PokedexService() }
             Class.forName("org.sqlite.JDBC")
         }
 
