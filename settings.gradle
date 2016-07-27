@@ -1,7 +1,8 @@
 include 'linkbait-core'
-include 'linkbait-plugin-api'
 include 'linkbait-server'
+include 'linkbait-plugin-api'
 include 'linkbait-plugins/plugin-pokedex'
 include 'linkbait-plugins/plugin-reddit-autocomplete'
+include 'linkbait-plugins/plugin-store-bot'
 
 rootProject.name = 'linkbait'

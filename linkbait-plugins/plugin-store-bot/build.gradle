@@ -1,0 +1,33 @@
+apply plugin: 'groovy'
+
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'StoreBotPlugin'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'com.nishtahir.linkbait.storebot.StoreBotPlugin',
+                'Plugin-Id': 'com.nishtahir.linkbait.storebot.StoreBotPlugin',
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'Nish Tahir',
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+
+    }
+}
+
+/**
+ * Important! Use exact versions.
+ */
+dependencies {
+    compile project(':linkbait-plugin-api')
+
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    compile 'org.jsoup:jsoup:1.9.2'
+    compile 'org.apache.commons:commons-lang3:3.4'
+
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'junit:junit:4.12'
+}
