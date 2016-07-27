@@ -6,5 +6,4 @@ build-job:
     - ./gradlew build
   tags:
     - java
-    - kotlin
   allow_failure: false
