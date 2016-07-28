@@ -38,7 +38,7 @@ class HeySnackFoodHandler(val context: PluginContext) : MessageEventListener {
                 if (i > 10) {
                     return@forEachIndexed
                 }
-                context.getMessenger().sendMessage(event.channel, "${i + 1}. ${user.name}    *${user.count}*")
+                context.getMessenger().sendMessage(event.channel, "${i + 1}. ${user.name}    *${user.count}*  ${ if (i == 0) ":crown:" else ""}")
             }
         }
     }

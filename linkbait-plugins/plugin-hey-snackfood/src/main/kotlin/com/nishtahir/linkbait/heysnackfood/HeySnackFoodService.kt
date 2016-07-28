@@ -21,7 +21,7 @@ class HeySnackFoodService {
                 .ge(User::count.name, 1)
                 .prepare()
         val leaderboard: List<User> = userDao.query(query)
-        return leaderboard.sortedBy { it.count }.take(10).orEmpty()
+        return leaderboard.sortedByDescending { it.count }.take(10).orEmpty()
     }
 
     fun findOrCreateUser(name: String): User {
