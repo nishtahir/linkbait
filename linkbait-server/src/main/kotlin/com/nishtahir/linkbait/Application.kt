@@ -182,7 +182,7 @@ fun initializeRoutes() {
  */
 fun renderContent(htmlFile: String): String? {
     try {
-        val path = Paths.get(File("${webAppDirectory.absolutePath}/$htmlFile").toURI())
+        val path = Paths.get(File("${webAppDirectory.absolutePath}/index.html").toURI())
         return String(Files.readAllBytes(path), Charset.defaultCharset())
     } catch (e: IOException) {
     } catch (e: URISyntaxException) {
