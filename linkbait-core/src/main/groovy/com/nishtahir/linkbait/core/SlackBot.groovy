@@ -17,14 +17,14 @@ import groovy.transform.Canonical
 import groovy.transform.ToString
 
 /**
- *
+ * Supports slack using the slack api.
  */
 @Canonical
 @ToString
 class SlackBot extends AbstractBot {
 
     /**
-     *  Where all the communication magic happens
+     *  Where all the communication magic happens.
      */
     private SlackSession session
 
@@ -64,16 +64,16 @@ class SlackBot extends AbstractBot {
                 if (event.sender.id != session.sessionPersona().id) {
                     MessageEvent messageEvent = new MessageEvent(id: event.timestamp,
                             channel: event.channel.name,
-                            sender: event.sender.id,
+                            sender: event.sender.userName,
                     )
 
                     def matcher = (event.messageContent =~ /^(?i)(<@${session.sessionPersona().id}>:?)\s+(?<text>(.*))/)
                     if (matcher.find()) {
                         messageEvent.directedAtBot = true
-                        messageEvent.message = matcher.group('text')
+                        messageEvent.message = escapeSlackIds(matcher.group('text'))
                     } else {
                         messageEvent.directedAtBot = false
-                        messageEvent.message = event.messageContent
+                        messageEvent.message = escapeSlackIds(event.messageContent)
                     }
                     eventBus.post(messageEvent)
                 }
@@ -84,7 +84,7 @@ class SlackBot extends AbstractBot {
             void onEvent(ReactionAdded event, SlackSession session) {
                 ReactionEvent reactionEvent = new ReactionEvent(id: event.messageID,
                         channel: event.channel.name,
-                        sender: event.user.id,
+                        sender: event.user.userName,
                         reaction: event.emojiName,
                         added: true)
                 if (event.getUser().id != session.sessionPersona().id) {
@@ -97,7 +97,7 @@ class SlackBot extends AbstractBot {
             void onEvent(ReactionRemoved event, SlackSession session) {
                 ReactionEvent reactionEvent = new ReactionEvent(id: event.messageID,
                         channel: event.channel.name,
-                        sender: event.user.id,
+                        sender: event.user.userName,
                         reaction: event.emojiName,
                         added: true)
                 if (event.getUser().id != session.sessionPersona().id) {
@@ -146,6 +146,17 @@ class SlackBot extends AbstractBot {
     @Override
     void getPluginState() {
 
+    }
+
+    String escapeSlackIds(String message){
+        def matcher = ( message =~ /.*<@(?<id>\w+)>.*/ )
+        if (matcher.matches()) {
+            matcher[0].eachWithIndex { String match, int i ->
+                if(i == 0) return
+                message = message.replace("<@${match}>", "@${session.findUserById(match as String).userName}")
+            }
+        }
+        return message
     }
 
 }

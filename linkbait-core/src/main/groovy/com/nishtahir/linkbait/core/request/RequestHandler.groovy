@@ -5,17 +5,17 @@ import com.ullink.slack.simpleslackapi.events.SlackEvent
 
 /**
  * Base class for making requests to the bot.
- * @param <T> Information passed through from {@link RequestHandler#parse} to {@link RequestHandler#parse}.
- * @param <E> Subclass of {@link SlackEvent}.
- * @deprecated
+ * @param < T >  Information passed through from {@link RequestHandler#parse} to {@link RequestHandler#parse}.
+ * @param < E >  Subclass of {@link SlackEvent}.
  */
+@Deprecated
 interface RequestHandler<T, E extends SlackEvent> {
 
     /**
      * Parse the request and throw a {@link com.nishtahir.linkbait.exception.RequestParseException} if invalid.
      * @return Object that is passed to {@link #handle}.
      */
-     T parse(String message, String sessionId)
+    T parse(String message, String sessionId)
     /**
      * In case of no {@link com.nishtahir.linkbait.exception.RequestParseException}, execute this.
      * @param parsed

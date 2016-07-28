@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull
 class SlackMessenger implements Messenger {
 
     /**
-     *
+     * Session context. Needed to send the right messages to the right slack.
      */
     SlackSession session
 
@@ -55,22 +55,22 @@ class SlackMessenger implements Messenger {
     }
 
     /**
-     *
+     * Turns the attachment into something that Slack can use
      * @param attachment
      * @return
      */
     static SlackAttachment convertAttachmentToSlackAttachment(@NotNull Attachment attachment) {
-        SlackAttachment result = new SlackAttachment()
-        result.title = attachment.title
-        result.titleLink = attachment.titleUrl
-        result.imageUrl = attachment.imageUrl
-        result.text = attachment.body
-        result.color = attachment.color
-        result.thumbUrl = attachment.thumbnailUrl
+        SlackAttachment slackAttachment = new SlackAttachment()
+        slackAttachment.title = attachment.title
+        slackAttachment.titleLink = attachment.titleUrl
+        slackAttachment.imageUrl = attachment.imageUrl
+        slackAttachment.text = attachment.body
+        slackAttachment.color = attachment.color
+        slackAttachment.thumbUrl = attachment.thumbnailUrl
 
         attachment.additionalFields?.each { key, value ->
-            result.addField(key, value, true)
+            slackAttachment.addField(key, value, true)
         }
-        return result
+        return slackAttachment
     }
 }
