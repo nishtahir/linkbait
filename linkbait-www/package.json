@@ -1,0 +1,16 @@
+{
+  "engines": {
+    "node": "6.3.x",
+    "npm": "3.10.5"
+  },
+  "name": "linkbait-www",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Web interface for Linkbait",
+  "repository": "https://gitlab.com/nishtahir/linkbait",
+  "license": "Apache 2",
+  "main": "",
+  "dependencies": {
+    "bower": "^1.7.9"
+  }
+}

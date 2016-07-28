@@ -14,6 +14,7 @@ buildscript {
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokka_version}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
+        classpath "com.moowork.gradle:gradle-node-plugin:0.13"
     }
 }
 

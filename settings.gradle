@@ -1,5 +1,6 @@
 include 'linkbait-core'
 include 'linkbait-server'
+include 'linkbait-www'
 include 'linkbait-plugin-api'
 include 'linkbait-plugins/plugin-pokedex'
 include 'linkbait-plugins/plugin-reddit-autocomplete'

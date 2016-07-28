@@ -1,0 +1,46 @@
+apply plugin: 'com.moowork.node'
+
+/**
+ * Used to manage web app as part of gradle build.
+ * It uses a self contained version of Node and npm
+ *
+ * for reference, see:
+ *
+ *     https://objectpartners.com/2015/04/29/using-gradle-and-bower-to-manage-jscss-dependencies/
+ *     https://objectpartners.com/2016/04/14/using-self-contained-node-js-and-npm-instances-with-gradle/
+ *
+ */
+
+node {
+    version = '6.3.1'
+    npmVersion = '3.10.5'
+    download = true
+}
+
+task npmCacheConfig(type: NpmTask) {
+    description = "Configure the NPM cache"
+    def npmCacheDir = "${gradle.getGradleUserHomeDir()}/caches/npm"
+    outputs.files file(npmCacheDir)
+    args = [ 'config', 'set', 'cache', npmCacheDir ]
+}
+
+task npmPackages(type: NpmTask, dependsOn: npmCacheConfig) {
+    description = "Install Node.js packages"
+    args = [ 'install' ]
+    inputs.files file('package.json')
+    outputs.files file('node_modules')
+}
+
+task bowerInstall(type: NodeTask) {
+    description = 'Installs bower components'
+    script = file('node_modules/bower/bin/bower')
+    args = ['install']
+    inputs.files file('bower.json')
+    outputs.files file('bower_components')
+    dependsOn npmPackages
+}
+
+task clean(type: Delete) {
+    delete 'node_modules'
+    delete 'bower_components'
+}
