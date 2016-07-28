@@ -20,10 +20,20 @@ import org.slf4j.LoggerFactory
 /**
  * This has a big job. Downloads plugins from the plugin repository.
  */
-@Canonical
 class DependencyResolver {
 
+    def repositories = [
+            "http://repository.jetbrains.com/all",
+            "https://jitpack.io",
+            "http://central.maven.org/maven2/"
+    ]
+
     File repository
+
+    DependencyResolver(File repository){
+        this.repository = repository
+    }
+
 
     private Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
 
@@ -34,8 +44,8 @@ class DependencyResolver {
      * @param version
      * @return
      */
-    public File resolveArtifact(String groupId, String artifactId, String version) {
-        String artifactIdentifier = "$groupId:$artifactId:$version"
+    public File resolveArtifact(com.nishtahir.linkbait.core.model.Dependency dependency) {
+        String artifactIdentifier = dependency.toString()
         LOG.debug("Resolving artifact: $artifactIdentifier")
 
         RepositorySystem repositorySystem = Booter.newRepositorySystem();
@@ -45,7 +55,7 @@ class DependencyResolver {
 
         ArtifactRequest artifactRequest = new ArtifactRequest();
         artifactRequest.setArtifact(artifact);
-        artifactRequest.setRepositories(Booter.newRepositories(repositorySystem, session));
+        artifactRequest.setRepositories(Booter.newRepositories(repositories));
 
         ArtifactResult artifactResult = repositorySystem.resolveArtifact(session, artifactRequest);
 
@@ -74,7 +84,7 @@ class DependencyResolver {
 
         CollectRequest collectRequest = new CollectRequest();
         collectRequest.setRoot(new Dependency(artifact, JavaScopes.COMPILE));
-        collectRequest.setRepositories(Booter.newRepositories(repositorySystem, session));
+        collectRequest.setRepositories(Booter.newRepositories(repositories));
 
         DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
 

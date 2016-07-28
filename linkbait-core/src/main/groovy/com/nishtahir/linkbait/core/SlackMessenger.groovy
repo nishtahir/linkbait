@@ -54,6 +54,14 @@ class SlackMessenger implements Messenger {
         session.sendMessage(slackChannel, null, convertAttachmentToSlackAttachment(attachment))
     }
 
+    @Override
+    void uploadFile(@NotNull String channel, @NotNull File file) {
+        SlackChannel slackChannel = session?.findChannelByName(channel)
+        if (file.exists()) {
+            session.sendFile(slackChannel, file.getBytes(), file.name)
+        }
+    }
+
     /**
      * Turns the attachment into something that Slack can use
      * @param attachment

@@ -1,5 +1,7 @@
 package com.nishtahir.linkbait.plugin
 
+import java.io.File
+
 /**
  *  Abstract out messaging functionality such that it's not dependent
  *  on any single framework. If a specific function is not supported by
@@ -33,5 +35,12 @@ interface Messenger {
     /**
      *
      */
-    fun sendAttachment(channel: String, attachment : Attachment)
+    fun sendAttachment(channel: String, attachment: Attachment)
+
+    /**
+     * Upload a what to a where
+     * @param channel Where
+     * @param file What
+     */
+    fun uploadFile(channel: String, file: File)
 }

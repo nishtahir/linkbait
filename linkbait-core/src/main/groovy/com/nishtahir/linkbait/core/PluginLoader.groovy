@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull
 
 import java.util.jar.JarInputStream
 import java.util.jar.Manifest
+
 /**
  * Class loader to loadPluginsFromPath language tools dynamically
  * at runtime, this helps decouple to the project into
@@ -70,7 +71,7 @@ class PluginLoader {
         String className = attributes.getValue('Plugin-Class')
 
         String dependencies = attributes.getValue('Dependencies')
-        DependencyResolver resolver = new DependencyResolver(repository: new File("data/repo"))
+        DependencyResolver resolver = new DependencyResolver(configuration.pluginRepository)
 
         List<File> files = []
         DependencyUtils.parseDependencies(dependencies).each {

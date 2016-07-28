@@ -45,8 +45,10 @@ class Booter {
      * @param session
      * @return
      */
-    public static List<RemoteRepository> newRepositories(RepositorySystem system, RepositorySystemSession session) {
-        return new ArrayList<RemoteRepository>(Arrays.asList(newCentralRepository()));
+    public static List<RemoteRepository> newRepositories(List<String> urls) {
+        return urls.collect() { url ->
+            newCentralRepository(url)
+        }
     }
 
     /**
