@@ -8,9 +8,6 @@ import spock.lang.Specification
  */
 class DependencyResolverTest extends Specification {
 
-    @Shared
-    DependencyResolver pluginResolver
-
     def setupSpec() {
 
     }
