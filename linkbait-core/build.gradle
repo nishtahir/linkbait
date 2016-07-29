@@ -1,18 +1,11 @@
-group 'com.nishtahir.linkbait'
+group 'com.nishtahir.linkbait.core'
 version '0.1.2'
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.2-1"
-    }
-}
 
 apply plugin: 'groovy'
 apply plugin: 'application'
 apply plugin: 'maven'
+
+mainClassName = 'com.nishtahir.linkbait.core.Application'
 
 sourceCompatibility = 1.7
 
@@ -21,7 +14,6 @@ ext.mavenVersion = "3.1.0"
 ext.wagonVersion = "1.0"
 
 repositories {
-    mavenCentral()
     maven { url "https://jitpack.io" }
 }
 
