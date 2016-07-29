@@ -1,0 +1,46 @@
+apply plugin: 'kotlin'
+
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'PluginMemegen'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'com.nishtahir.linkbait.memegen.MemegenPlugin',
+                'Plugin-Id': 'com.nishtahir.linkbait.memegen',
+                //Strictly enforces semver(major.minor.patch)
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'Nish Tahir',
+                //Export a list of compile time dependencies.
+                //This is so that they can be added to the
+                //classpath at runtime
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+
+    }
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+kapt {
+    generateStubs = true
+}
+
+/**
+ * Important! Use exact versions.
+ */
+dependencies {
+    compile project(':linkbait-plugin-api')
+
+    compile 'com.gitlab.nishtahir:java-meme-generator:79adf701f1'
+
+    compile 'commons-io:commons-io:2.4'
+
+    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.2"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.2"
+    testCompile "org.jetbrains.spek:spek:1.0.25"
+}
