@@ -1,59 +1,20 @@
 # Linkbait core
 
-Core library for building plugins for [Linkbait](https://gitlab.com/nishtahir/linkbait).
+Core library for linkbait. It can be launch independently
 
-# Usage
-
-This library is made available in through JitPack. Simply include it in your build script like so.
-```
-repositories {
-	maven { url "https://jitpack.io" }
-}
-
-dependencies {
-    compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'
-}
-```
-
-In a new class, simply extend `RequestHandler` and include your business logic.
-
-For example,
+## Usage
 
 ```
-class MyHandler implements RequestHandler<String, SlackMessagePosted> {
+usage: [opt] <args>
+ -h,--help               Print this message
+    --id <arg>           Bot identifier
+    --key <arg>          Bot api key or token
+    --plugin-dir <arg>   Plugin directory
+    --service <arg>      Service to connect to
+    --static-dir <arg>   Static file directory
+    --temp-dir <arg>     Temporary file directory
 
-    @Override
-    String parse(String message, String sessionId) {
-        // Parse content here
-        // Optionally throw an exception if parse failed
-        return result of parsing
-    }
-
-    @Override
-    boolean handle(SlackSession session, SlackMessagePosted event) {
-        //Invoke parse here
-        String result = parse(event.getMessageContent(), session.sessionPersona().getId());
-
-        //Do something here
-        session.sendMessage(event.getChannel(), "Successfully parsed message", null)
-    }
-}
 ```
-
-
-To prepare a package for use with Linkbait, You need to include the following file named `plugin.json` in the route of your `resources` folder.
-```
-{
-  "version": "1.0",
-  "title": "N plugin",
-  "description": "React with :nutella: whenever N is mentioned",
-  "author": "Nish Tahir",
-  "url": "",
-  "handler": "com.nishtahir.linkbait.NReactionHandler"
-}
-```
-
-Finally simply, package the application as a `*.jar` file and drop it in the `plugins` folder of a Linkbait installation and restart the server.
 
 # License
 
