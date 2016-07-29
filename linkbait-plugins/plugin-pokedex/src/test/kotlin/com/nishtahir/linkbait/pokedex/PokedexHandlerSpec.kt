@@ -8,6 +8,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
 import com.nishtahir.linkbait.plugin.model.Configuration
 import com.nishtahir.linkbait.plugin.model.EventListener
 import org.jetbrains.spek.api.Spek
+import java.io.File
 
 import kotlin.test.assertEquals
 
@@ -125,6 +126,10 @@ class MockMessenger : Messenger {
 
     override fun sendAttachment(channel: String, attachment: Attachment) {
         this.attachment = attachment
+    }
+
+    override fun uploadFile(channel: String, file: File) {
+        throw UnsupportedOperationException()
     }
 
 }
