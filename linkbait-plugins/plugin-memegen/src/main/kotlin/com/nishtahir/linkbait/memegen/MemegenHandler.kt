@@ -7,6 +7,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.InputStream
+import java.util.*
 
 
 /**
@@ -40,13 +41,22 @@ class MemegenHandler(val context: PluginContext) : MessageEventListener {
 
     fun getImageFromTitle(title: String): File? {
         when (title) {
-            "success" -> return copyInputStreamToTempFile(javaClass.classLoader.getResourceAsStream("success_kid.jpg"), title)
+            "success" -> return getImageFile("success_kid.jpg")
+            "ggg" -> return getImageFile("good_guy_greg.jpg")
+            "ss" -> return getImageFile("scumbag_steve.jpg")
+            "cat" -> return getImageFile("grumpy_cat.jpg")
+            "morpheus" -> return getImageFile("what_if_i_told_you.jpg")
+            "roman" -> return getImageFile("downvoting_roman.jpg")
         }
         return null
     }
 
-    fun copyInputStreamToTempFile(inputStream: InputStream, name: String): File {
-        val tempFile: File = File.createTempFile(name, "jpg");
+    fun getImageFile(path: String): File {
+        return copyInputStreamToTempFile(javaClass.classLoader.getResourceAsStream(path))
+    }
+
+    fun copyInputStreamToTempFile(inputStream: InputStream): File {
+        val tempFile: File = File.createTempFile(UUID.randomUUID().toString(), "jpg");
         tempFile.deleteOnExit();
         FileUtils.copyInputStreamToFile(inputStream, tempFile);
         return tempFile
