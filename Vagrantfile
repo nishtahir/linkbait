@@ -69,9 +69,7 @@ Vagrant.configure(2) do |config|
     sudo apt-get install -y software-properties-common
     sudo add-apt-repository ppa:openjdk-r/ppa
     sudo apt-get update
-    sudo apt-get install -y openjdk-8-jdk
+    sudo apt-get install -y openjdk-8-jdk nodejs npm
     sudo update-ca-certificates -f
-    sudo apt-get install nodejs
-    sudo apt-get install npm
   SHELL
 end

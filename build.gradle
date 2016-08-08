@@ -15,12 +15,58 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
         classpath "com.moowork.gradle:gradle-node-plugin:0.13"
+        classpath 'com.bmuschko:gradle-docker-plugin:3.0.1'
     }
 }
 
-allprojects{
-  repositories {
-      mavenCentral()
-      maven { url "http://repository.jetbrains.com/all" }
-  }
+allprojects {
+    buildDir = new File(rootProject.projectDir, "build/" + project.name)
+
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url "http://repository.jetbrains.com/all" }
+    }
+}
+
+subprojects {
+
+    if (project.name.startsWith("linkbait-plugins/")) {
+        task hello << { task -> println "$task.project.name" }
+    }
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+apply plugin: 'com.bmuschko.docker-java-application'
+
+mainClassName = 'com.nishtahir.linkbait.Application'
+
+docker {
+    javaApplication {
+        baseImage = "java:8-jre"
+        maintainer = "Nish Tahir <nishtahir@outlook.com>"
+    }
+}
+
+dependencies {
+    compile project(':linkbait-core')
+    compile project(':linkbait-server')
+
+    compile 'org.slf4j:slf4j-simple:1.7.21'
+
+    compile 'com.beust:jcommander:1.48'
+
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
+
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testCompile "org.jetbrains.spek:spek:$spek_version"
+
 }

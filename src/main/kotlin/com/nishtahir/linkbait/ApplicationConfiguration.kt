@@ -1,10 +1,10 @@
-package com.nishtahir.linkbait.model
+package com.nishtahir.linkbait
 
 import com.nishtahir.linkbait.plugin.model.Configuration
 import java.io.File
 
 
-class ServerConfiguration : Configuration {
+class ApplicationConfiguration : Configuration {
 
     /**
      * For temporary file storage

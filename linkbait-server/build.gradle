@@ -9,11 +9,6 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'org.jetbrains.dokka'
 
-repositories {
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-    maven { url "http://repository.jetbrains.com/all" }
-}
 
 mainClassName = 'com.nishtahir.linkbait.Application'
 
@@ -58,13 +53,9 @@ dependencies {
 
     compile 'org.slf4j:slf4j-simple:1.7.21'
 
-    compile 'org.apache.derby:derby:10.12.1.1'
-
     compile 'com.sparkjava:spark-core:2.5'
 
     compile 'com.github.jeremyh:jBCrypt:jbcrypt-0.4'
-
-    compile 'com.sparkjava:spark-template-mustache:2.3'
 
     compile group: 'commons-validator', name: 'commons-validator', version: '1.5.1'
 

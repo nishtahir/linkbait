@@ -33,7 +33,7 @@ class Application {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            initializeCli(args)
+//            initializeCli(args)
             onShutdown()
             run()
         }
@@ -43,7 +43,7 @@ class Application {
                     { byClass -> LoggerFactory.getLogger(byClass) })
             val databaseUrl = "jdbc:derby:data/linkbait;create=true"
             addSingleton(JdbcConnectionSource(databaseUrl, DerbyEmbeddedDatabaseType()))
-            addSingleton(ServerConfiguration())
+//            addSingleton(com.nishtahir.linkbait.ServerConfiguration())
         }
 
     }
@@ -60,7 +60,7 @@ val LOG: Logger by injectLogger(Application::class.java)
  */
 val connectionSource: JdbcConnectionSource = Injekt.get()
 
-val configuration: ServerConfiguration = Injekt.get()
+//val configuration: com.nishtahir.linkbait.ServerConfiguration = Injekt.get()
 
 val webAppDirectory = File("linkbait-www")
 
@@ -119,7 +119,7 @@ private fun run() {
  * Configure excellence into server
  */
 fun initializeServer() {
-    Spark.port(configuration.port)
+//    Spark.port(configuration.port)
 
     Spark.staticFiles.externalLocation(webAppDirectory.absolutePath)
 //    Spark.externalStaticFileLocation(configuration.staticFileDirectory)
