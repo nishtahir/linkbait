@@ -36,7 +36,7 @@ kapt {
 dependencies {
     compile project(':linkbait-plugin-api')
 
-    compile 'com.gitlab.nishtahir:java-meme-generator:79adf701f1'
+    compile 'com.gitlab.nishtahir:java-meme-generator:ef51352c1f'
 
     compile 'commons-io:commons-io:2.4'
 
