@@ -1,33 +1,11 @@
 # Linkbait core
 
-Core library for linkbait. It can be launch independently
+Core library for linkbait.
 
-## Usage
+# Features
 
-```
-usage: [opt] <args>
- -h,--help               Print this message
-    --id <arg>           Bot identifier
-    --key <arg>          Bot api key or token
-    --plugin-dir <arg>   Plugin directory
-    --service <arg>      Service to connect to
-    --static-dir <arg>   Static file directory
-    --temp-dir <arg>     Temporary file directory
-
-```
-
-# License
-
-Copyright 2016 Nish Tahir
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+* Sevices are used to run connections to messaging platforms
+* Plugins are loaded dynamically at runtime
+* Eventbus is for message passing between the core and plugins
+* Plugin compile time dependencies not bundles with plugins are downloaded 
+and added to the classpath at runtime. (No more fatjars)
