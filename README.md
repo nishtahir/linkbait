@@ -74,6 +74,16 @@ API key and specify the service in order to run Linkbait.
 
 # Architecture
 
+![LinkbaitArchitecture](/uploads/d934b724ec8a31a4c3d2e0cad8e87394/LinkbaitArchitecture.png)
+
+Linkbait is made of a lot of smaller stuff that come together to make up the framework
+
+* Linkbait-core - This is the heart of the bot (where the magic happens). This is where
+connections to the various messaging providers are made.
+* Linkbait-server - This is an application server for Linkbait.
+* Linkbait-plugin-api - Used to develop plugins which are loaded by the core.
+* Linkbait-www - The web interface served by the server.
+
 # Contributors
 
 Thanks to these wonderful people, that have helped make Linkbait possible
