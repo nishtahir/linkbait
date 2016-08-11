@@ -32,4 +32,4 @@ jar {
       'Plugin-Provider' : 'Your name here <Optional email>'
   }
 }
-```\e.
+```
