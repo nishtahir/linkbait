@@ -25,7 +25,7 @@ repositories {
 
 dokka {
     moduleName = 'linkbait-plugin-api'
-    outputFormat = 'markdown'
+    outputFormat = 'html'
     outputDirectory = "$buildDir/javadoc"
     processConfigurations = ['compile']
     linkMapping {

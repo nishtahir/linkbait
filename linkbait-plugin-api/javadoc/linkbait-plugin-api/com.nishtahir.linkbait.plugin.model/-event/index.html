@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<title>Event - linkbait-plugin-api</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">linkbait-plugin-api</a>&nbsp;/&nbsp;<a href="../index.html">com.nishtahir.linkbait.plugin.model</a>&nbsp;/&nbsp;<a href=".">Event</a><br/>
+<br/>
+<h1>Event</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">Event</span></code> <a href="https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugin-api/src/main/kotlin//com/nishtahir/linkbait/plugin/model/Event.kt#L7">(source)</a><br/>
+<p>Base of any event. Contains a collection of
+generic fields that any event should have.</p>
+<br/>
+<br/>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-init-.html">&lt;init&gt;</a></td>
+<td>
+<code><span class="identifier">Event</span><span class="symbol">(</span><span class="symbol">)</span></code><p>Base of any event. Contains a collection of
+generic fields that any event should have.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="channel.html">channel</a></td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">channel</span><span class="symbol">: </span><span class="identifier">String</span></code><p>Channel the message originated</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="id.html">id</a></td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">id</span><span class="symbol">: </span><span class="identifier">String</span></code><p>Id of event</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="is-directed-at-bot.html">isDirectedAtBot</a></td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">isDirectedAtBot</span><span class="symbol">: </span><span class="identifier">Boolean</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="sender.html">sender</a></td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">sender</span><span class="symbol">: </span><span class="identifier">String</span></code><p>person that reacted</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="../../com.nishtahir.linkbait.plugin/-message-event/index.html">MessageEvent</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">MessageEvent</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Event</span></code><p>Nice bundle of sticks put together when a
+message is received.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../../com.nishtahir.linkbait.plugin/-reaction-event/index.html">ReactionEvent</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ReactionEvent</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Event</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

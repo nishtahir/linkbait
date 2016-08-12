@@ -1,0 +1,108 @@
+<HTML>
+<HEAD>
+<title>com.nishtahir.linkbait.plugin - linkbait-plugin-api</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">linkbait-plugin-api</a>&nbsp;/&nbsp;<a href=".">com.nishtahir.linkbait.plugin</a><br/>
+<br/>
+<h2>Package com.nishtahir.linkbait.plugin</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-attachment/index.html">Attachment</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Attachment</span></code><p>Attachment in a message.
+I could not figure out how to make this
+visible as an inner class.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-message-event/index.html">MessageEvent</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">MessageEvent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.nishtahir.linkbait.plugin.model/-event/index.html"><span class="identifier">Event</span></a></code><p>Nice bundle of sticks put together when a
+message is received.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-message-event-listener/index.html">MessageEventListener</a></td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">MessageEventListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.nishtahir.linkbait.plugin.model/-event-listener.html"><span class="identifier">EventListener</span></a></code><p>Receives notifications when messages are received.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-messenger/index.html">Messenger</a></td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">Messenger</span></code><p>Abstract out messaging functionality such that its not dependent
+on any single framework. If a specific function is not supported by
+a service its expected to throw an exception.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-plugin/index.html">Plugin</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">Plugin</span></code><p>Base implementation of a plugin</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-plugin-context/index.html">PluginContext</a></td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">PluginContext</span></code><p>Context in which plugin is currently operating. Supplied by active bot.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-reaction-event/index.html">ReactionEvent</a></td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ReactionEvent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.nishtahir.linkbait.plugin.model/-event/index.html"><span class="identifier">Event</span></a></code></td>
+</tr>
+<tr>
+<td>
+<a href="-reaction-event-listener/index.html">ReactionEventListener</a></td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ReactionEventListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../com.nishtahir.linkbait.plugin.model/-event-listener.html"><span class="identifier">EventListener</span></a></code><p>Receives notifications when reactions happen.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="-type/index.html">Type</a></td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Type</span></code><p>Type of Data storage</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Annotations</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-extention/index.html">Extention</a></td>
+<td>
+<code><span class="keyword">annotation</span> <span class="keyword">class </span><span class="identifier">Extention</span></code><p>Annotation used to indicate that a class is a pluging</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-data-source.html">DataSource</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">DataSource</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin$DataSource(com.nishtahir.linkbait.plugin.Type, kotlin.String, kotlin.String, kotlin.String)/type">type</span><span class="symbol">:</span>&nbsp;<a href="-type/index.html"><span class="identifier">Type</span></a><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin$DataSource(com.nishtahir.linkbait.plugin.Type, kotlin.String, kotlin.String, kotlin.String)/url">url</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin$DataSource(com.nishtahir.linkbait.plugin.Type, kotlin.String, kotlin.String, kotlin.String)/username">username</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin$DataSource(com.nishtahir.linkbait.plugin.Type, kotlin.String, kotlin.String, kotlin.String)/password">password</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/6/docs/api/javax/sql/DataSource.html"><span class="identifier">DataSource</span></a></code><p>Factory method to provide database connection instances. This prevents a clash when
+loading drivers using the Driver manager</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

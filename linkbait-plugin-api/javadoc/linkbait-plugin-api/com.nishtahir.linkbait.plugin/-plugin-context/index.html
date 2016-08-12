@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<title>PluginContext - linkbait-plugin-api</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">linkbait-plugin-api</a>&nbsp;/&nbsp;<a href="../index.html">com.nishtahir.linkbait.plugin</a>&nbsp;/&nbsp;<a href=".">PluginContext</a><br/>
+<br/>
+<h1>PluginContext</h1>
+<code><span class="keyword">interface </span><span class="identifier">PluginContext</span></code> <a href="https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugin-api/src/main/kotlin//com/nishtahir/linkbait/plugin/PluginContext.kt#L9">(source)</a><br/>
+<p>Context in which plugin is currently operating. Supplied by active bot.</p>
+<br/>
+<br/>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="get-configuration.html">getConfiguration</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getConfiguration</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.nishtahir.linkbait.plugin.model/-configuration/index.html"><span class="identifier">Configuration</span></a></code></td>
+</tr>
+<tr>
+<td>
+<a href="get-messenger.html">getMessenger</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getMessenger</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-messenger/index.html"><span class="identifier">Messenger</span></a></code></td>
+</tr>
+<tr>
+<td>
+<a href="get-plugin-state.html">getPluginState</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getPluginState</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code><p>State in which plugin is operating. In case of Async operations,
+Check the running state of the plugin before performing actions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="register-listener.html">registerListener</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">registerListener</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin.PluginContext$registerListener(com.nishtahir.linkbait.plugin.model.EventListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<a href="../../com.nishtahir.linkbait.plugin.model/-event-listener.html"><span class="identifier">EventListener</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="unregister-listener.html">unregisterListener</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">unregisterListener</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin.PluginContext$unregisterListener(com.nishtahir.linkbait.plugin.model.EventListener)/listener">listener</span><span class="symbol">:</span>&nbsp;<a href="../../com.nishtahir.linkbait.plugin.model/-event-listener.html"><span class="identifier">EventListener</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<title>Messenger - linkbait-plugin-api</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">linkbait-plugin-api</a>&nbsp;/&nbsp;<a href="../index.html">com.nishtahir.linkbait.plugin</a>&nbsp;/&nbsp;<a href=".">Messenger</a><br/>
+<br/>
+<h1>Messenger</h1>
+<code><span class="keyword">interface </span><span class="identifier">Messenger</span></code> <a href="https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugin-api/src/main/kotlin//com/nishtahir/linkbait/plugin/Messaging.kt#L10">(source)</a><br/>
+<p>Abstract out messaging functionality such that its not dependent
+on any single framework. If a specific function is not supported by
+a service its expected to throw an exception.</p>
+<br/>
+<br/>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="add-reaction.html">addReaction</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addReaction</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$addReaction(kotlin.String, kotlin.String, kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$addReaction(kotlin.String, kotlin.String, kotlin.String)/messageId">messageId</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$addReaction(kotlin.String, kotlin.String, kotlin.String)/reaction">reaction</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="remove-reaction.html">removeReaction</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">removeReaction</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$removeReaction(kotlin.String, kotlin.String, kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$removeReaction(kotlin.String, kotlin.String, kotlin.String)/messageId">messageId</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$removeReaction(kotlin.String, kotlin.String, kotlin.String)/reaction">reaction</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code><p>Removes all reaction videos on YouTube. Works 100%.
+They respawn pretty fast so they might be back by the time you check.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="send-attachment.html">sendAttachment</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">sendAttachment</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$sendAttachment(kotlin.String, com.nishtahir.linkbait.plugin.Attachment)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$sendAttachment(kotlin.String, com.nishtahir.linkbait.plugin.Attachment)/attachment">attachment</span><span class="symbol">:</span>&nbsp;<a href="../-attachment/index.html"><span class="identifier">Attachment</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="send-message.html">sendMessage</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">sendMessage</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$sendMessage(kotlin.String, kotlin.String)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$sendMessage(kotlin.String, kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="upload-file.html">uploadFile</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">uploadFile</span><span class="symbol">(</span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$uploadFile(kotlin.String, java.io.File)/channel">channel</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.nishtahir.linkbait.plugin.Messenger$uploadFile(kotlin.String, java.io.File)/file">file</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/io/File.html"><span class="identifier">File</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code><p>Upload a what to a where</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
