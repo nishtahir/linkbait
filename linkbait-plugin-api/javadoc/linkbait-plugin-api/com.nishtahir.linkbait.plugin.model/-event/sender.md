@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin.model](../index.md) / [Event](index.md) / [sender](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin.model](../index.md) / [Event](index.md) / [sender](.)
 
 
 # sender

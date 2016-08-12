@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [MessageEvent](index.md) / [message](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [MessageEvent](index.md) / [message](.)
 
 
 # message

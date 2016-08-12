@@ -1,4 +1,4 @@
-[data](../index.md) / [com.nishtahir.linkbait.plugin.model](.)
+[linkbait-plugin-api](../index.md) / [com.nishtahir.linkbait.plugin.model](.)
 
 
 ## Package com.nishtahir.linkbait.plugin.model

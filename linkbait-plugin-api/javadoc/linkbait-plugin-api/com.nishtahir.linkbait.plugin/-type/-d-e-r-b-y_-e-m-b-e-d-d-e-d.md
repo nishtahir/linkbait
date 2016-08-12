@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [Type](index.md) / [DERBY_EMBEDDED](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [Type](index.md) / [DERBY_EMBEDDED](.)
 
 
 # DERBY_EMBEDDED

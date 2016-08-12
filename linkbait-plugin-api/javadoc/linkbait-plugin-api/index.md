@@ -1,4 +1,4 @@
-[data](.)
+[linkbait-plugin-api](.)
 
 
 ### Packages

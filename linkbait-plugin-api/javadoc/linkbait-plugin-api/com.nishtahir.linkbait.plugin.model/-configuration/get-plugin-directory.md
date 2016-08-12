@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin.model](../index.md) / [Configuration](index.md) / [getPluginDirectory](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin.model](../index.md) / [Configuration](index.md) / [getPluginDirectory](.)
 
 
 # getPluginDirectory

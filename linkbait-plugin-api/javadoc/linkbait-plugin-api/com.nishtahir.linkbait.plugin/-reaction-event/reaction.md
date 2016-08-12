@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [ReactionEvent](index.md) / [reaction](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [ReactionEvent](index.md) / [reaction](.)
 
 
 # reaction

@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [Attachment](index.md) / [thumbnailUrl](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [Attachment](index.md) / [thumbnailUrl](.)
 
 
 # thumbnailUrl

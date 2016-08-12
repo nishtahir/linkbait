@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [PluginContext](index.md) / [registerListener](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [PluginContext](index.md) / [registerListener](.)
 
 
 # registerListener

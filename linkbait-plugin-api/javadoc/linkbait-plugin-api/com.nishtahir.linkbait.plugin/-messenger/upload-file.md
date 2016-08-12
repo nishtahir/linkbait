@@ -1,4 +1,4 @@
-[data](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [Messenger](index.md) / [uploadFile](.)
+[linkbait-plugin-api](../../index.md) / [com.nishtahir.linkbait.plugin](../index.md) / [Messenger](index.md) / [uploadFile](.)
 
 
 # uploadFile
