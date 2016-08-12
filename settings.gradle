@@ -7,5 +7,6 @@ include 'linkbait-plugins/plugin-reddit-autocomplete'
 include 'linkbait-plugins/plugin-store-bot'
 include 'linkbait-plugins/plugin-hey-snackfood'
 include 'linkbait-plugins/plugin-memegen'
+include 'linkbait-plugins/plugin-imdb'
 
 rootProject.name = 'linkbait'

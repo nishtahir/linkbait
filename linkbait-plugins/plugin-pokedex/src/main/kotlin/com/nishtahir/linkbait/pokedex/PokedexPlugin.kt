@@ -48,7 +48,6 @@ class PokedexPlugin : Plugin() {
     }
 
     override fun start(context: PluginContext) {
-        println("start")
         pokedexHandler = PokedexHandler(context)
         pokedexHandler?.let {
             context.registerListener(it)
@@ -56,7 +55,6 @@ class PokedexPlugin : Plugin() {
     }
 
     override fun stop(context: PluginContext) {
-        println("stop")
         pokedexHandler?.let {
             context.unregisterListener(it)
         }

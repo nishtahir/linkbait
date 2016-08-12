@@ -76,7 +76,7 @@ class PluginLoader {
         List<File> files = []
         DependencyUtils.parseDependencies(dependencies).each {
             //All of this should already be in the classpath
-            if (!it.group.startsWith(ROOT_PACKAGE_NAME)) {
+            if (!it.group.startsWith(ROOT_PACKAGE_NAME) && it.group != "linkbait") {
                 files.addAll(resolver.resolveArtifactWithDependencies(it))
             }
         }

@@ -255,6 +255,8 @@ gradle-app.setting
 ### Other ###
 *.iml
 .idea/
-/data
+data/
+plugins/
+repo/
 *.sqlite
 config.yml

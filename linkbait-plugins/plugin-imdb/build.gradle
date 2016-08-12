@@ -1,16 +1,3 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1"
-    }
-}
-
-plugins {
-    id "com.github.johnrengelman.shadow" version "1.2.3"
-}
-
 repositories {
     maven {
         url "http://repository.jetbrains.com/all"
@@ -20,27 +7,33 @@ repositories {
 apply plugin: 'kotlin'
 version '0.1'
 
-// Property that says it's a plugin. Used in deployment
-ext.isPlugin = true
+jar.doFirst() {
+    baseName = 'PluginIMDB'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'de.langerhans.linkbait.imdb.PluginImdb',
+                'Plugin-Id': 'de.langerhans.linkbait.imdb.PluginImdb',
+                //Strictly enforces semver(major.minor.patch)
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'Max Keller',
+                'Plugin-Description': 'Tries to find info about movies and TV shows. Uses IMDb and OMDb API.',
+                //Export a list of compile time dependencies.
+                //This is so that they can be added to the
+                //classpath at runtime
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
 
-evaluationDependsOn(':linkbait-server')
-
-install.dependsOn('shadowJar')
-
-//Do whatever needs to be done here before the Jar
-//Is copied into the install directory of the server
-install.doLast {
+    }
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.1"
+    compile project(':linkbait-plugin-api')
 
-    //Linkbait core project
-    compile 'com.gitlab.nishtahir:linkbait-core:-SNAPSHOT'
-
-    //Jackson
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
     compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.7.3'
 
-    testCompile 'org.jetbrains.spek:spek:0.1.195'
+    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.2"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.2"
+    testCompile "org.jetbrains.spek:spek:1.0.25"
 }
