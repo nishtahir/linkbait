@@ -9,9 +9,7 @@ Linkbait is an extensible bot framework supports for plugins.
 Clone the repository and run the following command in the project root directory
 
 ``` sh
-
 ./gradlew installDist
-
 ```
 
 This will build Linkbait and deploy it in the build folder.
@@ -19,7 +17,7 @@ This will build Linkbait and deploy it in the build folder.
 ## Basic usage
 
 ``` sh
-Usage: <main class> [options] [command] [command options]
+Usage: <linkbait> [options] [command] [command options]
   Options:
     --help, -h, Display this message
 
@@ -72,17 +70,34 @@ API key and specify the service in order to run Linkbait.
 
 # Extending Linkbait with plugins
 
+Linkbait plugins are distributed as `*.jar` (java archives). All plugins should be placed
+in a *plugin* folder and set using the `--plugin` flag when launching the bot or server.
+
+Plugins can be developed using any JVM language by implementing the [Plugin API](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugin-api).
+
+Plugins that are avaliable with Linkbait
+
+* [Pokedex](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-pokedex)
+
+* [Memegen](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-memegen)
+
+* [HeySnackfood](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-hey-snackfood)
+
+* [RedditAutocomplete](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-reddit-autocomplete)
+
+* [Storebot](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-reddit-autocomplete)
+
 # Architecture
 
 ![LinkbaitArchitecture](/uploads/d934b724ec8a31a4c3d2e0cad8e87394/LinkbaitArchitecture.png)
 
 Linkbait is made of a lot of smaller stuff that come together to make up the framework
 
-* Linkbait-core - This is the heart of the bot (where the magic happens). This is where
+* [Linkbait-core](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-core) - This is the heart of the bot (where the magic happens). This is where
 connections to the various messaging providers are made.
-* Linkbait-server - This is an application server for Linkbait.
-* Linkbait-plugin-api - Used to develop plugins which are loaded by the core.
-* Linkbait-www - The web interface served by the server.
+* [Linkbait-server](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-server) - This is an application server for Linkbait.
+* [Linkbait-plugin-api](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugin-api) - Used to develop plugins which are loaded by the core.
+* [Linkbait-www](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-www) - The web interface served by the server.
 
 # Contributors
 
