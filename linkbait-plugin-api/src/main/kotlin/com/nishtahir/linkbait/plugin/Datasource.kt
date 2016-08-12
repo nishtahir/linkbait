@@ -27,4 +27,18 @@ fun DataSource(type: Type, url: String, username: String, password: String): Dat
     return datasource
 }
 
-enum class Type { SQLITE, DERBY_EMBEDDED }
+/**
+ * Type of Data storage
+ */
+enum class Type {
+
+    /**
+     *
+     */
+    SQLITE,
+
+    /**
+     *
+     */
+    DERBY_EMBEDDED
+}

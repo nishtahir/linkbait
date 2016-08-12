@@ -24,13 +24,13 @@ repositories {
 }
 
 dokka {
-    moduleName = 'data'
-    outputFormat = 'html'
+    moduleName = 'linkbait-plugin-api'
+    outputFormat = 'markdown'
     outputDirectory = "$buildDir/javadoc"
     processConfigurations = ['compile']
     linkMapping {
         dir = "src/main/kotlin"
-        url = "https://gitlab.com/nishtahir/linkbait-plugin-api/tree/master/src/main/kotlin/"
+        url = "https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugin-api/src/main/kotlin/"
         suffix = "#L"
     }
     sourceDirs += files('src/main/kotlin')
