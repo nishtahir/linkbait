@@ -36,7 +36,7 @@ class ImdbListener(ctx: PluginContext) : MessageEventListener {
         if (!event.isDirectedAtBot) {
             return
         }
-        val input = IMDB_PLUGIN_PATTERN.find(event.message)?.groups?.get(2)?.value
+        val input = IMDB_PLUGIN_PATTERN.find(event.message)?.groups?.get(2)?.value?.replace(" ", "%20")
         val json = jacksonObjectMapper()
 
         if (input.isNullOrEmpty()) return
