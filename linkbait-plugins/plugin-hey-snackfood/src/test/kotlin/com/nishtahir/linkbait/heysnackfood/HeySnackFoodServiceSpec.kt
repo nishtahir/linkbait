@@ -8,9 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-/**
- * Created by nish on 7/27/16.
- */
 class HeySnackFoodServiceSpec : Spek ({
 
     InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:test.sqlite"))
@@ -45,5 +42,4 @@ class HeySnackFoodServiceSpec : Spek ({
             assertNotNull(user)
         }
     }
-
 })

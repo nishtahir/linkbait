@@ -22,8 +22,14 @@ abstract class Event {
     var channel: String = ""
 
     /**
-     *
+     * If the bot was mentioned by name.
+     * "@mentions" on slack.
      */
     var isDirectedAtBot : Boolean = false
+
+    /**
+     * If it is a direct or private message.
+     */
+    var isDirectMessage : Boolean = false
 
 }
