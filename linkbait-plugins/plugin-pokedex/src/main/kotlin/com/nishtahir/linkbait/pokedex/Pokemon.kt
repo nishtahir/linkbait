@@ -43,12 +43,16 @@ class Pokemon(
     fun getAbilities(): List<String> {
         return abilities.split(';').filter {
             !it.isNullOrBlank()
+        }.map {
+            it.capitalize()
         }
     }
 
     fun getType(): List<String> {
         return type.split(';').filter {
             !it.isNullOrBlank()
+        }.map {
+            it.capitalize()
         }
     }
 }

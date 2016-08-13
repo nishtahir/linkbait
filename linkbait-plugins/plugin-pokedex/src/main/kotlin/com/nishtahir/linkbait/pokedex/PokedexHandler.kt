@@ -21,7 +21,6 @@ class PokedexHandler(val context: PluginContext) : MessageEventListener {
             val tokens = event.message.split("""\s+""".toRegex())
             if ("pokedex" == tokens[0]) {
 
-
                 val pokemon = service.findPokemon(parseTextInput(tokens[1]))
                 pokemon?.let { pokemon ->
                     val attachment = Attachment(
