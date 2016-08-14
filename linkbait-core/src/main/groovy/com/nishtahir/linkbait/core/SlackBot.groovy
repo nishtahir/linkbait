@@ -66,13 +66,15 @@ class SlackBot extends AbstractBot {
                             channel: event.channel.name,
                             sender: event.sender.userName,
                     )
-
                     def matcher = (event.messageContent =~ /^(?i)(<@${session.sessionPersona().id}>:?)\s+(?<text>(.*))/)
                     if (matcher.find()) {
                         messageEvent.directedAtBot = true
+                        messageEvent.directMessage = event.channel.direct
+
                         messageEvent.message = escapeSlackIds(matcher.group('text'))
                     } else {
                         messageEvent.directedAtBot = false
+                        messageEvent.directMessage = event.channel.direct
                         messageEvent.message = escapeSlackIds(event.messageContent)
                     }
                     eventBus.post(messageEvent)
@@ -148,11 +150,11 @@ class SlackBot extends AbstractBot {
 
     }
 
-    String escapeSlackIds(String message){
-        def matcher = ( message =~ /.*<@(?<id>\w+)>.*/ )
+    String escapeSlackIds(String message) {
+        def matcher = (message =~ /.*<@(?<id>\w+)>.*/)
         if (matcher.matches()) {
             matcher[0].eachWithIndex { String match, int i ->
-                if(i == 0) return
+                if (i == 0) return
                 message = message.replace("<@${match}>", "@${session.findUserById(match as String).userName}")
             }
         }
