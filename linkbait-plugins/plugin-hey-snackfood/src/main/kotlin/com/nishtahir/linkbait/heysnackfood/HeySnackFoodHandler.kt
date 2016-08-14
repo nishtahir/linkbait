@@ -26,8 +26,7 @@ class HeySnackFoodHandler(val context: PluginContext) : MessageEventListener {
 
             if (event.isDirectMessage) {
                 if (userName.equals(event.sender)) {
-                    TODO("Add shame gif")
-                    context.getMessenger().sendMessage(event.channel, "")
+                    context.getMessenger().sendMessage(event.channel, "<Shame! Shame! Shame!|https://media.giphy.com/media/xTiTnmrpGi0zetc9Xy/giphy.gif>")
                 } else {
                     context.getMessenger().sendMessage(event.channel, "Show your appreciation for @$userName and give :nutella in a public channel")
                 }

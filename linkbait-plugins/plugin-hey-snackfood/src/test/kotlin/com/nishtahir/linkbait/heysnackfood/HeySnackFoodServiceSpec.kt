@@ -12,7 +12,6 @@ class HeySnackFoodServiceSpec : Spek ({
 
     InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:test.sqlite"))
 
-
     val service = HeySnackFoodService()
 
     describe("Service crud") {

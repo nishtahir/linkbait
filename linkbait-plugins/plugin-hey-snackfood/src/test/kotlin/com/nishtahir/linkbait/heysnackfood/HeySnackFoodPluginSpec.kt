@@ -18,7 +18,7 @@ class HeySnackFoodPluginSpec : Spek({
 
     val SNACK_FOOD_NAME = ":nutella:"
 
-    InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/test.sqlite"))
+    InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:test.sqlite"))
     InjektModule.scope.addFactory { HeySnackFoodService() }
 
     val context: PluginContext = MockContext()
