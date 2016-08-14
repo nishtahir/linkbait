@@ -145,7 +145,7 @@ class HeySnackFoodPluginSpec : Spek({
                 messageEvent.message = "leaderboard"
 
                 handler.handleMessageEvent(messageEvent)
-                TODO("Add checks here")
+//                TODO("Add checks here")
 //                println (messenger.message)
             }
         }
