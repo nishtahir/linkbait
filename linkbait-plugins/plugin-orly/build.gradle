@@ -1,0 +1,30 @@
+apply plugin: 'kotlin'
+
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'PluginOrly'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'de.langerhans.linkbait.orly.OrlyPlugin',
+                'Plugin-Id': 'de.langerhans.linkbait.orly.OrlyPlugin',
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'AndroidChat\'s benevolent overlord, langerhans',
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+/**
+ * Important! Use exact versions.
+ */
+dependencies {
+    compile project(':linkbait-plugin-api')
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
+}

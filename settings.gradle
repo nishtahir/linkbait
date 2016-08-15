@@ -8,5 +8,6 @@ include 'linkbait-plugins/plugin-store-bot'
 include 'linkbait-plugins/plugin-hey-snackfood'
 include 'linkbait-plugins/plugin-memegen'
 include 'linkbait-plugins/plugin-imdb'
+include 'linkbait-plugins/plugin-orly'
 
 rootProject.name = 'linkbait'
