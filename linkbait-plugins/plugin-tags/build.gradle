@@ -1,0 +1,39 @@
+apply plugin: 'kotlin'
+
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'PluginTags'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'de.langerhans.linkbait.tags.TagsPlugin',
+                'Plugin-Id': 'de.langerhans.linkbait.tags.TagsPlugin',
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'AndroidChat\'s benevolent overlord, langerhans',
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+/**
+ * Important! Use exact versions.
+ */
+dependencies {
+    compile project(':linkbait-plugin-api')
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
+
+    compile 'org.xerial:sqlite-jdbc:3.8.11.2'
+    compile 'org.xerial.thirdparty:nestedvm:1.0'
+    compile "com.j256.ormlite:ormlite-core:5.0"
+    compile "com.j256.ormlite:ormlite-jdbc:5.0"
+
+    compile 'uy.kohesive.injekt:injekt-core:2.0.0-ALPHA-03'
+
+}
