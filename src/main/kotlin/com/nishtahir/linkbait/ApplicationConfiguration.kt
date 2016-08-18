@@ -1,5 +1,6 @@
 package com.nishtahir.linkbait
 
+import com.nishtahir.linkbait.extensions.*
 import com.nishtahir.linkbait.plugin.model.Configuration
 import java.io.File
 
@@ -9,28 +10,32 @@ class ApplicationConfiguration : Configuration {
     /**
      * For temporary file storage
      */
-    var temporaryFileDirectory = "data/tmp"
+    var temporaryFileDirectory = DEFAULT_TEMP_FILE_DIRECTORY
 
     /**
      * Plugins downloaded as artifacts as well as their
      * dependencies will be stored here
      */
-    var pluginRepository = "data/repo"
+    var pluginRepository = DEFAULT_REPOSITORY
 
     /**
      * Static files to be served will be stored here
      */
-    var staticFileDirectory = "data/static"
+    var staticFileDirectory = DEFAULT_STATIC_FILE_DIRECTORY
 
     /**
      * External plugins should be kept here
      */
-    var pluginDirectory = "data/plugins"
+    var pluginDirectory = DEFAULT_PLUGIN_DIRECTORY
 
+    /**
+     * Data stuff
+     */
+    var dataDirectory = DEFAULT_DATA_DIRECTORY
     /**
      * Port number to serve on
      */
-    var port = 4567
+    var port = DEFAULT_PORT
 
     override fun getTemporaryFileDirectory(): File {
         val dir = File(temporaryFileDirectory)
@@ -58,6 +63,14 @@ class ApplicationConfiguration : Configuration {
 
     override fun getPluginDirectory(): File {
         val dir = File(pluginDirectory)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
+    }
+
+    override fun getDataDirectory(): File {
+        val dir = File(dataDirectory)
         if (!dir.exists()) {
             dir.mkdirs()
         }

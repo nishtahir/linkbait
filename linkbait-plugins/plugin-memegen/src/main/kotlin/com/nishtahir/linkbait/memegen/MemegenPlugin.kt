@@ -9,7 +9,6 @@ class MemegenPlugin : Plugin() {
     var memegenHandler: MemegenHandler? = null
 
     override fun start(context: PluginContext) {
-        println("start")
         memegenHandler = MemegenHandler(context)
         memegenHandler?.let {
             context.registerListener(it)
@@ -17,7 +16,6 @@ class MemegenPlugin : Plugin() {
     }
 
     override fun stop(context: PluginContext) {
-        println("stop")
         memegenHandler?.let {
             context.unregisterListener(it)
         }

@@ -24,8 +24,8 @@ class HeySnackFoodPlugin : Plugin() {
     companion object {
         init {
             Class.forName("org.sqlite.JDBC")
-
-            InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:hey_snackfood.sqlite"))
+            //TODO - get data dir from config
+            InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:data/hey_snackfood.sqlite"))
             InjektModule.scope.addFactory { HeySnackFoodService() }
         }
     }

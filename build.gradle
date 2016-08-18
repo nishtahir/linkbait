@@ -30,7 +30,6 @@ allprojects {
 }
 
 subprojects {
-
     if (project.name.startsWith("linkbait-plugins/")) {
         task hello << { task -> println "$task.project.name" }
     }

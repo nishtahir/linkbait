@@ -28,4 +28,9 @@ interface Configuration {
      * is essentially a local maven repository for Linkbait.
      */
     fun getPluginRepository(): File
+
+    /**
+     * @return Folder For persistence purposes.
+     */
+    fun getDataDirectory():File
 }

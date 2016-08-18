@@ -31,7 +31,7 @@ class MemegenHandler(val context: PluginContext) : MessageEventListener {
     fun createMeme(title: String, top: String, bottom: String): File? {
         val file = getImageFromTitle(title)
         file?.let {
-            val meme = File("memegen/${top.replace("\\s", "_")}-${bottom.replace("\\s", "_")}.jpg")
+            val meme = File("data/memegen/${top.replace("\\s", "_")}-${bottom.replace("\\s", "_")}.jpg")
             meme.mkdirs()
             return MemeGenerator.generateMeme(it, meme, top, bottom)
         }

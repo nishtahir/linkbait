@@ -13,7 +13,7 @@ class TagsPlugin: Plugin() {
     private lateinit var handler: TagsHandler
 
     override fun start(context: PluginContext) {
-        InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:tags.sqlite"))
+        InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:data/tags.sqlite"))
         InjektModule.scope.addFactory { TagService() }
 
         handler = TagsHandler(context)
