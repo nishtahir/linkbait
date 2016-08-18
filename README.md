@@ -1,8 +1,27 @@
 # Linkbait
 
-Linkbait is an extensible bot framework supports for plugins.
+Linkbait is an extensible bot framework with supports for plugins.
 
 ## Getting started
+
+## Docker
+
+Linkbait is made available though the gitlab container registry. Running the following command
+
+```
+docker pull registry.gitlab.com/nishtahir/linkbait:latest
+```
+will get you the latest version of linkbait.
+
+Run the image using
+
+```
+docker run -d -P --name [name] -v [path to data]:/data registry.gitlab.com/nishtahir/linkbait [args] 
+```
+
+Here you mount the `data` directory which contains the plugins, static files and databases
+
+> Plugins are not distributed in the container at this time. but will be in a future release.
 
 ## Building from source
 
