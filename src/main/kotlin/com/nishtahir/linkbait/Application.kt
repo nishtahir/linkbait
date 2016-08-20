@@ -4,6 +4,8 @@ import com.beust.jcommander.JCommander
 import com.nishtahir.linkbait.cli.CommandBot
 import com.nishtahir.linkbait.cli.CommandLinkbait
 import com.nishtahir.linkbait.cli.CommandServer
+import com.nishtahir.linkbait.core.AbstractBot
+import com.nishtahir.linkbait.core.DiscordBot
 import com.nishtahir.linkbait.core.SlackBot
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -57,7 +59,16 @@ private fun parseCommandLine(args: Array<String>) {
 }
 
 fun startBot(cmdBot: CommandBot) {
-    val bot = SlackBot(cmdBot.getConfiguration(), cmdBot.apiKey, cmdBot.id)
+    val bot: AbstractBot
+    when (cmdBot.service) {
+        "slack" -> bot = SlackBot(cmdBot.getConfiguration(), cmdBot.apiKey, cmdBot.id)
+        "discord" -> bot = DiscordBot(cmdBot.getConfiguration(), cmdBot.apiKey, cmdBot.id)
+        else -> {
+            LOG.error("No service specified!") // This shouldn't actually ever happen
+            exitProcess(0)
+        }
+    }
+
     bot.startAsync()
 }
 
