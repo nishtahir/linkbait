@@ -1,0 +1,31 @@
+apply plugin: 'kotlin'
+
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'PluginAsciitext'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'co.jasonwyatt.linkbait.asciitext.AsciiTextPlugin',
+                'Plugin-Id': 'co.jasonwyatt.linkbait.asciitext.AsciiTextPlugin',
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'Some dude named Jason Feinstein',
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+/**
+ * Important! Use exact versions.
+ */
+dependencies {
+    compile project(':linkbait-plugin-api')
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
+    compile "com.github.lalyos:jfiglet:0.0.7"
+}
