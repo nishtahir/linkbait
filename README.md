@@ -2,6 +2,12 @@
 
 Linkbait is an extensible bot framework with supports for plugins.
 
+# Supported platforms
+
+* [Slack](https://slack.com/)
+
+* [Discord](https://discordapp.com/)
+
 ## Getting started
 
 ## Docker
@@ -97,14 +103,14 @@ Plugins can be developed using any JVM language by implementing the [Plugin API]
 Plugins that are avaliable with Linkbait
 
 * [Pokedex](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-pokedex)
-
 * [Memegen](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-memegen)
-
 * [HeySnackfood](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-hey-snackfood)
-
 * [RedditAutocomplete](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-reddit-autocomplete)
-
 * [Storebot](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-reddit-autocomplete)
+* [Imdb](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-imdb)
+* [Orly](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-orly)
+* [Tags](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-tags) 
+* [AsciiText](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-asciitext)
 
 # Architecture
 
@@ -126,6 +132,7 @@ Thanks to these wonderful people, that have helped make Linkbait possible
 * Max Keller aka [@langer_hans](https://twitter.com/langer_hans)
 * Aki Kanellis aka [@AkiKanellis](https://twitter.com/AkiKanellis)
 * Ben Butzow aka [@cr5315](https://twitter.com/cr5315)
+* Jason Wyatt Feinstein aka [@jasonwyatt](twitter.com/jasonwyatt)
 
 LICENSE
 =======
