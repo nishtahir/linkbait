@@ -32,7 +32,13 @@ allprojects {
 
 subprojects {
     if (project.name.startsWith("linkbait-plugins/")) {
-        task hello << { task -> println "$task.project.name" }
+        doLast {
+            copy {
+                from "$project.buildDir/libs"
+                into "$rootProject.buildDir/plugins/"
+                include '**/*.jar'
+            }
+        }
     }
 
 }
