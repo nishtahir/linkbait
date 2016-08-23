@@ -1,6 +1,7 @@
 package de.langerhans.linkbait.imdb
 
 import com.nishtahir.linkbait.plugin.Attachment
+import com.nishtahir.linkbait.plugin.MessageFormatter
 import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.PluginContext
 import com.nishtahir.linkbait.plugin.model.Configuration
@@ -101,6 +102,10 @@ class MockMessenger : Messenger {
     }
 
     override fun uploadFile(channel: String, file: File) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getMessageFormatter(): MessageFormatter {
         throw UnsupportedOperationException()
     }
 

@@ -1,10 +1,7 @@
 package com.nishtahir.linkbait.pokedex
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource
-import com.nishtahir.linkbait.plugin.Attachment
-import com.nishtahir.linkbait.plugin.MessageEvent
-import com.nishtahir.linkbait.plugin.Messenger
-import com.nishtahir.linkbait.plugin.PluginContext
+import com.nishtahir.linkbait.plugin.*
 import com.nishtahir.linkbait.plugin.model.Configuration
 import com.nishtahir.linkbait.plugin.model.EventListener
 import org.jetbrains.spek.api.Spek
@@ -129,6 +126,10 @@ class MockMessenger : Messenger {
     }
 
     override fun uploadFile(channel: String, file: File) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getMessageFormatter(): MessageFormatter {
         throw UnsupportedOperationException()
     }
 

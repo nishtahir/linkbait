@@ -43,4 +43,76 @@ interface Messenger {
      * @param file What
      */
     fun uploadFile(channel: String, file: File)
+
+    /**
+     *
+     */
+    fun getMessageFormatter(): MessageFormatter
+}
+
+interface MessageFormatter {
+
+    fun format(): String
+
+    fun par(text: String)
+
+    fun bold(text: String)
+
+    fun italics(text: String)
+
+    fun strike(text: String)
+
+    fun pre(text: String)
+
+    fun code(text: String)
+
+    fun emoji(text: String)
+
+    fun link(title: String, url: String)
+
+    fun clear()
+}
+
+class AbstractMessageFormatter : MessageFormatter {
+
+    override fun format(): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun par(text: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun bold(text: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun italics(text: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun strike(text: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun pre(text: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun code(text: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun emoji(text: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun link(title: String, url: String) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun clear() {
+        throw UnsupportedOperationException()
+    }
+
 }

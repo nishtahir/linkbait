@@ -1,6 +1,7 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.plugin.Attachment
+import com.nishtahir.linkbait.plugin.MessageFormatter
 import com.nishtahir.linkbait.plugin.Messenger
 import groovy.transform.Canonical
 import org.jetbrains.annotations.NotNull
@@ -79,5 +80,10 @@ class DiscordMessenger implements Messenger {
             }
         }
         return message
+    }
+
+    @Override
+    MessageFormatter getMessageFormatter() {
+        return null
     }
 }

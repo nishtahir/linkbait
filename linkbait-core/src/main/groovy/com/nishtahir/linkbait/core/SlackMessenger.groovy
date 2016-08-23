@@ -1,6 +1,7 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.plugin.Attachment
+import com.nishtahir.linkbait.plugin.MessageFormatter
 import com.nishtahir.linkbait.plugin.Messenger
 import com.ullink.slack.simpleslackapi.SlackAttachment
 import com.ullink.slack.simpleslackapi.SlackChannel
@@ -80,5 +81,10 @@ class SlackMessenger implements Messenger {
             slackAttachment.addField(key, value, true)
         }
         return slackAttachment
+    }
+
+    @Override
+    MessageFormatter getMessageFormatter() {
+        return null
     }
 }

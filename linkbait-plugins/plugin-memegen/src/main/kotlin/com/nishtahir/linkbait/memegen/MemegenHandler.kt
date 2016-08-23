@@ -7,6 +7,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
 import org.apache.commons.io.FileUtils
 import java.io.File
 import java.io.InputStream
+import java.net.URL
 import java.util.*
 
 
@@ -16,50 +17,68 @@ import java.util.*
  */
 class MemegenHandler(val context: PluginContext) : MessageEventListener {
 
+    val templatesFile = File("data/templates")
+
     override fun handleMessageEvent(event: MessageEvent) {
         if (event.isDirectedAtBot) {
-            if (event.message.matches("""memegen\s+(?<text>.*)""".toRegex())) {
-                val text = event.message.replaceFirst("memegen", "").split(";")
-                val meme = createMeme(text[0].trim(), text[1].trim().orEmpty(), text[2].trim().orEmpty())
-                meme?.let {
-                    context.getMessenger().uploadFile(event.channel, meme)
-                }
+            if (!event.message.startsWith("memegen")) {
+                //move along... nothing to see here
+                return
+            }
+
+            val commands = event.message.split(" ")
+
+            if (commands.size < 2) {
+                context.getMessenger().sendMessage(event.channel, formatHelp())
+                return
+            }
+
+            val text = event.message.replaceFirst(commands[0], "")
+                                    .replaceFirst(commands[1], "")
+                                    .trim()
+
+            val params = text.split(";")
+            val meme = createMeme(commands[1].trim(), params[0].orEmpty(), params[1].trim().orEmpty())
+            meme?.let {
+                context.getMessenger().uploadFile(event.channel, meme)
             }
         }
     }
 
+
+    private fun formatHelp(): String {
+        val memes = templatesFile.listFiles().joinToString(", ") {
+            "`${it.name.dropLast(4)}`"
+        }
+
+        val helpText =
+                """
+```
+Memegen usage: memegen [meme name] [top text];[bottom text]
+
+Available memes:
+```
+"""
+
+        return helpText + memes
+    }
+
     fun createMeme(title: String, top: String, bottom: String): File? {
-        val file = getImageFromTitle(title)
+        val outputMemeFile = File("data/memegen/${UUID.randomUUID().toString()}.jpg")
+        val file = findImageFile(title)
         file?.let {
-            val meme = File("data/memegen/${top.replace("\\s", "_")}-${bottom.replace("\\s", "_")}.jpg")
-            meme.mkdirs()
-            return MemeGenerator.generateMeme(it, meme, top, bottom)
+            outputMemeFile.mkdirs()
+            return MemeGenerator.generateMeme(it, outputMemeFile, top, bottom)
         }
 
         return null
     }
 
-    fun getImageFromTitle(title: String): File? {
-        when (title) {
-            "success" -> return getImageFile("success_kid.jpg")
-            "ggg" -> return getImageFile("good_guy_greg.jpg")
-            "ss" -> return getImageFile("scumbag_steve.jpg")
-            "cat" -> return getImageFile("grumpy_cat.jpg")
-            "morpheus" -> return getImageFile("what_if_i_told_you.jpg")
-            "roman" -> return getImageFile("downvoting_roman.jpg")
+    fun findImageFile(title: String): File? {
+        val template = templatesFile.listFiles().firstOrNull() {
+            it.name.dropLast(4) == title
         }
-        return null
-    }
-
-    fun getImageFile(path: String): File {
-        return copyInputStreamToTempFile(javaClass.classLoader.getResourceAsStream(path))
-    }
-
-    fun copyInputStreamToTempFile(inputStream: InputStream): File {
-        val tempFile: File = File.createTempFile(UUID.randomUUID().toString(), "jpg");
-        tempFile.deleteOnExit();
-        FileUtils.copyInputStreamToFile(inputStream, tempFile);
-        return tempFile
+        return template
     }
 
 }
