@@ -1,7 +1,7 @@
 package de.langerhans.linkbait.imdb
 
 import com.nishtahir.linkbait.plugin.Attachment
-import com.nishtahir.linkbait.plugin.MessageFormatter
+import com.nishtahir.linkbait.plugin.MessageBuilder
 import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.PluginContext
 import com.nishtahir.linkbait.plugin.model.Configuration
@@ -89,6 +89,10 @@ class MockMessenger : Messenger {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun sendDirectMessage(user: String, message: String) {
+        throw UnsupportedOperationException()
+    }
+
     override fun addReaction(channel: String, messageId: String, reaction: String) {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -105,7 +109,7 @@ class MockMessenger : Messenger {
         throw UnsupportedOperationException()
     }
 
-    override fun getMessageFormatter(): MessageFormatter {
+    override fun getMessageBuilder(): MessageBuilder {
         throw UnsupportedOperationException()
     }
 

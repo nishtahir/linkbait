@@ -34,8 +34,8 @@ class MemegenHandler(val context: PluginContext) : MessageEventListener {
             }
 
             val text = event.message.replaceFirst(commands[0], "")
-                                    .replaceFirst(commands[1], "")
-                                    .trim()
+                    .replaceFirst(commands[1], "")
+                    .trim()
 
             val params = text.split(";")
             val meme = createMeme(commands[1].trim(), params[0].orEmpty(), params[1].trim().orEmpty())
@@ -51,16 +51,15 @@ class MemegenHandler(val context: PluginContext) : MessageEventListener {
             "`${it.name.dropLast(4)}`"
         }
 
-        val helpText =
+        val messageBuilder = context.getMessenger().getMessageBuilder()
+        messageBuilder.pre(
                 """
-```
 Memegen usage: memegen [meme name] [top text];[bottom text]
-
 Available memes:
-```
 """
+        )
 
-        return helpText + memes
+        return messageBuilder.build() + memes
     }
 
     fun createMeme(title: String, top: String, bottom: String): File? {

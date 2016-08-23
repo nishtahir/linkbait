@@ -16,6 +16,11 @@ interface Messenger {
     fun sendMessage(channel: String, message: String)
 
     /**
+     *
+     */
+    fun sendDirectMessage(user: String, message: String)
+
+    /**
      *  @param channel Where to add the reaction
      *  @param messageId ID of message to react
      *  @param reaction Reaction to react with
@@ -47,72 +52,27 @@ interface Messenger {
     /**
      *
      */
-    fun getMessageFormatter(): MessageFormatter
+    fun getMessageBuilder(): MessageBuilder
 }
 
-interface MessageFormatter {
+interface MessageBuilder {
 
-    fun format(): String
+    fun text(text: String): MessageBuilder
 
-    fun par(text: String)
+    fun bold(text: String): MessageBuilder
 
-    fun bold(text: String)
+    fun italics(text: String): MessageBuilder
 
-    fun italics(text: String)
+    fun strike(text: String): MessageBuilder
 
-    fun strike(text: String)
+    fun pre(text: String): MessageBuilder
 
-    fun pre(text: String)
+    fun code(text: String): MessageBuilder
 
-    fun code(text: String)
+    fun emoji(text: String): MessageBuilder
 
-    fun emoji(text: String)
+    fun link(title: String, url: String): MessageBuilder
 
-    fun link(title: String, url: String)
-
-    fun clear()
-}
-
-class AbstractMessageFormatter : MessageFormatter {
-
-    override fun format(): String {
-        throw UnsupportedOperationException()
-    }
-
-    override fun par(text: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun bold(text: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun italics(text: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun strike(text: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun pre(text: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun code(text: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun emoji(text: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun link(title: String, url: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun clear() {
-        throw UnsupportedOperationException()
-    }
+    fun build(): String
 
 }

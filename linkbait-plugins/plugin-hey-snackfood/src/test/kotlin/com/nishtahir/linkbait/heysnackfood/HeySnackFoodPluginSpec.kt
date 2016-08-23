@@ -186,6 +186,10 @@ class MockMessenger : Messenger {
         this.message = message
     }
 
+    override fun sendDirectMessage(user: String, message: String) {
+        throw UnsupportedOperationException()
+    }
+
     override fun addReaction(channel: String, messageId: String, reaction: String) {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -202,7 +206,7 @@ class MockMessenger : Messenger {
         throw UnsupportedOperationException()
     }
 
-    override fun getMessageFormatter(): MessageFormatter {
+    override fun getMessageBuilder(): MessageBuilder {
         throw UnsupportedOperationException()
     }
 

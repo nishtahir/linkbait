@@ -1,11 +1,12 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.plugin.Attachment
-import com.nishtahir.linkbait.plugin.MessageFormatter
+import com.nishtahir.linkbait.plugin.MessageBuilder
 import com.nishtahir.linkbait.plugin.Messenger
 import com.ullink.slack.simpleslackapi.SlackAttachment
 import com.ullink.slack.simpleslackapi.SlackChannel
 import com.ullink.slack.simpleslackapi.SlackSession
+import com.ullink.slack.simpleslackapi.SlackUser
 import groovy.transform.Canonical
 import org.jetbrains.annotations.NotNull
 
@@ -30,6 +31,11 @@ class SlackMessenger implements Messenger {
     void sendMessage(@NotNull String channel, @NotNull String message) {
         SlackChannel slackChannel = session?.findChannelByName(channel)
         session?.sendMessage(slackChannel, message)
+    }
+
+    void sendDirectMessage(@NotNull String user, @NotNull String message) {
+        SlackUser slackUser = session?.findUserByUserName(user)
+        session?.sendMessageToUser(slackUser, message, null)
     }
 
     /**
@@ -84,7 +90,7 @@ class SlackMessenger implements Messenger {
     }
 
     @Override
-    MessageFormatter getMessageFormatter() {
-        return null
+    MessageBuilder getMessageBuilder() {
+        return new SlackMessageBuilder()
     }
 }
