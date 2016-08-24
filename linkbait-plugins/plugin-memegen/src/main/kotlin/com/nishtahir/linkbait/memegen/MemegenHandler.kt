@@ -57,7 +57,7 @@ class MemegenHandler(val context: PluginContext) : MessageEventListener {
 Memegen usage: memegen [meme name] [top text];[bottom text]
 Available memes:
 """
-        )
+        ).text("\n")
 
         return messageBuilder.build() + memes
     }
