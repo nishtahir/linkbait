@@ -1,0 +1,35 @@
+apply plugin: 'kotlin'
+
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'PluginTenor'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'de.langerhans.linkbait.tenor.TenorPlugin',
+                'Plugin-Id': 'de.langerhans.linkbait.tenor.TenorPlugin',
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'AndroidChat\'s benevolent overlord, langerhans',
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+/**
+ * Important! Use exact versions.
+ */
+dependencies {
+    compile project(':linkbait-plugin-api')
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"
+
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.1'
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.8.1'
+}
