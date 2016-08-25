@@ -5,10 +5,10 @@ before_script:
 build:
   stage: build
   script:
-    - ./gradlew -g /cache assemble
+    - ./gradlew -g /cache/.gradle assemble
   allow_failure: false
 
 test:
   stage: test
   script:
-    - ./gradlew -g /cache check
+    - ./gradlew -g /cache/.gradle check
