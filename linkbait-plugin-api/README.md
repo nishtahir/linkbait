@@ -33,3 +33,66 @@ jar {
   }
 }
 ```
+
+# Creating a plugin
+
+Simply extend `Plugin` and override the appropriate lifecycle methods.
+
+```
+public class MyFancyPlugin extends Plugin {
+
+  public void start(PluginContext context){
+  
+  }
+  
+  public void stop(PluginContext context){
+  
+  }
+}
+```
+
+# Plugin lifecycle
+
+The plugin lifecycle consists of 2 main methods. `start` and `stop`.
+
+```
++----------+
+|          |
+|   Start  |
+|          |
++-----+----+
+      |
+      |
++-----+----+
+|          |
+|   Stop   |
+|          |
++----------+
+
+```
+
+They are invoked when after the plugin is load; when the plugin is started and stoped
+respectively. 
+
+Register any handlers you wish to receive events in start along with
+any other resources and do any cleanup needed in stop
+
+# Creating handlers
+
+Event handlers are used to notify your plugin when certain things happen. For example
+when messages are recieved, reactions are added etc...
+
+Simply implement an event handler and you are in business.
+
+For example,
+
+```
+public class MessageHandler implements MessageEventListener {
+
+  public void handleMessageEvent(MessageEvent event) {
+    String messageContent = event.getMessage();
+    //handle  message here
+  }
+}
+```
+
