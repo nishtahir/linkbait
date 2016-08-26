@@ -1,6 +1,7 @@
-package com.nishtahir.linkbait.core
+package com.nishtahir.linkbait.core.discord
 
 import com.google.common.eventbus.EventBus
+import com.nishtahir.linkbait.core.AbstractBot
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.model.Configuration
@@ -9,7 +10,6 @@ import sx.blah.discord.api.ClientBuilder
 import sx.blah.discord.api.IDiscordClient
 import sx.blah.discord.api.events.IListener
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent
-import sx.blah.discord.handle.obj.IGuild
 
 /**
  * Created by maxke on 20.08.2016.

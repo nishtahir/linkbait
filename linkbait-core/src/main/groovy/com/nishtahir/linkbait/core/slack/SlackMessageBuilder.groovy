@@ -1,5 +1,6 @@
-package com.nishtahir.linkbait.core
+package com.nishtahir.linkbait.core.slack
 
+import com.nishtahir.linkbait.core.AbstractMessageBuilder
 import com.nishtahir.linkbait.plugin.MessageBuilder
 import org.jetbrains.annotations.NotNull
 

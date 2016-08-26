@@ -12,11 +12,13 @@ interface Messenger {
     /**
      *  @param channel Where to send the message.
      *  @param message Content of message to send.
+     *  @param unfurl Render extra content with message. Default true.
      */
-    fun sendMessage(channel: String, message: String)
+    fun sendMessage(channel: String, message: String, unfurl: Boolean = true)
 
     /**
-     *
+     *  @param user User to send the message.
+     *  @param message Content of the message
      */
     fun sendDirectMessage(user: String, message: String)
 
@@ -50,11 +52,21 @@ interface Messenger {
     fun uploadFile(channel: String, file: File)
 
     /**
-     *
+     * @param channel where
+     * @param topic new topic
+     */
+    fun setChannelTopic(channel: String, topic: String)
+
+    /**
+     * @return Builder to help format messages correctly for
+     * the given platform.
      */
     fun getMessageBuilder(): MessageBuilder
 }
 
+/**
+ * Helps format messages
+ */
 interface MessageBuilder {
 
     fun text(text: String): MessageBuilder

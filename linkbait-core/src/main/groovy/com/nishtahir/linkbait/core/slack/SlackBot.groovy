@@ -1,6 +1,7 @@
-package com.nishtahir.linkbait.core
+package com.nishtahir.linkbait.core.slack
 
 import com.google.common.eventbus.EventBus
+import com.nishtahir.linkbait.core.AbstractBot
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.ReactionEvent

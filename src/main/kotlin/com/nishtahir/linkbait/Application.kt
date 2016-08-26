@@ -5,8 +5,8 @@ import com.nishtahir.linkbait.cli.CommandBot
 import com.nishtahir.linkbait.cli.CommandLinkbait
 import com.nishtahir.linkbait.cli.CommandServer
 import com.nishtahir.linkbait.core.AbstractBot
-import com.nishtahir.linkbait.core.DiscordBot
-import com.nishtahir.linkbait.core.SlackBot
+import com.nishtahir.linkbait.core.discord.DiscordBot
+import com.nishtahir.linkbait.core.slack.SlackBot
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.system.exitProcess
