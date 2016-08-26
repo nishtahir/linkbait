@@ -10,7 +10,7 @@ import java.util.jar.JarInputStream
 import java.util.jar.Manifest
 
 /**
- * Class loader to loadPluginsFromPath language tools dynamically
+ * Class pluginClassLoader to loadPluginsFromPath language tools dynamically
  * at runtime, this helps decouple to the project into
  * more manageable components.
  *
@@ -34,11 +34,14 @@ class PluginLoader {
     }
 
     /**
-     * List of handlers loaded from plugins.
+     * List of plugins loaded from plugins.
      */
-    List<Plugin> handlers = []
+    List<Plugin> plugins = []
 
-    PluginClassLoader loader = new PluginClassLoader(new URL[0], getClass().classLoader)
+    /**
+     * Classloader where all the magic happens.
+     */
+    PluginClassLoader pluginClassLoader = new PluginClassLoader(new URL[0], getClass().classLoader)
 
     /**
      * @param path path to plugin folder
@@ -61,51 +64,61 @@ class PluginLoader {
      * @param files
      * @throws Exception
      */
-    public void loadPlugin(File file) throws Exception {
-
-        InputStream input = new FileInputStream(file);
-        JarInputStream jarStream = new JarInputStream(input);
-        Manifest mf = jarStream.getManifest();
+    public void loadPlugin(File plugin) throws Exception {
+        Manifest mf = getManifest(plugin)
 
         def attributes = mf.getMainAttributes()
-        String className = attributes.getValue('Plugin-Class')
-
+        String pluginClassName = attributes.getValue('Plugin-Class')
         String dependencies = attributes.getValue('Dependencies')
+
         DependencyResolver resolver = new DependencyResolver(configuration.pluginRepository)
 
         List<File> files = []
         DependencyUtils.parseDependencies(dependencies).each {
             //All of this should already be in the classpath
+            //After all, they are compile time dependencies for the framework
             if (!it.group.startsWith(ROOT_PACKAGE_NAME) && it.group != "linkbait") {
                 files.addAll(resolver.resolveArtifactWithDependencies(it))
             }
         }
 
-        loadJars(files)
-        loadJar(file)
-        Class<Plugin> clazz = (Class<Plugin>) Class.forName(className, true, loader)
+        addJarsToClasspath(files)
+        addJarToClasspath(plugin)
+        Class<Plugin> clazz = (Class<Plugin>) Class.forName(pluginClassName, true, pluginClassLoader)
 
-        def plugin = clazz.newInstance()
-        handlers.add(plugin)
+        def pluginClass = clazz.newInstance()
+        plugins.add(pluginClass)
 
+    }
+
+    /**
+     *
+     * @param jar
+     * @return
+     */
+    private Manifest getManifest(File jar) {
+        InputStream input = new FileInputStream(jar);
+        JarInputStream jarStream = new JarInputStream(input);
+        Manifest manifest = jarStream.getManifest();
+        return manifest
     }
 
     /**
      * Load list of jars into classpath.
      * @param jars
      */
-    void loadJars(List<File> jars) {
+    void addJarsToClasspath(List<File> jars) {
         jars.each { jar ->
-            loadJar(jar)
+            addJarToClasspath(jar)
         }
     }
 
     /**
-     * Load a single jar into the classpath.
-     * @param jar
+     * Loads a single jar onto the classpath.
+     * @param jar file to load.
      */
-    void loadJar(File jar) {
-        loader.addURL(jar.toURI().toURL())
+    void addJarToClasspath(File jar) {
+        pluginClassLoader.addURL(jar.toURI().toURL())
     }
 
 }

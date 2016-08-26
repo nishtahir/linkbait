@@ -54,7 +54,7 @@ abstract class AbstractBot extends AbstractExecutionThreadService implements Plu
      */
     @Override
     protected void startUp() throws Exception {
-        loader.handlers.each {
+        loader.plugins.each {
             it.start(this)
         }
     }
@@ -66,7 +66,7 @@ abstract class AbstractBot extends AbstractExecutionThreadService implements Plu
 
     @Override
     protected void shutDown() throws Exception {
-        loader.handlers.each {
+        loader.plugins.each {
             it.stop(this)
         }
     }

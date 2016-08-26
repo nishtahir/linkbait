@@ -3,7 +3,7 @@ package com.nishtahir.linkbait.core
 import org.jetbrains.annotations.NotNull
 
 /**
- *  Class loader. Needed to expose {@link URLClassLoader#addURL(java.net.URL)}
+ *  Class pluginClassLoader. Needed to expose {@link URLClassLoader#addURL(java.net.URL)}
  */
 class PluginClassLoader extends URLClassLoader {
     
