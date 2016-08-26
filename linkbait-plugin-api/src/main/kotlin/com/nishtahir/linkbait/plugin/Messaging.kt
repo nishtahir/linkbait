@@ -16,6 +16,11 @@ interface Messenger {
     fun sendMessage(channel: String, message: String)
 
     /**
+     *
+     */
+    fun sendDirectMessage(user: String, message: String)
+
+    /**
      *  @param channel Where to add the reaction
      *  @param messageId ID of message to react
      *  @param reaction Reaction to react with
@@ -43,4 +48,31 @@ interface Messenger {
      * @param file What
      */
     fun uploadFile(channel: String, file: File)
+
+    /**
+     *
+     */
+    fun getMessageBuilder(): MessageBuilder
+}
+
+interface MessageBuilder {
+
+    fun text(text: String): MessageBuilder
+
+    fun bold(text: String): MessageBuilder
+
+    fun italics(text: String): MessageBuilder
+
+    fun strike(text: String): MessageBuilder
+
+    fun pre(text: String): MessageBuilder
+
+    fun code(text: String): MessageBuilder
+
+    fun emoji(text: String): MessageBuilder
+
+    fun link(title: String, url: String): MessageBuilder
+
+    fun build(): String
+
 }

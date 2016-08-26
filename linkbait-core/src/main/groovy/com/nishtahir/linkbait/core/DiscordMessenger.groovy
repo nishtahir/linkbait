@@ -1,14 +1,12 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.plugin.Attachment
+import com.nishtahir.linkbait.plugin.MessageBuilder
 import com.nishtahir.linkbait.plugin.Messenger
 import groovy.transform.Canonical
 import org.jetbrains.annotations.NotNull
 import sx.blah.discord.api.IDiscordClient
 import sx.blah.discord.handle.obj.IChannel
-
-import java.io.File
-import java.util.regex.Pattern
 
 @Canonical
 class DiscordMessenger implements Messenger {
@@ -21,6 +19,11 @@ class DiscordMessenger implements Messenger {
     @Override
     void sendMessage(@NotNull String channel, @NotNull String message) {
         findChannelByName(channel)?.sendMessage(message)
+    }
+
+    @Override
+    void sendDirectMessage(@NotNull String user, @NotNull String message) {
+        // TODO Implement this method.
     }
 
     @Override
@@ -79,5 +82,10 @@ class DiscordMessenger implements Messenger {
             }
         }
         return message
+    }
+
+    @Override
+    MessageBuilder getMessageBuilder() {
+        return null
     }
 }

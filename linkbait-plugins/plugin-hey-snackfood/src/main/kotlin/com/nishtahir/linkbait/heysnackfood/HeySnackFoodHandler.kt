@@ -26,7 +26,7 @@ class HeySnackFoodHandler(val context: PluginContext) : MessageEventListener {
 
             if (event.isDirectMessage) {
                 if (userName.equals(event.sender)) {
-                    context.getMessenger().sendMessage(event.channel, "<Shame! Shame! Shame!|https://media.giphy.com/media/xTiTnmrpGi0zetc9Xy/giphy.gif>")
+                    context.getMessenger().sendDirectMessage(event.sender, "<https://media.giphy.com/media/xTiTnmrpGi0zetc9Xy/giphy.gif|Shame. Shame. Shame.>")
                 } else {
                     context.getMessenger().sendMessage(event.channel, "Show your appreciation for @$userName and give :nutella in a public channel")
                 }
@@ -53,15 +53,23 @@ class HeySnackFoodHandler(val context: PluginContext) : MessageEventListener {
         if (event.message.trim() == "leaderboard") {
             val list = service.getLeaderboad()
 
-            val leaderboard = StringBuilder()
-            leaderboard.appendNew("* Hey $snackFood Leaderboard! * \n\n")
+            val builder = context.getMessenger().getMessageBuilder()
+            builder.bold("Hey $snackFood Leaderboard!")
+            builder.text("\n\n")
             list.forEachIndexed { i, user ->
                 if (i > 10) {
                     return@forEachIndexed
                 }
-                leaderboard.appendNew("${i + 1}. ${user.name}    *${user.count}*  ${ if (i == 0) ":crown: \n" else ""}")
+
+                builder.text("${i + 1}. ${user.name}")
+                builder.text("    ")
+                builder.bold("${user.count}")
+                if (i == 0) {
+                    builder.text(":crown: \n")
+                }
+                builder.text("\n")
             }
-            context.getMessenger().sendMessage(event.channel, leaderboard.toString())
+            context.getMessenger().sendMessage(event.channel, builder.build())
 
         } else if (event.message.contains("$snackFood")) {
             context.getMessenger().sendMessage(event.channel, ":heart:")
