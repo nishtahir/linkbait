@@ -1,7 +1,6 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.core.util.Booter
-import groovy.transform.Canonical
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.artifact.Artifact
@@ -22,6 +21,14 @@ import org.slf4j.LoggerFactory
  */
 class DependencyResolver {
 
+    /**
+     * Logger.
+     */
+    private Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
+
+    /**
+     * Maven repositories to search for dependencies.
+     */
     def repositories = [
             "http://repository.jetbrains.com/all",
             "https://jitpack.io",
@@ -30,12 +37,10 @@ class DependencyResolver {
 
     File repository
 
-    DependencyResolver(File repository){
+    DependencyResolver(File repository) {
         this.repository = repository
     }
 
-
-    private Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
 
     /**
      *
@@ -79,12 +84,13 @@ class DependencyResolver {
         RepositorySystem repositorySystem = Booter.newRepositorySystem();
         RepositorySystemSession session = Booter.newRepositorySystemSession(repositorySystem, repository);
 
-        Artifact artifact = new DefaultArtifact(artifactIdentifier);
         DependencyFilter classpathFilter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);
 
-        CollectRequest collectRequest = new CollectRequest();
-        collectRequest.setRoot(new Dependency(artifact, JavaScopes.COMPILE));
-        collectRequest.setRepositories(Booter.newRepositories(repositories));
+        CollectRequest collectRequest = new CollectRequest().with {
+            root = new Dependency(new DefaultArtifact(artifactIdentifier), JavaScopes.COMPILE)
+            repositories = Booter.newRepositories(repositories)
+            return it
+        }
 
         DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
 
