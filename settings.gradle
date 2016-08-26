@@ -12,5 +12,6 @@ include 'linkbait-plugins/plugin-orly'
 include 'linkbait-plugins/plugin-tags'
 include 'linkbait-plugins/plugin-asciitext'
 include 'linkbait-plugins/plugin-tenor'
+include 'linkbait-plugins/plugin-android-docs'
 
 rootProject.name = 'linkbait'
