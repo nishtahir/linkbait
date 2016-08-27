@@ -3,7 +3,6 @@ package com.nishtahir.linkbait.core.slack
 import com.nishtahir.linkbait.plugin.Attachment
 import com.nishtahir.linkbait.plugin.MessageBuilder
 import com.nishtahir.linkbait.plugin.Messenger
-import com.sun.tools.corba.se.idl.constExpr.Not
 import com.ullink.slack.simpleslackapi.SlackAttachment
 import com.ullink.slack.simpleslackapi.SlackChannel
 import com.ullink.slack.simpleslackapi.SlackSession

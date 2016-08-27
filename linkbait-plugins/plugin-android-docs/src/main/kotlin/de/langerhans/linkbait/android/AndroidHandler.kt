@@ -41,9 +41,6 @@ class AndroidHandler(val context: PluginContext): MessageEventListener {
         }
         val text = searchJson.items.joinToString("\n", transform = transform)
 
-        context.getMessenger().sendMessage(event.channel, text)
-
-
-
+        context.getMessenger().sendMessage(event.channel, text, unfurl = false)
     }
 }
