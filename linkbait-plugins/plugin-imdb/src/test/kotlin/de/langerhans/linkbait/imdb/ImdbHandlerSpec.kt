@@ -82,10 +82,13 @@ class MockContext : PluginContext {
 }
 
 class MockMessenger : Messenger {
+    override fun setChannelTopic(channel: String, topic: String) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     var attachment: Attachment? = null
 
-    override fun sendMessage(channel: String, message: String) {
+    override fun sendMessage(channel: String, message: String, unfurl: Boolean) {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
