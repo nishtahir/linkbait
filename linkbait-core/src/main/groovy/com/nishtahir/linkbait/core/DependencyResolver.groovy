@@ -84,13 +84,12 @@ class DependencyResolver {
         RepositorySystem repositorySystem = Booter.newRepositorySystem();
         RepositorySystemSession session = Booter.newRepositorySystemSession(repositorySystem, repository);
 
+        Artifact artifact = new DefaultArtifact(artifactIdentifier);
         DependencyFilter classpathFilter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);
 
-        CollectRequest collectRequest = new CollectRequest().with {
-            root = new Dependency(new DefaultArtifact(artifactIdentifier), JavaScopes.COMPILE)
-            repositories = Booter.newRepositories(repositories)
-            return it
-        }
+        CollectRequest collectRequest = new CollectRequest();
+        collectRequest.setRoot(new Dependency(artifact, JavaScopes.COMPILE));
+        collectRequest.setRepositories(Booter.newRepositories(repositories));
 
         DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
 
