@@ -14,7 +14,7 @@ class PlayStoreDataProvider extends StoreDataProvider {
     }
 
     Map<String, String> getAppDetailsFromPlayStore() {
-        String html = getEN_US_RegionalUrlFromPlayId(getPlaystoreId(url)).toURL().text
+        String html = getEN_US_RegionalUrlFromPlayId(getPlayStoreId(url)).toURL().text
 
         Document doc = Jsoup.parse(html)
 
