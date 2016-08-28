@@ -11,5 +11,6 @@ include 'linkbait-plugins/plugin-imdb'
 include 'linkbait-plugins/plugin-orly'
 include 'linkbait-plugins/plugin-tags'
 include 'linkbait-plugins/plugin-asciitext'
+include 'linkbait-plugins/plugin-tenor'
 
 rootProject.name = 'linkbait'
