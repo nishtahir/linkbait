@@ -56,7 +56,7 @@ mainClassName = 'com.nishtahir.linkbait.Application'
 
 docker {
     javaApplication {
-        baseImage = "java:8-jre"
+        baseImage = "openjdk:8-jre"
         maintainer = "Nish Tahir <nishtahir@outlook.com>"
     }
 }
