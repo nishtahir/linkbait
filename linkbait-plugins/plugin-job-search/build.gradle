@@ -1,0 +1,45 @@
+apply plugin: 'kotlin'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+/**
+ *
+ */
+jar.doFirst() {
+    baseName = 'PluginJobSearch'
+    version = '1.0'
+    manifest {
+        attributes 'Plugin-Class': 'com.nishtahir.linkbait.plugin.JobSearchPlugin',
+                'Plugin-Id': 'com.nishtahir.linkbait.plugin.JobSearchPlugin',
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'Nish Tahir',
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+    }
+}
+
+junitPlatform {
+    engines {
+        include 'spek'
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+/**
+ * Important! Use exact versions.
+ */
+dependencies {
+    compile project(':linkbait-plugin-api')
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.2'
+    compile 'org.jsoup:jsoup:1.9.2'
+    compile 'com.machinepublishers:jbrowserdriver:0.16.4'
+
+    testCompile project(':linkbait-test')
+    testCompile 'org.jetbrains.kotlin:kotlin-test:1.0.3'
+    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
+
+}
