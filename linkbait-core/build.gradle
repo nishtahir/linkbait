@@ -16,7 +16,7 @@ ext.wagonVersion = "1.0"
 dependencies {
     compile project(':linkbait-plugin-api')
 
-    compile 'com.github.Ullink:simple-slack-api:-SNAPSHOT'
+    compile 'com.github.Ullink:simple-slack-api:0.6.0'
     compile 'com.github.austinv11:Discord4j:2.5.4'
 
     compile 'com.fasterxml.jackson.core:jackson-core:2.6.3'
