@@ -1,5 +1,6 @@
 package com.nishtahir.linkbait.core
 
+import com.nishtahir.linkbait.core.slack.SlackMessageBuilder
 import spock.lang.Shared
 import spock.lang.Specification
 

@@ -1,3 +1,4 @@
+convert templates/adam-jensen.png -resize 350 templates/adam-jensen.png
 convert templates/ageism.png -resize 350 templates/ageism.png
 convert templates/aliens.png -resize 350 templates/aliens.png
 convert templates/all-the-things.png -resize 350 templates/all-the-things.png
@@ -28,6 +29,7 @@ convert templates/good-guy-greg.png -resize 350 templates/good-guy-greg.png
 convert templates/grampy-cat.png -resize 350 templates/grampy-cat.png
 convert templates/grumpy-cat.png -resize 350 templates/grumpy-cat.png
 convert templates/insanity-wolf.png -resize 350 templates/insanity-wolf.png
+convert templates/milton.png -resize 350 templates/milton.png
 convert templates/morpheus.png -resize 350 templates/morpheus.png
 convert templates/nedstark.png -resize 350 templates/nedstark.png
 convert templates/philosoraptor.png -resize 350 templates/philosoraptor.png

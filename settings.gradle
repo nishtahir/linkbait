@@ -1,6 +1,7 @@
 include 'linkbait-core'
 include 'linkbait-server'
 include 'linkbait-www'
+include 'linkbait-test'
 include 'linkbait-plugin-api'
 include 'linkbait-plugins/plugin-pokedex'
 include 'linkbait-plugins/plugin-reddit-autocomplete'
@@ -11,5 +12,9 @@ include 'linkbait-plugins/plugin-imdb'
 include 'linkbait-plugins/plugin-orly'
 include 'linkbait-plugins/plugin-tags'
 include 'linkbait-plugins/plugin-asciitext'
+include 'linkbait-plugins/plugin-tenor'
+include 'linkbait-plugins/plugin-android-docs'
+include 'linkbait-plugins/plugin-job-search'
 
 rootProject.name = 'linkbait'
+

@@ -1,7 +1,6 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.core.util.Booter
-import groovy.transform.Canonical
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.artifact.Artifact
@@ -22,6 +21,14 @@ import org.slf4j.LoggerFactory
  */
 class DependencyResolver {
 
+    /**
+     * Logger.
+     */
+    private Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
+
+    /**
+     * Maven repositories to search for dependencies.
+     */
     def repositories = [
             "http://repository.jetbrains.com/all",
             "https://jitpack.io",
@@ -30,12 +37,10 @@ class DependencyResolver {
 
     File repository
 
-    DependencyResolver(File repository){
+    DependencyResolver(File repository) {
         this.repository = repository
     }
 
-
-    private Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
 
     /**
      *

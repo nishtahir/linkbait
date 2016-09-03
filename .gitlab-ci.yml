@@ -1,11 +1,11 @@
-image: java:8-jdk
+image: openjdk:8-jdk
 before_script:
     - chmod +x gradlew
 
 build:
   stage: build
   script:
-    - ./gradlew -g /cache/.gradle assemble
+    - ./gradlew -g /cache/.gradle clean assemble
   allow_failure: false
 
 test:

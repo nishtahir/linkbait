@@ -36,7 +36,7 @@ abstract class StoreDataProvider {
      * @param context
      * @return
      */
-    static String getPlaystoreId(String context) {
+    static String getPlayStoreId(String context) {
         def matcher = (context =~ /play\.google.com\\/store\\/apps\\/details\?id=(?<id>[\w.]+)/)
         if (matcher.find()) {
             return matcher.group('id')

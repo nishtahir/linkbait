@@ -30,7 +30,7 @@ class StoreBotListener implements MessageEventListener {
         if (url.contains("play.google.com")) {
             provider = new PlayStoreDataProvider(url)
         } else if (url.contains("store.steampowered.com")) {
-            // steam
+            provider = new SteamStoreDataProvider((url))
         }
 
         if (provider != null) {

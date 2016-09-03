@@ -1,4 +1,4 @@
-package com.nishtahir.linkbait.core
+package com.nishtahir.linkbait.core.discord
 
 import com.nishtahir.linkbait.plugin.Attachment
 import com.nishtahir.linkbait.plugin.MessageBuilder
@@ -17,7 +17,7 @@ class DiscordMessenger implements Messenger {
     IDiscordClient client;
 
     @Override
-    void sendMessage(@NotNull String channel, @NotNull String message) {
+    void sendMessage(@NotNull String channel, @NotNull String message, boolean unfurl) {
         findChannelByName(channel)?.sendMessage(message)
     }
 
@@ -44,6 +44,11 @@ class DiscordMessenger implements Messenger {
     @Override
     void uploadFile(@NotNull String channel, @NotNull File file) {
         findChannelByName(channel)?.sendFile(file)
+    }
+
+    @Override
+    void setChannelTopic(@NotNull String channel, @NotNull String topic) {
+
     }
 
     private IChannel findChannelByName(String name) {
