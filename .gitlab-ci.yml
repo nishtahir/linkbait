@@ -23,7 +23,7 @@ build:
   stage: build
   script:
     - ./gradlew -g $GRADLE_USER_HOME clean assemble
-    - ./gradlew -g $GRADLE_USER_HOME dockerDistTar
+    - ./gradlew -g $GRADLE_USER_HOME createDockerfile
   allow_failure: false
 
 test:
@@ -40,6 +40,7 @@ release:
   script:
     - export BUILD_VER=$(git describe --tags)
     - docker build -t registry.gitlab.com/nishtahir/linkbait:$BUILD_VER $BUILD_DIR/linkbait/docker/
+    - docker build -t registry.gitlab.com/nishtahir/linkbait:latest $BUILD_DIR/linkbait/docker/
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker push registry.gitlab.com/nishtahir/linkbait:$BUILD_VER
     - docker push registry.gitlab.com/nishtahir/linkbait:latest

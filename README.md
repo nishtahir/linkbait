@@ -8,7 +8,12 @@ Linkbait is an extensible bot framework with supports for plugins.
 
 * [Discord](https://discordapp.com/)
 
-## Getting started
+# Getting started
+
+To get started with Linkbait, you have the option of pulling a docker image from the
+container registry, or building from source.
+
+If your aim is to contribute to Linkbait, please skip to builing building from source.
 
 ## Docker
 
@@ -31,15 +36,26 @@ Here you mount the `data` directory which contains the plugins, static files and
 
 ## Building from source
 
-Clone the repository and run the following command in the project root directory
+### Requirements
+
+In order to build Linkbait, you need some variant of the Java Development Kit (JDK). However some packages require
+the JavaFX library.
+
+If you intend to build Linkbait with the OpenJDK, be sure also install OpenJFX. On Ubuntu this can be done using apt
+
+```
+apt-get update && apt-get install -y --no-install-recommends openjfx
+```
+
+Clone the repository run the following command in the project root directory
 
 ``` sh
 ./gradlew installDist
 ```
 
-This will build Linkbait and deploy it in the build folder.
+This will build and deploy Linkbait into the `build/linkbait` directory.
 
-## Basic usage
+### Basic usage
 
 ``` sh
 Usage: <linkbait> [options] [command] [command options]
