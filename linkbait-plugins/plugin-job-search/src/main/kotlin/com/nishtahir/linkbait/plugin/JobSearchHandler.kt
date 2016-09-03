@@ -35,52 +35,52 @@ class JobSearchHandler(val context: PluginContext) : MessageEventListener {
         }
     }
 
-}
 
-fun queryLinkedInForJobs(request: JobRequest): List<Job> {
-    val linkedInQuery = buildLinkedInUrl(request)
+    fun queryLinkedInForJobs(request: JobRequest): List<Job> {
+        val linkedInQuery = buildLinkedInUrl(request)
 
-    //This is a dependency that can be moved out of here - IOC
-    val driver = JBrowserDriver(Settings.builder().
-            userAgent(UserAgent.CHROME).
-            timezone(Timezone.AMERICA_NEWYORK).build())
-    driver.get(linkedInQuery)
+        //This is a dependency that can be moved out of here - IOC
+        val driver = JBrowserDriver(Settings.builder().
+                userAgent(UserAgent.CHROME).
+                timezone(Timezone.AMERICA_NEWYORK).build())
+        driver.get(linkedInQuery)
 
-    val pageSource = driver.pageSource
-    val document = Jsoup.parse(pageSource)
+        val pageSource = driver.pageSource
+        val document = Jsoup.parse(pageSource)
 
-    val jobListings = mutableListOf<Job>()
-    document?.let {
-        it.select(".job-listing").forEach { listItem ->
-            val title = listItem.select(".job-title-text").joinToString(" ") { elem ->
-                elem.text().trim()
+        val jobListings = mutableListOf<Job>()
+        document?.let {
+            it.select(".job-listing").forEach { listItem ->
+                val title = listItem.select(".job-title-text").joinToString(" ") { elem ->
+                    elem.text().trim()
+                }
+                val titleUrl = listItem.select(".job-title-link").attr("abs:href")
+                val company = listItem.select(".company-name-text").text()
+                val location = listItem.select(".job-location").text()
+                val datePosted = listItem.select(".date-posted-or-new").text()
+                val description = listItem.select(".job-description").text()
+
+                jobListings.add(Job(title, titleUrl, company, datePosted, location, description, "LinkedIn"))
             }
-            val titleUrl = listItem.select(".job-title-link").attr("abs:href")
-            val company = listItem.select(".company-name-text").text()
-            val location = listItem.select(".job-location").text()
-            val datePosted = listItem.select(".date-posted-or-new").text()
-            val description = listItem.select(".job-description").text()
-
-            jobListings.add(Job(title, titleUrl, company, datePosted, location, description, "LinkedIn"))
         }
+        driver.quit()
+        return jobListings
     }
-    driver.quit()
-    return jobListings
-}
 
-fun parseJobRequest(str: String): JobRequest {
-    val req = JobRequest()
-    PATTERN.matchEntire(str)?.let { matchResult ->
-        req.tags = matchResult.groups[1]?.value?.trim()?.split(" ").orEmpty()
-        req.location = matchResult.groups[4]?.value.orEmpty()
+    fun parseJobRequest(str: String): JobRequest {
+        val req = JobRequest()
+        PATTERN.matchEntire(str)?.let { matchResult ->
+            req.tags = matchResult.groups[1]?.value?.trim()?.split(" ").orEmpty()
+            req.location = matchResult.groups[4]?.value.orEmpty()
+        }
+        return req
     }
-    return req
-}
 
-fun buildLinkedInUrl(request: JobRequest): String {
-    val keywords = request.tags.joinToString("%20")
-    val location = request.location.replace(" ", "%20")
-    return "$LINKEDIN_SEARCH_ROUTE?keywords=$keywords&location=$location"
+    fun buildLinkedInUrl(request: JobRequest): String {
+        val keywords = request.tags.joinToString("%20")
+        val location = request.location.replace(" ", "%20")
+        return "$LINKEDIN_SEARCH_ROUTE?keywords=$keywords&location=$location"
+    }
 }
 
 class JobRequest {
