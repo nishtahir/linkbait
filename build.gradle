@@ -59,7 +59,7 @@ version = getVersion()
 
 docker {
     javaApplication {
-        baseImage = "openjdk:8-jre"
+        baseImage = "java8-openjfx-docker"
         maintainer = "Nish Tahir <nishtahir@outlook.com>"
     }
 }
