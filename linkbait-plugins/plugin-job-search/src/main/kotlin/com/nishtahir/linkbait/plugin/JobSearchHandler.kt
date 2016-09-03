@@ -9,7 +9,7 @@ import org.jsoup.Jsoup
 class JobSearchHandler(val context: PluginContext) : MessageEventListener {
 
     override fun handleMessageEvent(event: MessageEvent) {
-        if (event.isDirectedAtBot == false) {
+        if (event.isDirectedAtBot == false || event.message.startsWith("$TRIGGER") == false) {
             return
         }
 

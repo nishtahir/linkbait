@@ -35,7 +35,7 @@ Searches LinkedIn and returns new job postings
             val messageEvent: MessageEvent = MessageEvent()
             messageEvent.isDirectedAtBot = true
             messageEvent.channel = "test"
-            messageEvent.message = "$TRIGGER"
+            messageEvent.message = "$TRIGGER "
 
             it("should send help message") {
                 handler.handleMessageEvent(messageEvent)
