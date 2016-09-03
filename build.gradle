@@ -18,7 +18,7 @@ buildscript {
 
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
         classpath "com.moowork.gradle:gradle-node-plugin:0.13"
-        classpath 'com.bmuschko:gradle-docker-plugin:3.0.1'
+        classpath 'com.bmuschko:gradle-docker-plugin:3.0.2'
     }
 }
 
@@ -57,11 +57,22 @@ apply plugin: 'com.bmuschko.docker-java-application'
 
 mainClassName = 'com.nishtahir.linkbait.Application'
 
+version = getVersion()
+
 docker {
     javaApplication {
         baseImage = "openjdk:8-jre"
         maintainer = "Nish Tahir <nishtahir@outlook.com>"
     }
+}
+
+def getVersion() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
 }
 
 dependencies {
@@ -80,3 +91,4 @@ dependencies {
     testCompile "org.jetbrains.spek:spek:$spek_version"
 
 }
+
