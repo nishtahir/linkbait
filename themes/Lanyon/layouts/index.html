@@ -10,7 +10,6 @@
     -->
     <meta charset="utf-8">
     <base href="{{ .Site.BaseURL }}">
-    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
     <title>{{ .Site.Title }}</title>
     <link rel="canonical" href="{{ .Permalink }}">
     <link href="{{ .RSSlink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
@@ -47,16 +46,35 @@
         posts we have made.
       -->
       <div class="container content">
-        <h1>Oh, Hi!. You've stumbled upon the Linkbait development blog</h1>
+        <h1>Oh, Hi! You've stumbled upon the Linkbait development blog</h1>
+        <br></br>
 
-        <p class="lead"> What is Linkbait? </p>
+        <h2 class="post-title">What is Linkbait?</h2>
 
         <p>Linkbait is a bot framework that's awesome. It's got a whole bunch of neat features, but most
-        importantly, it's super extensible with support for plugins; It comes with a whole bunch of plugins from gifs to a pokedex.</p>
+        importantly, it's super extensible with support for plugins. It's a really easy way to super charge your Slack or Discord</p>
 
+        <img src="/images/linkbait-gif-screenshot.png">
+
+        <h2 class="post-title">What does it do?</h2>
+        <p>Pretty much everything. It's got gifs, delicious nutella, unfurls links from app stores,
+          steam and even subreddit mentions, a meme generator and <a href="https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins">much much more</a>.</p>
+        <p>Did I mention that it has a Pokedex?</p>
+        <br>
+        <img src="/images/pokedex-screen.png">
+
+        <h2 class="post-title">What platforms are supported?</h2>
         <p>It currently supports Slack and Discord, but we are working to support new clients everyday.</p>
+        <br>
 
-        <br></br>
+        <h2 class="post-title">How much is all this awesomeness going to cost me?</h2>
+        <p>Nothing it's free and <a href="https://gitlab.com/nishtahir/linkbait/">open source</a>.</p>
+        <br>
+<!-- 
+        <h2 class="post-title">Can I contribute to Linkbait?</h2>
+        <p>Absolutely!</p>
+        <br> -->
+
         <!-- Recent Posts section -->
         <h1 class="post-title">Recent Posts</h1>
           <section id="main">
