@@ -1,4 +1,4 @@
-image: openjdk:8-jdk
+image: nishtahir/openjfx:8-jdk
 
 stages:
 - build

@@ -59,7 +59,7 @@ mainClassName = 'com.nishtahir.linkbait.Application'
 
 version = getVersion()
 
-task copyDockerArchiveResources(type: Copy){
+task copyDockerArchiveResources(type: Copy) {
     dependsOn distTar
     from { distTar.archivePath }
     into { createDockerfile.destFile.parentFile }
@@ -68,9 +68,8 @@ task copyDockerArchiveResources(type: Copy){
 task createDockerfile(type: Dockerfile) {
     dependsOn copyDockerArchiveResources
     destFile = project.file("$project.buildDir/docker/Dockerfile")
-    from 'openjdk:8-jre'
+    from 'nishtahir/openjfx:8-jre'
     maintainer 'Nish Tahir <nishtahir@outlook.com>'
-    runCommand "apt-get update && apt-get install -y --no-install-recommends openjfx && rm -rf /var/lib/apt/lists/*"
     addFile({ distTar.archivePath.name }, { '/' })
     entryPoint { getEntryPoint() }
     exposePort 8080
