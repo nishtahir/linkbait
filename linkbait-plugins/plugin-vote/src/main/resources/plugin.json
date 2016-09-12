@@ -1,8 +1,0 @@
-{
-  "version": "1.0",
-  "title": "Vote",
-  "description": "A plugin to allow voting on links",
-  "author": "Nish Tahir",
-  "url": "",
-  "handler": "com.nishtahir.linkbait.VoteHandler"
-}
