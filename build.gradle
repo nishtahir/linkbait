@@ -5,14 +5,18 @@ buildscript {
     ext.kotlin_version = '1.0.2'
     ext.dokka_version = '0.9.9'
     ext.spek_version = '1.0.25'
+    ext.spring_version = '1.4.0.RELEASE'
     repositories {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_version"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
 
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
         classpath "com.moowork.gradle:gradle-node-plugin:0.13"
@@ -104,10 +108,9 @@ task printVersion() {
 dependencies {
     compile project(':linkbait-core')
     compile project(':linkbait-server')
-
     compile 'org.slf4j:slf4j-simple:1.7.21'
-
     compile 'com.beust:jcommander:1.48'
+    compile 'com.brsanthu:google-analytics-java:1.1.2'
 
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.2"

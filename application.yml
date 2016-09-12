@@ -1,0 +1,28 @@
+server:
+  name: anon
+# plugin: ./data/plugin
+# port: 8080
+# repo: ./data/repo
+# static: ./data/static
+# temp: ./data/temp
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:file:./data/database/linkbait
+    username: linkbait
+    password: tiabknil
+h2:
+  console:
+    enabled: true
+jpa:
+  database-platform: org.hibernate.dialect.H2Dialect
+
+bot:
+  config:
+    - id: testId1
+      key: testKey1
+      service: slack
+
+#   - id: testId2
+#     key: testKey2
+#     service: slack
