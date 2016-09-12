@@ -113,60 +113,60 @@ class UrlMatcherSpecification : Spek ({
             assertTrue(handler.URL_PATTERN.matches("http://a.b-c.de"))
         }
 
-        // Below this line lies tests that would be nice to pass. Edge cases that are unlikely,
-        // but will probably happen.
-
-        xit("should match http://142.42.1.1/") {
-            assertTrue(handler.URL_PATTERN.matches("http://142.42.1.1/"))
-        }
-
-        xit("should match http://142.42.1.1:8080/") {
-            assertTrue(handler.URL_PATTERN.matches("http://142.42.1.1:8080/"))
-        }
-
-        xit("should match http://➡.ws/䨹") {
-            assertTrue(handler.URL_PATTERN.matches("http://➡.ws/䨹"))
-        }
-
-        xit("should match http://⌘.ws") {
-            assertTrue(handler.URL_PATTERN.matches("http://⌘.ws"))
-        }
-
-        xit("should match http://⌘.ws/") {
-            assertTrue(handler.URL_PATTERN.matches("http://⌘.ws/"))
-        }
-
-        xit("should match http://مثال.إختبار") {
-            assertTrue(handler.URL_PATTERN.matches("http://مثال.إختبار"))
-        }
-
-        xit("should match http://例子.测试") {
-            assertTrue(handler.URL_PATTERN.matches("http://例子.测试"))
-        }
-
-        xit("should match http://उदाहरण.परीक्षा") {
-            assertTrue(handler.URL_PATTERN.matches("http://उदाहरण.परीक्षा"))
-        }
-
-        xit("should match http://-.~_!$&'()*+,;=:%40:80%2f::::::@example.com") {
-            assertTrue(handler.URL_PATTERN.matches("http://-.~_!$&'()*+,;=:%40:80%2f::::::@example.com"))
-        }
-
-        xit("should match http://223.255.255.254") {
-            assertTrue(handler.URL_PATTERN.matches("http://223.255.255.254"))
-        }
-
-        xit("should match http://☺.damowmow.com/") {
-            assertTrue(handler.URL_PATTERN.matches("http://☺.damowmow.com/"))
-        }
-
-        xit("should match http://✪df.ws/123") {
-            assertTrue(handler.URL_PATTERN.matches("http://✪df.ws/123"))
-        }
-
-        xit("should match http://foo.com/unicode_(✪)_in_parens") {
-            assertTrue(handler.URL_PATTERN.matches("http://foo.com/unicode_(✪)_in_parens"))
-        }
+//        Below this line lies tests that would be nice to pass. Edge cases that are unlikely,
+//        but will probably happen.
+//
+//        xit("should match http://142.42.1.1/") {
+//            assertTrue(handler.URL_PATTERN.matches("http://142.42.1.1/"))
+//        }
+//
+//        xit("should match http://142.42.1.1:8080/") {
+//            assertTrue(handler.URL_PATTERN.matches("http://142.42.1.1:8080/"))
+//        }
+//
+//        xit("should match http://➡.ws/䨹") {
+//            assertTrue(handler.URL_PATTERN.matches("http://➡.ws/䨹"))
+//        }
+//
+//        xit("should match http://⌘.ws") {
+//            assertTrue(handler.URL_PATTERN.matches("http://⌘.ws"))
+//        }
+//
+//        xit("should match http://⌘.ws/") {
+//            assertTrue(handler.URL_PATTERN.matches("http://⌘.ws/"))
+//        }
+//
+//        xit("should match http://مثال.إختبار") {
+//            assertTrue(handler.URL_PATTERN.matches("http://مثال.إختبار"))
+//        }
+//
+//        xit("should match http://例子.测试") {
+//            assertTrue(handler.URL_PATTERN.matches("http://例子.测试"))
+//        }
+//
+//        xit("should match http://उदाहरण.परीक्षा") {
+//            assertTrue(handler.URL_PATTERN.matches("http://उदाहरण.परीक्षा"))
+//        }
+//
+//        xit("should match http://-.~_!$&'()*+,;=:%40:80%2f::::::@example.com") {
+//            assertTrue(handler.URL_PATTERN.matches("http://-.~_!$&'()*+,;=:%40:80%2f::::::@example.com"))
+//        }
+//
+//        xit("should match http://223.255.255.254") {
+//            assertTrue(handler.URL_PATTERN.matches("http://223.255.255.254"))
+//        }
+//
+//        xit("should match http://☺.damowmow.com/") {
+//            assertTrue(handler.URL_PATTERN.matches("http://☺.damowmow.com/"))
+//        }
+//
+//        xit("should match http://✪df.ws/123") {
+//            assertTrue(handler.URL_PATTERN.matches("http://✪df.ws/123"))
+//        }
+//
+//        xit("should match http://foo.com/unicode_(✪)_in_parens") {
+//            assertTrue(handler.URL_PATTERN.matches("http://foo.com/unicode_(✪)_in_parens"))
+//        }
 
     }
 
@@ -291,37 +291,36 @@ class UrlMatcherSpecification : Spek ({
             assertFalse(handler.URL_PATTERN.matches("http://10.1.1.1"))
         }
 
-        xit("should not match http://.www.foo.bar/") {
-            assertFalse(handler.URL_PATTERN.matches("http://.www.foo.bar/"))
-        }
-
-        xit("should not match http://www.foo.bar./") {
-            assertFalse(handler.URL_PATTERN.matches("http://www.foo.bar./"))
-        }
-
-        xit("should not match http://.www.foo.bar./") {
-            assertFalse(handler.URL_PATTERN.matches("http://.www.foo.bar./"))
-        }
-
-        xit("should not match http://-error-.invalid/") {
-            assertFalse(handler.URL_PATTERN.matches("http://-error-.invalid/"))
-        }
-
-        xit("should not match http://a.b--c.de/") {
-            assertFalse(handler.URL_PATTERN.matches("http://a.b--c.de/"))
-        }
-
-        xit("should not match http://-a.b.co") {
-            assertFalse(handler.URL_PATTERN.matches("http://-a.b.co"))
-        }
-
-        xit("should not match http://a.b-.co") {
-            assertFalse(handler.URL_PATTERN.matches("http://a.b-.co"))
-        }
-
-        xit("should not match foo.com") {
-            assertFalse(handler.URL_PATTERN.matches("foo.com"))
-        }
-
+//        xit("should not match http://.www.foo.bar/") {
+//            assertFalse(handler.URL_PATTERN.matches("http://.www.foo.bar/"))
+//        }
+//
+//        xit("should not match http://www.foo.bar./") {
+//            assertFalse(handler.URL_PATTERN.matches("http://www.foo.bar./"))
+//        }
+//
+//        xit("should not match http://.www.foo.bar./") {
+//            assertFalse(handler.URL_PATTERN.matches("http://.www.foo.bar./"))
+//        }
+//
+//        xit("should not match http://-error-.invalid/") {
+//            assertFalse(handler.URL_PATTERN.matches("http://-error-.invalid/"))
+//        }
+//
+//        xit("should not match http://a.b--c.de/") {
+//            assertFalse(handler.URL_PATTERN.matches("http://a.b--c.de/"))
+//        }
+//
+//        xit("should not match http://-a.b.co") {
+//            assertFalse(handler.URL_PATTERN.matches("http://-a.b.co"))
+//        }
+//
+//        xit("should not match http://a.b-.co") {
+//            assertFalse(handler.URL_PATTERN.matches("http://a.b-.co"))
+//        }
+//
+//        xit("should not match foo.com") {
+//            assertFalse(handler.URL_PATTERN.matches("foo.com"))
+//        }
     }
 })
