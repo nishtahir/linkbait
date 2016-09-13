@@ -102,7 +102,7 @@ class SlackBot extends AbstractBot {
                         channel: event.channel.name,
                         sender: event.user.userName,
                         reaction: event.emojiName,
-                        added: true)
+                        added: false)
                 if (event.getUser().id != session.sessionPersona().id) {
                     eventBus.post(reactionEvent)
                 }

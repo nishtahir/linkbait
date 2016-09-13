@@ -4,13 +4,13 @@ import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.jdbc.JdbcConnectionSource
-import com.j256.ormlite.logger.LoggerFactory
 import com.j256.ormlite.table.DatabaseTable
 import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.plugin.*
 import uy.kohesive.injekt.api.InjektScope
 import uy.kohesive.injekt.registry.default.DefaultRegistrar
 import java.sql.SQLException
+import java.util.*
 
 /**
  * Pokedex plugin for Linkbait. To edit the pokedex content.
@@ -65,7 +65,14 @@ class LinkLoggerService() {
         TableUtils.createTableIfNotExists(connectionSource, Link::class.java)
     }
 
-    fun findLink(url: String): Link? {
+    fun findLinksByMessageId(id: String): List<Link> {
+        return linkDao.queryBuilder()
+                .where()
+                .eq(Link::messageId.name, id)
+                .query().orEmpty()
+    }
+
+    fun findLinkByUrl(url: String): Link? {
         return linkDao.queryBuilder()
                 .where()
                 .eq(Link::url.name, url)
@@ -81,7 +88,7 @@ class LinkLoggerService() {
     }
 
     fun findOrCreateLink(url: String): Link {
-        var link = findLink(url)
+        var link = findLinkByUrl(url)
         if (link == null) {
             link = Link(url = url)
             createLink(link)
@@ -99,12 +106,47 @@ class LinkLoggerHandler(val context: PluginContext) : MessageEventListener, Reac
 
     val URL_PATTERN = """(?<url>((https?|s?ftp):\/\/)?([\da-z\.:@-]+)\.([a-z\.]{2,6})([\/\w\-&\?:@=%+\.#\(\)]*)*\/?)""".toRegex()
 
-    override fun handleMessageEvent(event: MessageEvent) {
+    val service = InjektModule.scope.get<LinkLoggerService>()
 
+    override fun handleMessageEvent(event: MessageEvent) {
+        val links = getLinksFromString(event.message)
+        links.map { url ->
+            service.createLink(
+                    Link(
+                            messageId = event.id,
+                            url = url,
+                            author = event.sender,
+                            channel = event.channel
+                    )
+            )
+        }.let {
+            if (it.isNotEmpty()) {
+                context.getMessenger().addReaction(event.channel, event.id, "upvote")
+                context.getMessenger().addReaction(event.channel, event.id, "downvote")
+            }
+        }
     }
 
     override fun handleReactionEvent(event: ReactionEvent) {
-
+        service.findLinksByMessageId(event.id).forEach {
+            when (event.reaction) {
+                "upvote" -> {
+                    if (event.added) {
+                        it.upvotes++
+                    } else {
+                        it.upvotes--
+                    }
+                }
+                "downvote" -> {
+                    if (event.added) {
+                        it.downvotes++
+                    } else {
+                        it.downvotes--
+                    }
+                }
+            }
+            service.updateLink(it)
+        }
     }
 
     fun getLinksFromString(string: String): List<String> {
@@ -114,11 +156,14 @@ class LinkLoggerHandler(val context: PluginContext) : MessageEventListener, Reac
 }
 
 @DatabaseTable data class Link(@DatabaseField(generatedId = true) var id: Long = 0L,
+                               @DatabaseField var messageId: String = "",
                                @DatabaseField var url: String = "",
-                               @DatabaseField val author: String = "",
-                               @DatabaseField val conversation: String = "",
-                               @DatabaseField val upvotes: Int = 0,
-                               @DatabaseField val downvotes: Int = 0)
+                               @DatabaseField var author: String = "",
+                               @DatabaseField var channel: String = "",
+                               @DatabaseField val createdAt: Long = System.currentTimeMillis(),
+                               @DatabaseField var conversation: String = "",
+                               @DatabaseField var upvotes: Int = 0,
+                               @DatabaseField var downvotes: Int = 0)
 
 object InjektModule {
     @Volatile var scope: InjektScope = InjektScope(DefaultRegistrar())
