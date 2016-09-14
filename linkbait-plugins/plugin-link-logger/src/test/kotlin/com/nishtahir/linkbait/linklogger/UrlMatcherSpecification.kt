@@ -300,6 +300,10 @@ class UrlMatcherSpecification : Spek ({
             assertFalse(handler.URL_PATTERN.matches("http://10.1.1.1"))
         }
 
+        it("should not match foo.com") {
+            assertFalse(handler.URL_PATTERN.matches("foo.com"))
+        }
+
 //        xit("should not match http://.www.foo.bar/") {
 //            assertFalse(handler.URL_PATTERN.matches("http://.www.foo.bar/"))
 //        }
@@ -327,9 +331,6 @@ class UrlMatcherSpecification : Spek ({
 //        xit("should not match http://a.b-.co") {
 //            assertFalse(handler.URL_PATTERN.matches("http://a.b-.co"))
 //        }
-//
-//        xit("should not match foo.com") {
-//            assertFalse(handler.URL_PATTERN.matches("foo.com"))
-//        }
+
     }
 })

@@ -104,7 +104,7 @@ class LinkLoggerService() {
 
 class LinkLoggerHandler(val context: PluginContext) : MessageEventListener, ReactionEventListener {
 
-    val URL_PATTERN = """(?<url>((https?|s?ftp):\/\/)?([\da-z\.:@-]+)\.([a-z\.]{2,6})([\/\w\-&\?:@=%+\.#\(\)]*)*\/?)""".toRegex()
+    val URL_PATTERN = """(?<url>((https?|s?ftp):\/\/)([\da-z\.:@-]+)\.([a-z\.]{2,6})([\/\w\-&\?:@=%+\.#\(\)]*)*\/?)""".toRegex()
 
     val service = InjektModule.scope.get<LinkLoggerService>()
 
