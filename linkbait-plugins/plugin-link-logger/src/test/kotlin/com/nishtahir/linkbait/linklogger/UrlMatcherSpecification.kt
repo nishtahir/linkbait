@@ -1,5 +1,6 @@
 package com.nishtahir.linkbait.linklogger;
 
+import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.nishtahir.linkbait.test.MockConfiguration
 import com.nishtahir.linkbait.test.MockContext
 import com.nishtahir.linkbait.test.MockMessenger
@@ -8,9 +9,18 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Created by nish on 9/12/16.
+ * Tests for the URL regex.
+ * Inspired by https://mathiasbynens.be/demo/url-regex
+ *
+ * For some reason, gradle still tries to run
+ * specifications that have been marked with x-spec.
+ * So I had no choice but to comment them out.
  */
 class UrlMatcherSpecification : Spek ({
+
+    InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:test.sqlite"))
+    InjektModule.scope.addFactory { LinkLoggerService() }
+
 
     val mockConfig = MockConfiguration()
     val mockMessenger = MockMessenger()
@@ -18,7 +28,6 @@ class UrlMatcherSpecification : Spek ({
 
     val handler: LinkLoggerHandler = LinkLoggerHandler(mockContext)
 
-    // Inspired by https://mathiasbynens.be/demo/url-regex
     describe("urls that should match") {
 
         it("should match http://foo.com/blah_blah") {
