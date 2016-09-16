@@ -47,10 +47,9 @@ class MemegenHandler(val context: PluginContext) : MessageEventListener {
 
 
     private fun formatHelp(): String {
-        val memes = templatesFile.listFiles().joinToString(", ") {
+        val memes = templatesFile.listFiles().sortedArray().joinToString(", ") {
             "`${it.name.dropLast(4)}`"
         }
-
         val messageBuilder = context.getMessenger().getMessageBuilder()
         messageBuilder.pre(
                 """
