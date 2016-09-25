@@ -5,6 +5,9 @@ import com.j256.ormlite.table.TableUtils
 import com.nishtahir.linkbait.plugin.*
 import com.nishtahir.linkbait.plugin.model.Configuration
 import com.nishtahir.linkbait.plugin.model.EventListener
+import com.nishtahir.linkbait.test.MockConfiguration
+import com.nishtahir.linkbait.test.MockContext
+import com.nishtahir.linkbait.test.MockMessenger
 import org.jetbrains.spek.api.Spek
 import java.io.File
 import kotlin.test.assertEquals
@@ -18,10 +21,11 @@ class HeySnackFoodPluginSpec : Spek({
     InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:test.sqlite"))
     InjektModule.scope.addFactory { HeySnackFoodService() }
 
-    val context: PluginContext = MockContext()
+    val mockConfig = MockConfiguration()
+    val mockMessenger = MockMessenger()
+    val mockContext = MockContext(mockConfig, mockMessenger)
 
-    val handler: HeySnackFoodHandler = HeySnackFoodHandler(context)
-    val messenger: MockMessenger = context.getMessenger() as MockMessenger
+    val handler: HeySnackFoodHandler = HeySnackFoodHandler(mockContext)
 
     describe("a message event ") {
         val service: HeySnackFoodService = InjektModule.scope.get()
@@ -30,7 +34,7 @@ class HeySnackFoodPluginSpec : Spek({
 
             beforeEach {
                 TableUtils.clearTable(InjektModule.scope.get<JdbcConnectionSource>(), User::class.java)
-                messenger.message = ""
+                mockMessenger.message = ""
             }
 
             it("should return a heart emoji when given nuttela") {
@@ -40,10 +44,10 @@ class HeySnackFoodPluginSpec : Spek({
                 messageEvent.message = "something something $SNACK_FOOD_NAME"
 
                 handler.handleMessageEvent(messageEvent)
-                assertTrue (messenger.message.contains(":heart:", true))
+                assertTrue (mockMessenger.message.contains(":heart:", true))
             }
 
-            it("should reward one nuttela correctly"){
+            it("should reward one nuttela correctly") {
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = false
                 messageEvent.isDirectMessage = false
@@ -55,7 +59,7 @@ class HeySnackFoodPluginSpec : Spek({
                 assertEquals(1, service.findOrCreateUser("user").count)
             }
 
-            it("should reward many many nuttela correctly"){
+            it("should reward many many nuttela correctly") {
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = false
                 messageEvent.isDirectMessage = false
@@ -67,7 +71,7 @@ class HeySnackFoodPluginSpec : Spek({
                 assertEquals(3, service.findOrCreateUser("user").count)
             }
 
-            it("should reward not reward unknown snacks"){
+            it("should reward not reward unknown snacks") {
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = false
                 messageEvent.isDirectMessage = false
@@ -79,7 +83,7 @@ class HeySnackFoodPluginSpec : Spek({
                 assertEquals(0, service.findOrCreateUser("user").count)
             }
 
-            it("should reward $SNACK_FOOD_NAME withing context strings"){
+            it("should reward $SNACK_FOOD_NAME withing context strings") {
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = false
                 messageEvent.isDirectMessage = false
@@ -115,11 +119,11 @@ class HeySnackFoodPluginSpec : Spek({
             }
         }
 
-        given("A $SNACK_FOOD_NAME given to a user"){
+        given("A $SNACK_FOOD_NAME given to a user") {
 
             beforeEach {
                 TableUtils.clearTable(InjektModule.scope.get<JdbcConnectionSource>(), User::class.java)
-                messenger.message = ""
+                mockMessenger.message = ""
 
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = false
@@ -131,86 +135,6 @@ class HeySnackFoodPluginSpec : Spek({
                 handler.handleMessageEvent(messageEvent)
                 assertEquals(1, service.findOrCreateUser("user").count)
             }
-
-
-//            it("should return the correct content in the leaderboard"){
-//
-//                val messageEvent: MessageEvent = MessageEvent()
-//                messageEvent.isDirectedAtBot = true
-//                messageEvent.channel = "test"
-//                messageEvent.sender = "user"
-//                messageEvent.message = "leaderboard"
-//
-//                handler.handleMessageEvent(messageEvent)
-////                TODO("Add checks here")
-////                println (messenger.message)
-//            }
         }
-
     }
 })
-
-/**
- * Mock the components needed to test the handler
- */
-class MockContext : PluginContext {
-
-    val messenger = MockMessenger()
-
-    override fun getPluginState() {
-    }
-
-    override fun getMessenger(): Messenger {
-        return messenger
-    }
-
-    override fun getConfiguration(): Configuration {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun registerListener(listener: EventListener) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun unregisterListener(listener: EventListener) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-}
-
-class MockMessenger : Messenger {
-    override fun setChannelTopic(channel: String, topic: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    var message: String = ""
-
-    override fun sendMessage(channel: String, message: String, unfurl: Boolean) {
-        this.message = message
-    }
-
-    override fun sendDirectMessage(user: String, message: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun addReaction(channel: String, messageId: String, reaction: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun removeReaction(channel: String, messageId: String, reaction: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun sendAttachment(channel: String, attachment: Attachment) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun uploadFile(channel: String, file: File) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun getMessageBuilder(): MessageBuilder {
-        throw UnsupportedOperationException()
-    }
-
-}

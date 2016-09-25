@@ -31,7 +31,6 @@ class HeySnackFoodPlugin : Plugin() {
     }
 
     override fun start(context: PluginContext) {
-        println("start")
         heySnackFoodHandler = HeySnackFoodHandler(context)
         heySnackFoodHandler?.let {
             context.registerListener(it)
@@ -39,7 +38,6 @@ class HeySnackFoodPlugin : Plugin() {
     }
 
     override fun stop(context: PluginContext) {
-        println("stop")
         heySnackFoodHandler?.let {
             context.unregisterListener(it)
         }
