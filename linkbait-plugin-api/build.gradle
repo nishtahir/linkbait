@@ -28,7 +28,8 @@ dependencies {
     compile 'org.xerial:sqlite-jdbc:3.8.11.2'
     compile 'org.xerial.thirdparty:nestedvm:1.0'
     compile 'org.apache.derby:derby:10.12.1.1'
-
+    compile 'com.machinepublishers:jbrowserdriver:0.16.4'
+    compile 'org.apache.commons:commons-pool2:2.4.2'
 
     compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
     compile group: 'com.google.guava', name: 'guava', version: '19.0'

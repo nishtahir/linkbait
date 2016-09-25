@@ -109,4 +109,8 @@ class SlackMessenger implements Messenger {
         }
     }
 
+    @Override
+    void setTyping(@NotNull String channel) {
+        session?.sendTyping(findChannel(channel))
+    }
 }

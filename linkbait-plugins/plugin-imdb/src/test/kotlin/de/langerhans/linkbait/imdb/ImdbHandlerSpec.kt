@@ -1,13 +1,6 @@
 package de.langerhans.linkbait.imdb
 
-import com.nishtahir.linkbait.plugin.Attachment
-import com.nishtahir.linkbait.plugin.MessageBuilder
-import com.nishtahir.linkbait.plugin.Messenger
-import com.nishtahir.linkbait.plugin.PluginContext
-import com.nishtahir.linkbait.plugin.model.Configuration
-import com.nishtahir.linkbait.plugin.model.EventListener
 import org.jetbrains.spek.api.Spek
-import java.io.File
 
 /**
  * Created by maxke on 24.04.2016.
@@ -51,69 +44,3 @@ class ImdbHandlerSpec() : Spek({
     }
 
 })
-
-
-/**
- * Mock the components needed to test the handler
- */
-class MockContext : PluginContext {
-
-    val messenger = MockMessenger()
-
-    override fun getPluginState() {
-    }
-
-    override fun getMessenger(): Messenger {
-        return messenger
-    }
-
-    override fun getConfiguration(): Configuration {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun registerListener(listener: EventListener) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun unregisterListener(listener: EventListener) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-}
-
-class MockMessenger : Messenger {
-    override fun setChannelTopic(channel: String, topic: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    var attachment: Attachment? = null
-
-    override fun sendMessage(channel: String, message: String, unfurl: Boolean) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun sendDirectMessage(user: String, message: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun addReaction(channel: String, messageId: String, reaction: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun removeReaction(channel: String, messageId: String, reaction: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun sendAttachment(channel: String, attachment: Attachment) {
-        this.attachment = attachment
-    }
-
-    override fun uploadFile(channel: String, file: File) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun getMessageBuilder(): MessageBuilder {
-        throw UnsupportedOperationException()
-    }
-
-}

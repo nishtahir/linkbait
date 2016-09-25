@@ -57,11 +57,13 @@ open class MockConfiguration : Configuration {
 }
 
 open class MockMessenger : Messenger {
-
     var message: String = ""
 
     override fun sendMessage(channel: String, message: String, unfurl: Boolean) {
         this.message = message
+    }
+
+    override fun setTyping(channel: String) {
     }
 
     override fun setChannelTopic(channel: String, topic: String) {

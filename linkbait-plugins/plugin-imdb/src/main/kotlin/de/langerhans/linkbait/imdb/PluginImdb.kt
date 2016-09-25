@@ -51,7 +51,7 @@ class ImdbListener(ctx: PluginContext) : MessageEventListener {
         val searchJson = json.readValue(search, ImdbResults::class.java)
 
         // Fallback through popular -> exact -> approx. Turns out exact is not so exact after all...
-        var id: String?
+        val id: String?
         if (searchJson.title_popular?.first()?.id == null) {
             if (searchJson.title_exact?.first()?.id == null) {
                 if (searchJson.title_approx?.first()?.id == null) {
