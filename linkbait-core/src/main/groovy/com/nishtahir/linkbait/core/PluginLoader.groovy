@@ -83,7 +83,7 @@ class PluginLoader {
         log.info("Plugin-Class: $pluginClassName")
         log.info("Plugin-Provider: $pluginProvider")
         log.info("Plugin-Version: $pluginVersion")
-        log.info("Plugin-Descriprion: $pluginDescription")
+        log.info("Plugin-Description: $pluginDescription")
 
         DependencyResolver resolver = new DependencyResolver(configuration.pluginRepository)
         List<File> files = DependencyUtils.parseDependencies(dependencies).findAll {
