@@ -86,7 +86,19 @@ def getVersion() {
         commandLine 'git', 'describe', '--tags'
         standardOutput = stdout
     }
-    return stdout.toString().trim()
+    //
+    def matcher = stdout.toString().trim() =~ /^(\d+)\.(\d+)-(\d+)-g([a-zA-z0-9]+)$/
+    if (matcher.matches()) {
+        def major = matcher.group(1)
+        def minor = matcher.group(2)
+        def patch = matcher.group(3)
+        def preRelease = matcher.group(4)
+        return "${major}.${minor}.${patch}-${preRelease}"
+    }
+}
+
+task printVersion() {
+    println version
 }
 
 dependencies {
