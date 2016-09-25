@@ -6,11 +6,13 @@ import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.PluginContext
 import com.nishtahir.linkbait.plugin.model.Configuration
 import com.nishtahir.linkbait.plugin.model.EventListener
+import groovy.util.logging.Slf4j
 import org.jetbrains.annotations.NotNull
 
 /**
  * Base implementation for a bot
  */
+@Slf4j
 abstract class AbstractBot extends AbstractExecutionThreadService implements PluginContext {
 
     /**
@@ -54,8 +56,9 @@ abstract class AbstractBot extends AbstractExecutionThreadService implements Plu
      */
     @Override
     protected void startUp() throws Exception {
-        loader.plugins.each {
-            it.start(this)
+        loader.plugins.each { name, plugin ->
+            log.info("Starting plugin: ${name}")
+            plugin.start(this)
         }
     }
 
@@ -66,8 +69,9 @@ abstract class AbstractBot extends AbstractExecutionThreadService implements Plu
 
     @Override
     protected void shutDown() throws Exception {
-        loader.plugins.each {
-            it.stop(this)
+        loader.plugins.each { name, plugin ->
+            log.info("Stoping plugin: ${name}")
+            plugin.stop(this)
         }
     }
 

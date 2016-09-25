@@ -5,6 +5,8 @@ import com.nishtahir.linkbait.core.AbstractBot
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.model.Configuration
+import groovy.util.logging.Log
+import groovy.util.logging.Slf4j
 import org.jetbrains.annotations.NotNull
 import sx.blah.discord.api.ClientBuilder
 import sx.blah.discord.api.IDiscordClient
@@ -15,6 +17,7 @@ import sx.blah.discord.handle.impl.events.MessageReceivedEvent
  * Created by maxke on 20.08.2016.
  * Allows linkbait to talk to the Discord API
  */
+@Slf4j
 class DiscordBot extends AbstractBot {
 
     /**

@@ -16,12 +16,15 @@ import com.ullink.slack.simpleslackapi.listeners.ReactionRemovedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import groovy.transform.Canonical
 import groovy.transform.ToString
+import groovy.util.logging.Log
+import groovy.util.logging.Slf4j
 
 /**
  * Supports slack using the slack api.
  */
 @Canonical
 @ToString
+@Slf4j
 class SlackBot extends AbstractBot {
 
     /**
