@@ -2,13 +2,13 @@ package com.nishtahir.linkbait.plugin
 
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.MessageEventListener
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
  * Created by nish on 9/2/16.
  */
-class JobSearchPlugin : Plugin() {
+class JobSearchLinkbaitPlugin : LinkbaitPlugin() {
 
     private lateinit var handler: JobSearchHandler
 

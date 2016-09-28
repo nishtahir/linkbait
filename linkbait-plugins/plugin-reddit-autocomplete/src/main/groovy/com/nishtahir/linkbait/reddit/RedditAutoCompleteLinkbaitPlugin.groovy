@@ -1,25 +1,26 @@
-package com.nishtahir.linkbait.storebot
+package com.nishtahir.linkbait.reddit
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 import org.jetbrains.annotations.NotNull;
 
-class StoreBotPlugin extends Plugin {
+class RedditAutoCompleteLinkbaitPlugin extends LinkbaitPlugin {
 
-    StoreBotListener listener
+    RedditAutoCompleteListener listener
 
     @Override
     void start(@NotNull PluginContext context) {
         if (listener == null) {
-            listener = new StoreBotListener(context)
+            listener = new RedditAutoCompleteListener(context)
         }
-
         context.registerListener(listener)
     }
 
     @Override
     void stop(@NotNull PluginContext context) {
-        context.unregisterListener(listener)
+        if (listener != null) {
+            context.unregisterListener(listener)
+        }
     }
 
     @Override

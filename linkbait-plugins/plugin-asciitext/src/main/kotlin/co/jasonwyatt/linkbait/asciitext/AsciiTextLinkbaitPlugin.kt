@@ -1,18 +1,17 @@
-package de.langerhans.linkbait.orly
+package co.jasonwyatt.linkbait.asciitext
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
- * Created by maxke on 15.08.2016.
- * O RLY?
+ * Created by jason on 8/22/16.
  */
-class OrlyPlugin: Plugin() {
+class AsciiTextLinkbaitPlugin : LinkbaitPlugin() {
 
-    private lateinit var handler: OrlyHandler
+    private lateinit var handler: AsciiTextHandler
 
     override fun start(context: PluginContext) {
-        handler = OrlyHandler(context)
+        handler = AsciiTextHandler(context)
         handler.let {
             context.registerListener(it)
         }

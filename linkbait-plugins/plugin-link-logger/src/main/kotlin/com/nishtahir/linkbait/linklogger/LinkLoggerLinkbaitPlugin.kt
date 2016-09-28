@@ -22,7 +22,7 @@ import java.util.*
  *
  */
 
-class LinkLoggerPlugin : Plugin() {
+class LinkLoggerLinkbaitPlugin : LinkbaitPlugin() {
 
     /**
      *

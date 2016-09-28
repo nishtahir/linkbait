@@ -1,17 +1,18 @@
-package co.jasonwyatt.linkbait.asciitext
+package de.langerhans.linkbait.tenor
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
- * Created by jason on 8/22/16.
+ * Created by maxke on 24.08.2016.
+ * Better gifs!
  */
-class AsciiTextPlugin: Plugin() {
+class TenorLinkbaitPlugin : LinkbaitPlugin() {
 
-    private lateinit var handler: AsciiTextHandler
+    private lateinit var handler: TenorHandler
 
     override fun start(context: PluginContext) {
-        handler = AsciiTextHandler(context)
+        handler = TenorHandler(context)
         handler.let {
             context.registerListener(it)
         }

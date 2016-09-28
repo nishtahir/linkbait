@@ -1,7 +1,7 @@
 package com.nishtahir.linkbait.heysnackfood
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
@@ -14,7 +14,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
  *
  */
 
-class HeySnackFoodPlugin : Plugin() {
+class HeySnackFoodLinkbaitPlugin : LinkbaitPlugin() {
 
     /**
      *

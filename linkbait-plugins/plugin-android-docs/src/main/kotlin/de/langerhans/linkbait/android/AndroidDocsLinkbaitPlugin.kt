@@ -1,24 +1,22 @@
-package de.langerhans.linkbait.tenor
+package de.langerhans.linkbait.android
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
-/**
- * Created by maxke on 24.08.2016.
- * Better gifs!
- */
-class TenorPlugin: Plugin() {
+class AndroidDocsLinkbaitPlugin : LinkbaitPlugin() {
 
-    private lateinit var handler: TenorHandler
+    private lateinit var handler: AndroidHandler
 
     override fun start(context: PluginContext) {
-        handler = TenorHandler(context)
+        println("AndroidDocs starting!")
+        handler = AndroidHandler(context)
         handler.let {
             context.registerListener(it)
         }
     }
 
     override fun stop(context: PluginContext) {
+        println("AndroidDocs stopping!")
         handler.let {
             context.unregisterListener(it)
         }

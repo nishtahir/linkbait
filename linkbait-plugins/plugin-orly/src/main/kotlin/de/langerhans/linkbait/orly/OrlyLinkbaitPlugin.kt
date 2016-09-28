@@ -1,22 +1,24 @@
-package de.langerhans.linkbait.android
+package de.langerhans.linkbait.orly
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
-class AndroidDocsPlugin: Plugin() {
+/**
+ * Created by maxke on 15.08.2016.
+ * O RLY?
+ */
+class OrlyLinkbaitPlugin : LinkbaitPlugin() {
 
-    private lateinit var handler: AndroidHandler
+    private lateinit var handler: OrlyHandler
 
     override fun start(context: PluginContext) {
-        println("AndroidDocs starting!")
-        handler = AndroidHandler(context)
+        handler = OrlyHandler(context)
         handler.let {
             context.registerListener(it)
         }
     }
 
     override fun stop(context: PluginContext) {
-        println("AndroidDocs stopping!")
         handler.let {
             context.unregisterListener(it)
         }
