@@ -1,0 +1,61 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        // 1.3.3 doesn"t work as expected
+        classpath "com.github.jruby-gradle:jruby-gradle-plugin:1.0.0"
+        classpath "com.github.jruby-gradle:jruby-gradle-jar-plugin:1.0.0"
+    }
+}
+
+apply plugin: "java"
+apply plugin: "com.github.jruby-gradle.base"
+apply plugin: "com.github.jruby-gradle.jar"
+
+import com.github.jrubygradle.JRubyExec
+
+// So IDEA will actually pick it up. I like my sources organized
+def rubySources = "$projectDir/src/main/ruby"
+sourceSets.main.java.srcDirs += rubySources
+
+// It would be nice for Java to build any generated classes.
+// This is so the classloaded will have something to load.
+def generatedSourcesRoot = "$buildDir/generated"
+sourceSets.main.java.srcDirs += generatedSourcesRoot
+
+configurations {
+    compile.extendsFrom jrubyJar
+    jrubyJar.extendsFrom gems
+}
+
+dependencies {
+    /* Using the built-in `jrubyJar` configuration to describe the
+     * dependencies our jrubyJar task will need, so the gem is properly
+     * included in the resulting .jar file
+     */
+
+    gems "rubygems:colorize:0.7.7+"
+    jrubyJar "org.slf4j:slf4j-simple:1.7.21"
+    jrubyJar "com.github.lalyos:jfiglet:0.0.7"
+    jrubyJar project(":linkbait-plugin-api")
+    jrubyJar project(":linkbait-test")
+
+    testCompile "junit:junit:4.12"
+}
+
+task compileRuby(type: JRubyExec) {
+    file(generatedSourcesRoot).mkdirs()
+    jrubyArgs "-S", "jrubyc", "--java", rubySources,"-t", generatedSourcesRoot
+}
+
+compileJava.dependsOn(compileRuby)
+
+jrubyJar {
+    //We want to use this Ruby script as our start point when the jar executes
+    from sourceSets.main.output
+    initScript "${projectDir}/main.rb"
+}
+
+jar.enabled = false
