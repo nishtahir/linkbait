@@ -40,10 +40,9 @@ class GithubPlugin
   def onPluginStateChanged()
   end
 
-  def test_octokit()
-    puts "Ok finally some progress".green
-  end
-
+  ##
+  # get reference to handler
+  #
   def getHandler()
     @handler
   end

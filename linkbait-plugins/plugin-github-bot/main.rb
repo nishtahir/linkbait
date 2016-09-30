@@ -26,5 +26,5 @@ plugin = GithubPlugin.new
 plugin.start(context)
 
 event = MessageEvent.new
-event.setMessage("Here be dragons!")
+event.setMessage("https://github.com/nishtahir/alang")
 plugin.getHandler().handleMessageEvent(event)

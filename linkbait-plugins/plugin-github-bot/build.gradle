@@ -37,6 +37,7 @@ dependencies {
      */
 
     gems "rubygems:colorize:0.7.7+"
+    gems "rubygems:octokit:4.3.0+"
     jrubyJar "org.slf4j:slf4j-simple:1.7.21"
     jrubyJar "com.github.lalyos:jfiglet:0.0.7"
     jrubyJar project(":linkbait-plugin-api")
@@ -56,6 +57,25 @@ jrubyJar {
     //We want to use this Ruby script as our start point when the jar executes
     from sourceSets.main.output
     initScript "${projectDir}/main.rb"
+
+    baseName = 'GitHubBot'
+    version = '1.0'
+
+    // Looks like using closures here causes it to crash
+    // https://github.com/jruby-gradle/jruby-gradle-plugin/issues/263
+    manifest.attributes 'Plugin-Class': 'com.nishtahir.linkbait.github.GithubPlugin',
+                'Plugin-Id': 'com.nishtahir.linkbait.github.GithubPlugin',
+                //Strictly enforces semver(major.minor.patch)
+                'Plugin-Version': '1.0.0',
+                'Plugin-Provider': 'Nish Tahir',
+                //Export a list of compile time dependencies.
+                //This is so that they can be added to the
+                //classpath at runtime
+                "Dependencies": configurations.compile.allDependencies.collect {
+                    "${it.group}:${it.name}:${it.version}"
+                }.join(',')
+
 }
 
-jar.enabled = false
+assemble.dependsOn jrubyJar
+jar.enabled = true
