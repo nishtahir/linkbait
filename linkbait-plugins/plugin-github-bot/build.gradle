@@ -5,8 +5,8 @@ buildscript {
 
     dependencies {
         // 1.3.3 doesn"t work as expected
-        classpath "com.github.jruby-gradle:jruby-gradle-plugin:1.0.0"
-        classpath "com.github.jruby-gradle:jruby-gradle-jar-plugin:1.0.0"
+        classpath "com.github.jruby-gradle:jruby-gradle-plugin:1.3.3"
+        classpath "com.github.jruby-gradle:jruby-gradle-jar-plugin:1.3.3"
     }
 }
 
@@ -43,20 +43,22 @@ dependencies {
     jrubyJar project(":linkbait-plugin-api")
     jrubyJar project(":linkbait-test")
 
+    compile group: 'org.jruby', name: 'jruby-complete', version: '9.1.5.0'
+
     testCompile "junit:junit:4.12"
 }
 
 task compileRuby(type: JRubyExec) {
     file(generatedSourcesRoot).mkdirs()
-    jrubyArgs "-S", "jrubyc", "--java", rubySources,"-t", generatedSourcesRoot
+    jrubyArgs "-S", "jrubyc", "--java", rubySources, "-t", generatedSourcesRoot
 }
 
 compileJava.dependsOn(compileRuby)
 
 jrubyJar {
-    //We want to use this Ruby script as our start point when the jar executes
+//    //We want to use this Ruby script as our start point when the jar executes
     from sourceSets.main.output
-    initScript "${projectDir}/main.rb"
+//    initScript "${projectDir}/main.rb"
 
     baseName = 'GitHubBot'
     version = '1.0'
@@ -64,17 +66,20 @@ jrubyJar {
     // Looks like using closures here causes it to crash
     // https://github.com/jruby-gradle/jruby-gradle-plugin/issues/263
     manifest.attributes 'Plugin-Class': 'com.nishtahir.linkbait.github.GithubPlugin',
-                'Plugin-Id': 'com.nishtahir.linkbait.github.GithubPlugin',
-                //Strictly enforces semver(major.minor.patch)
-                'Plugin-Version': '1.0.0',
-                'Plugin-Provider': 'Nish Tahir',
-                //Export a list of compile time dependencies.
-                //This is so that they can be added to the
-                //classpath at runtime
-                "Dependencies": configurations.compile.allDependencies.collect {
-                    "${it.group}:${it.name}:${it.version}"
-                }.join(',')
+            'Plugin-Id': 'com.nishtahir.linkbait.github.GithubPlugin',
+            'Plugin-Version': '1.0.0',
+            'Plugin-Provider': 'Nish Tahir',
+            'Plugin-Description': 'It took way too long to get this to work...',
+            "Dependencies": collectDependencies()
 
+}
+
+def collectDependencies() {
+    return configurations.compile.allDependencies.findAll {
+        it.group != "rubygems"
+    }.collect {
+        "${it.group}:${it.name}:${it.version}"
+    }.join(',')
 }
 
 assemble.dependsOn jrubyJar
