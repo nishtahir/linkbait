@@ -1,18 +1,11 @@
-package de.langerhans.linkbait.orly
+package com.nishtahir.linkbait.plugin
 
-import com.nishtahir.linkbait.plugin.LinkbaitPlugin
-import com.nishtahir.linkbait.plugin.PluginContext
+class JobSearchPlugin : LinkbaitPlugin() {
 
-/**
- * Created by maxke on 15.08.2016.
- * O RLY?
- */
-class OrlyLinkbaitPlugin : LinkbaitPlugin() {
-
-    private lateinit var handler: OrlyHandler
+    private lateinit var handler: JobSearchHandler
 
     override fun start(context: PluginContext) {
-        handler = OrlyHandler(context)
+        handler = JobSearchHandler(context)
         handler.let {
             context.registerListener(it)
         }
@@ -29,3 +22,4 @@ class OrlyLinkbaitPlugin : LinkbaitPlugin() {
     }
 
 }
+

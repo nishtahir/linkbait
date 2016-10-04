@@ -14,7 +14,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
  *
  */
 
-class HeySnackFoodLinkbaitPlugin : LinkbaitPlugin() {
+class HeySnackFoodPlugin : LinkbaitPlugin() {
 
     /**
      *

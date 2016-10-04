@@ -9,7 +9,7 @@ jar.doFirst() {
     version = '1.0'
     manifest {
         attributes 'Plugin-Class': 'com.nishtahir.linkbait.reddit.RedditAutoCompletePlugin',
-                'Plugin-Id': 'com.nishtahir.linkbait.reddit.RedditAutocomplete',
+                'Plugin-Id': 'com.nishtahir.linkbait.reddit.RedditAutoCompletePlugin',
                 'Plugin-Version': '1.0.0',
                 'Plugin-Provider': 'Nish Tahir',
                 "Dependencies": configurations.compile.allDependencies.collect {

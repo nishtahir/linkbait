@@ -6,7 +6,7 @@ import java.net.URL
 
 val IMDB_PLUGIN_PATTERN = """imdb(:?\s*):?([\w ]+)""".toRegex()
 
-class LinkbaitPluginImdb : LinkbaitPlugin() {
+class ImdbPlugin : LinkbaitPlugin() {
 
     var handler: ImdbListener? = null
 

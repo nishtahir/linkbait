@@ -9,7 +9,7 @@ jar.doFirst() {
     version = '1.0'
     manifest {
         attributes 'Plugin-Class': 'com.nishtahir.linkbait.heysnackfood.HeySnackFoodPlugin',
-                'Plugin-Id': 'com.nishtahir.linkbait.heysnackfood',
+                'Plugin-Id': 'com.nishtahir.linkbait.HeySnackFoodPlugin',
                 //Strictly enforces semver(major.minor.patch)
                 'Plugin-Version': '1.0.0',
                 'Plugin-Provider': 'Nish Tahir',

@@ -11,8 +11,8 @@ jar.doFirst() {
     baseName = 'PluginIMDB'
     version = '1.0'
     manifest {
-        attributes 'Plugin-Class': 'de.langerhans.linkbait.imdb.PluginImdb',
-                'Plugin-Id': 'de.langerhans.linkbait.imdb.PluginImdb',
+        attributes 'Plugin-Class': 'de.langerhans.linkbait.imdb.ImdbPlugin',
+                'Plugin-Id': 'de.langerhans.linkbait.imdb.ImdbPlugin',
                 //Strictly enforces semver(major.minor.patch)
                 'Plugin-Version': '1.0.0',
                 'Plugin-Provider': 'Max Keller',

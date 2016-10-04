@@ -7,7 +7,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
  * Created by maxke on 24.08.2016.
  * Better gifs!
  */
-class TenorLinkbaitPlugin : LinkbaitPlugin() {
+class TenorPlugin : LinkbaitPlugin() {
 
     private lateinit var handler: TenorHandler
 

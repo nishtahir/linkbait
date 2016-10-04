@@ -21,7 +21,7 @@ import java.io.InputStream
  * All Pokémon content is © Nintendo, Game Freak, and The Pokémon Company.
  *
  */
-class PokedexLinkbaitPlugin : LinkbaitPlugin() {
+class PokedexPlugin : LinkbaitPlugin() {
 
     /**
      *
@@ -33,7 +33,7 @@ class PokedexLinkbaitPlugin : LinkbaitPlugin() {
 
         init {
             val dex: File = copyInputStreamToTempFile(
-                    PokedexLinkbaitPlugin::class.java.classLoader.getResourceAsStream("linkbait-pokedex.sqlite"))
+                    PokedexPlugin::class.java.classLoader.getResourceAsStream("linkbait-pokedex.sqlite"))
             InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:${dex.absolutePath}"))
             InjektModule.scope.addFactory { PokedexService() }
             Class.forName("org.sqlite.JDBC")

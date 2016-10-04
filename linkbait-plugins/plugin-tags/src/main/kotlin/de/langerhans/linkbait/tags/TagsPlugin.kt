@@ -8,7 +8,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
  * Created by maxke on 16.08.2016.
  * Main entry for the tags plugin
  */
-class TagsLinkbaitPlugin : LinkbaitPlugin() {
+class TagsPlugin : LinkbaitPlugin() {
 
     private lateinit var handler: TagsHandler
 
