@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull
 
 import java.util.jar.JarInputStream
 import java.util.jar.Manifest
-import java.util.logging.Logger
 
 /**
  * Class pluginClassLoader to loadPluginsFromPath language tools dynamically

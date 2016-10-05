@@ -1,0 +1,38 @@
+
+apply plugin: "scala"
+
+dependencies {
+    /* Using the built-in `jrubyJar` configuration to describe the
+     * dependencies our jrubyJar task will need, so the gem is properly
+     * included in the resulting .jar file
+     */
+    compile project(":linkbait-test")
+    compile project(":linkbait-plugin-api")
+    compile "org.scala-lang:scala-library:2.11.8"
+    compile "org.kohsuke:github-api:1.77"
+    compile "com.github.verbalexpressions:scalaverbalexpression_2.11:1.0.1"
+
+    testCompile "junit:junit:4.12"
+}
+
+jar {
+    baseName = 'GitHubBot'
+    version = '1.0'
+
+    // Looks like using closures here causes it to crash
+    // https://github.com/jruby-gradle/jruby-gradle-plugin/issues/263
+    manifest.attributes 'Plugin-Class': 'com.nishtahir.linkbait.github.GithubPlugin',
+            'Plugin-Id': 'com.nishtahir.linkbait.github.GithubPlugin',
+            'Plugin-Version': '1.0.0',
+            'Plugin-Provider': 'Nish Tahir',
+            'Plugin-Description': 'It took way too long to get this to work...',
+            "Dependencies": collectDependencies()
+}
+
+def collectDependencies() {
+    return configurations.compile.allDependencies.findAll {
+        it.group != "rubygems"
+    }.collect {
+        "${it.group}:${it.name}:${it.version}"
+    }.join(',')
+}
