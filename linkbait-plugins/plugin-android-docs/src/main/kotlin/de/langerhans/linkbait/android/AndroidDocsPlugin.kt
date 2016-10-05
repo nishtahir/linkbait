@@ -1,23 +1,22 @@
-package co.jasonwyatt.linkbait.asciitext
+package de.langerhans.linkbait.android
 
 import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
-/**
- * Created by jason on 8/22/16.
- */
-class AsciiTextLinkbaitPlugin : LinkbaitPlugin() {
+class AndroidDocsPlugin : LinkbaitPlugin() {
 
-    private lateinit var handler: AsciiTextHandler
+    private lateinit var handler: AndroidHandler
 
     override fun start(context: PluginContext) {
-        handler = AsciiTextHandler(context)
+        println("AndroidDocs starting!")
+        handler = AndroidHandler(context)
         handler.let {
             context.registerListener(it)
         }
     }
 
     override fun stop(context: PluginContext) {
+        println("AndroidDocs stopping!")
         handler.let {
             context.unregisterListener(it)
         }
