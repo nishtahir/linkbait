@@ -35,15 +35,24 @@ class GithubHandler(context: PluginContext) extends MessageEventListener {
         val name = repository.getFullName
         val contributors = repository.listContributors().asList().size()
         val titleUrl = repository.getHtmlUrl
-        val language = repository.getLanguage
+        val languages = repository.listLanguages().asScala.keySet.mkString(", ")
         val openIssues = repository.getOpenIssueCount
+        val releases = repository.listReleases().asList().size()
+        val branches = repository.getBranches.size()
+        val commits = repository.listCommits().asList().size()
+        val license = repository.getLicense().getName
+
         val readMe = Source.fromInputStream(repository.getReadme.read()).mkString
 
         val att = new Attachment(name, readMe, "FFFFFF", titleUrl.toString, "", "")
         att.setAdditionalFields(Map(
-          "Language" -> language.toString,
+          "Languages" -> languages.toString,
           "Open issues" -> openIssues.toString,
-          "Contributors" -> contributors.toString
+          "Contributors" -> contributors.toString,
+          "Branches" -> branches.toString,
+          "Commits" -> commits.toString,
+          "Releases" -> releases.toString,
+          "License" -> license.toString
         ).asJava)
 
         context.getMessenger.sendAttachment(event.getChannel, att)
