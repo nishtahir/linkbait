@@ -1,6 +1,8 @@
 package com.nishtahir.linkbait.core
 
 import com.nishtahir.linkbait.core.util.Booter
+import groovy.util.logging.Log
+import groovy.util.logging.Slf4j
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.artifact.Artifact
@@ -19,12 +21,8 @@ import org.slf4j.LoggerFactory
 /**
  * This has a big job. Downloads plugins from the plugin repository.
  */
+@Slf4j
 class DependencyResolver {
-
-    /**
-     * Logger.
-     */
-    private Logger LOG = LoggerFactory.getLogger(this.class.getSimpleName())
 
     /**
      * Maven repositories to search for dependencies.
@@ -41,34 +39,6 @@ class DependencyResolver {
         this.repository = repository
     }
 
-
-    /**
-     *
-     * @param groupId
-     * @param artifactId
-     * @param version
-     * @return
-     */
-    public File resolveArtifact(com.nishtahir.linkbait.core.model.Dependency dependency) {
-        String artifactIdentifier = dependency.toString()
-        LOG.debug("Resolving artifact: $artifactIdentifier")
-
-        RepositorySystem repositorySystem = Booter.newRepositorySystem();
-        RepositorySystemSession session = Booter.newRepositorySystemSession(repositorySystem);
-
-        Artifact artifact = new DefaultArtifact(artifactIdentifier);
-
-        ArtifactRequest artifactRequest = new ArtifactRequest();
-        artifactRequest.setArtifact(artifact);
-        artifactRequest.setRepositories(Booter.newRepositories(repositories));
-
-        ArtifactResult artifactResult = repositorySystem.resolveArtifact(session, artifactRequest);
-
-        artifact = artifactResult.getArtifact();
-        LOG.debug("Artifact resolved at: ${artifact.getFile().toString()}")
-        return artifact.getFile()
-    }
-
     /**
      *
      * @param groupId
@@ -77,9 +47,9 @@ class DependencyResolver {
      * @return
      */
     public List<File> resolveArtifactWithDependencies(com.nishtahir.linkbait.core.model.Dependency dependency) {
-        String artifactIdentifier = dependency.toString()
 
-        LOG.debug("Resolving artifact with dependencies: $artifactIdentifier")
+        String artifactIdentifier = dependency.toString()
+        log.info("Resolving artifact with dependencies: $artifactIdentifier")
 
         RepositorySystem repositorySystem = Booter.newRepositorySystem();
         RepositorySystemSession session = Booter.newRepositorySystemSession(repositorySystem, repository);
@@ -93,11 +63,9 @@ class DependencyResolver {
 
         DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
 
-        List<ArtifactResult> artifactResults =
-                repositorySystem.resolveDependencies(session, dependencyRequest).getArtifactResults();
-
-        return artifactResults.collect {
-            LOG.debug("Artifact resolved at: ${it.artifact.getFile().toString()}")
+        return repositorySystem.resolveDependencies(session, dependencyRequest)
+                .getArtifactResults().collect {
+            log.info("Located artificat at: ${it.artifact.getFile().toString()}")
             it.artifact.file
         }
     }

@@ -4,6 +4,9 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource
 import com.nishtahir.linkbait.plugin.*
 import com.nishtahir.linkbait.plugin.model.Configuration
 import com.nishtahir.linkbait.plugin.model.EventListener
+import com.nishtahir.linkbait.test.MockConfiguration
+import com.nishtahir.linkbait.test.MockContext
+import com.nishtahir.linkbait.test.MockMessenger
 import org.jetbrains.spek.api.Spek
 import java.io.File
 
@@ -14,10 +17,11 @@ class PokedexHandlerTest : Spek({
     InjektModule.scope.addSingleton(JdbcConnectionSource("jdbc:sqlite:src/main/resources/linkbait-pokedex.sqlite"))
     InjektModule.scope.addFactory { PokedexService() }
 
-    val context: PluginContext = MockContext()
+    val config = MockConfiguration()
+    val messenger = MockMessenger()
+    val context = MockContext(config, messenger)
 
     val handler: PokedexHandler = PokedexHandler(context)
-    val messenger: MockMessenger = context.getMessenger() as MockMessenger
 
     describe("a message event ") {
         val service: PokedexService = InjektModule.scope.get()
@@ -25,7 +29,7 @@ class PokedexHandlerTest : Spek({
         given("handle event") {
 
             beforeEach {
-                messenger.attachment = null
+                messenger.reset()
             }
 
             it("should do nothing without the trigger word") {
@@ -76,68 +80,3 @@ class PokedexHandlerTest : Spek({
 
     }
 })
-
-/**
- * Mock the components needed to test the handler
- */
-class MockContext : PluginContext {
-
-    val messenger = MockMessenger()
-
-    override fun getPluginState() {
-    }
-
-    override fun getMessenger(): Messenger {
-        return messenger
-    }
-
-    override fun getConfiguration(): Configuration {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun registerListener(listener: EventListener) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun unregisterListener(listener: EventListener) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-}
-
-class MockMessenger : Messenger {
-    override fun setChannelTopic(channel: String, topic: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    var attachment: Attachment? = null
-
-    override fun sendMessage(channel: String, message: String, unfurl: Boolean) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-    
-    override fun sendDirectMessage(user: String, message: String) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun addReaction(channel: String, messageId: String, reaction: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun removeReaction(channel: String, messageId: String, reaction: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun sendAttachment(channel: String, attachment: Attachment) {
-        this.attachment = attachment
-    }
-
-    override fun uploadFile(channel: String, file: File) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun getMessageBuilder(): MessageBuilder {
-        throw UnsupportedOperationException()
-    }
-
-}

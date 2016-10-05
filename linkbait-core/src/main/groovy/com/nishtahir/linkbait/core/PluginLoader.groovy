@@ -4,6 +4,7 @@ import com.nishtahir.linkbait.core.util.DependencyUtils
 import com.nishtahir.linkbait.plugin.Plugin
 import com.nishtahir.linkbait.plugin.model.Configuration
 import groovy.io.FileType
+import groovy.util.logging.Slf4j
 import org.jetbrains.annotations.NotNull
 
 import java.util.jar.JarInputStream
@@ -16,6 +17,7 @@ import java.util.jar.Manifest
  *
  * Information is loaded from the manifest
  */
+@Slf4j
 class PluginLoader {
 
     /**
@@ -36,7 +38,7 @@ class PluginLoader {
     /**
      * List of plugins loaded from plugins.
      */
-    List<Plugin> plugins = []
+    Map<String, Plugin> plugins = [:]
 
     /**
      * Classloader where all the magic happens.
@@ -66,29 +68,35 @@ class PluginLoader {
      */
     public void loadPlugin(File plugin) throws Exception {
         Manifest mf = getManifest(plugin)
-
         def attributes = mf.getMainAttributes()
+
         String pluginClassName = attributes.getValue('Plugin-Class')
+        String pluginId = attributes.getValue('Plugin-Id')
+        String pluginVersion = attributes.getValue('Plugin-Version')
+        String pluginProvider = attributes.getValue('Plugin-Provider')
+        String pluginDescription = attributes.getValue('Plugin-Description')
         String dependencies = attributes.getValue('Dependencies')
 
-        DependencyResolver resolver = new DependencyResolver(configuration.pluginRepository)
+        log.info("Loading: $plugin.path")
+        log.info("Plugin-Id: $pluginId")
+        log.info("Plugin-Class: $pluginClassName")
+        log.info("Plugin-Provider: $pluginProvider")
+        log.info("Plugin-Version: $pluginVersion")
+        log.info("Plugin-Description: $pluginDescription")
 
-        List<File> files = []
-        DependencyUtils.parseDependencies(dependencies).each {
+        DependencyResolver resolver = new DependencyResolver(configuration.pluginRepository)
+        List<File> files = DependencyUtils.parseDependencies(dependencies).findAll {
             //All of this should already be in the classpath
             //After all, they are compile time dependencies for the framework
-            if (!it.group.startsWith(ROOT_PACKAGE_NAME) && it.group != "linkbait") {
-                files.addAll(resolver.resolveArtifactWithDependencies(it))
-            }
+            !it.group.startsWith(ROOT_PACKAGE_NAME) && it.group != "linkbait"
+        }.collectMany {
+            resolver.resolveArtifactWithDependencies(it)
         }
 
         addJarsToClasspath(files)
         addJarToClasspath(plugin)
         Class<Plugin> clazz = (Class<Plugin>) Class.forName(pluginClassName, true, pluginClassLoader)
-
-        def pluginClass = clazz.newInstance()
-        plugins.add(pluginClass)
-
+        plugins.put(pluginId, clazz.newInstance())
     }
 
     /**
@@ -96,7 +104,7 @@ class PluginLoader {
      * @param jar
      * @return
      */
-    private Manifest getManifest(File jar) {
+    private static Manifest getManifest(File jar) {
         InputStream input = new FileInputStream(jar);
         JarInputStream jarStream = new JarInputStream(input);
         Manifest manifest = jarStream.getManifest();

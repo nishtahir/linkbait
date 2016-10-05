@@ -93,4 +93,9 @@ class DiscordMessenger implements Messenger {
     MessageBuilder getMessageBuilder() {
         return null
     }
+
+    @Override
+    void setTyping(@NotNull String channel) {
+
+    }
 }

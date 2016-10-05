@@ -1,13 +1,13 @@
 package de.langerhans.linkbait.orly
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
  * Created by maxke on 15.08.2016.
  * O RLY?
  */
-class OrlyPlugin: Plugin() {
+class OrlyPlugin : LinkbaitPlugin() {
 
     private lateinit var handler: OrlyHandler
 

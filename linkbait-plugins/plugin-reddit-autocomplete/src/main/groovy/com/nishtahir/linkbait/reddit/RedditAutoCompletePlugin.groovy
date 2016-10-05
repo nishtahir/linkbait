@@ -1,10 +1,10 @@
 package com.nishtahir.linkbait.reddit
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 import org.jetbrains.annotations.NotNull;
 
-class RedditAutoCompletePlugin extends Plugin {
+class RedditAutoCompletePlugin extends LinkbaitPlugin {
 
     RedditAutoCompleteListener listener
 

@@ -1,54 +1,6 @@
-convert templates/adam-jensen.png -resize 350 templates/adam-jensen.png
-convert templates/ageism.png -resize 350 templates/ageism.png
-convert templates/aliens.png -resize 350 templates/aliens.png
-convert templates/all-the-things.png -resize 350 templates/all-the-things.png
-convert templates/anti-joke-chicken.png -resize 350 templates/anti-joke-chicken.png
-convert templates/baby-godfather.png -resize 350 templates/baby-godfather.png
-convert templates/bad-luck.png -resize 350 templates/bad-luck.png
-convert templates/bad-pun-raccoon.png -resize 350 templates/bad-pun-raccoon.png
-convert templates/bad-time.png -resize 350 templates/bad-time.png
-convert templates/boromir.png -resize 350 templates/boromir.png
-convert templates/chemistry-cat.png -resize 350 templates/chemistry-cat.png
-convert templates/clarence.png -resize 350 templates/clarence.png
-convert templates/comic-book-guy.png -resize 350 templates/comic-book-guy.png
-convert templates/confession-bear.png -resize 350 templates/confession-bear.png
-convert templates/conspiracy-keanu.png -resize 350 templates/conspiracy-keanu.png
-convert templates/dog-scientist.png -resize 350 templates/dog-scientist.png
-convert templates/dos-equis.png -resize 350 templates/dos-equis.png
-convert templates/drunk-baby.png -resize 350 templates/drunk-baby.png
-convert templates/dwight.png -resize 350 templates/dwight.png
-convert templates/eel.png -resize 350 templates/eel.png
-convert templates/everywhere.png -resize 350 templates/everywhere.png
-convert templates/feel-bad.png -resize 350 templates/feel-bad.png
-convert templates/first-world-problems.png -resize 350 templates/first-world-problems.png
-convert templates/forever-alone.png -resize 350 templates/forever-alone.png
-convert templates/foul-bachelor-frog.png -resize 350 templates/foul-bachelor-frog.png
-convert templates/fry.png -resize 350 templates/fry.png
-convert templates/god.png -resize 350 templates/god.png
-convert templates/good-guy-greg.png -resize 350 templates/good-guy-greg.png
-convert templates/grampy-cat.png -resize 350 templates/grampy-cat.png
-convert templates/grumpy-cat.png -resize 350 templates/grumpy-cat.png
-convert templates/insanity-wolf.png -resize 350 templates/insanity-wolf.png
-convert templates/milton.png -resize 350 templates/milton.png
-convert templates/morpheus.png -resize 350 templates/morpheus.png
-convert templates/nedstark.png -resize 350 templates/nedstark.png
-convert templates/philosoraptor.png -resize 350 templates/philosoraptor.png
-convert templates/picard.png -resize 350 templates/picard.png
-convert templates/racism.png -resize 350 templates/racism.png
-convert templates/scumbag-brain.png -resize 350 templates/scumbag-brain.png
-convert templates/scumbag-steve.png -resize 350 templates/scumbag-steve.png
-convert templates/seal.png -resize 350 templates/seal.png
-convert templates/senior.png -resize 350 templates/senior.png
-convert templates/shutup.png -resize 350 templates/shutup.png
-convert templates/socially-awkward-penguin.png -resize 350 templates/socially-awkward-penguin.png
-convert templates/stoner.png -resize 350 templates/stoner.png
-convert templates/success-kid-mini.png -resize 350 templates/success-kid-mini.png
-convert templates/success-kid.png -resize 350 templates/success-kid.png
-convert templates/surprised-koala.png -resize 350 templates/surprised-koala.png
-convert templates/the-only-one.png -resize 350 templates/the-only-one.png
-convert templates/too-damn-high.png -resize 350 templates/too-damn-high.png
-convert templates/trellis.png -resize 350 templates/trellis.png
-convert templates/wonka.png -resize 350 templates/wonka.png
-convert templates/yo-dawg.png -resize 350 templates/yo-dawg.png
-convert templates/yuno.png -resize 350 templates/yuno.png
-convert templates/zoidberg.png -resize 350 templates/zoidberg.png
+#!/bin/bash
+for template in templates/*; do
+  base=${template%.*}
+  convert $template -resize 350 "${base}.png"
+  rm "${base}.jpg"
+done

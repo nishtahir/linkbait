@@ -8,7 +8,7 @@ jar.doFirst() {
     version = '1.0'
     manifest {
         attributes 'Plugin-Class': 'com.nishtahir.linkbait.memegen.MemegenPlugin',
-                'Plugin-Id': 'com.nishtahir.linkbait.memegen',
+                'Plugin-Id': 'com.nishtahir.linkbait.memegen.MemegenPlugin',
                 //Strictly enforces semver(major.minor.patch)
                 'Plugin-Version': '1.0.0',
                 'Plugin-Provider': 'Nish Tahir',

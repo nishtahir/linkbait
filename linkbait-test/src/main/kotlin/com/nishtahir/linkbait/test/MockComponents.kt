@@ -58,10 +58,18 @@ open class MockConfiguration : Configuration {
 
 open class MockMessenger : Messenger {
 
+    var isTyping: Boolean = false
+    var channel: String = ""
     var message: String = ""
+    var attachment: Attachment? = null
 
     override fun sendMessage(channel: String, message: String, unfurl: Boolean) {
         this.message = message
+    }
+
+    override fun setTyping(channel: String) {
+        this.isTyping = true
+        this.channel = channel
     }
 
     override fun setChannelTopic(channel: String, topic: String) {
@@ -77,6 +85,7 @@ open class MockMessenger : Messenger {
     }
 
     override fun sendAttachment(channel: String, attachment: Attachment) {
+        this.attachment = attachment
     }
 
     override fun uploadFile(channel: String, file: File) {
@@ -84,6 +93,13 @@ open class MockMessenger : Messenger {
 
     override fun getMessageBuilder(): MessageBuilder {
         throw UnsupportedOperationException("Not yet Implemented.")
+    }
+
+    fun reset(){
+        channel = ""
+        message = ""
+        attachment = null
+        isTyping = false
     }
 
 }

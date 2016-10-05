@@ -1,10 +1,10 @@
 package com.nishtahir.linkbait.storebot
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 import org.jetbrains.annotations.NotNull;
 
-class StoreBotPlugin extends Plugin {
+class StoreBotPlugin extends LinkbaitPlugin {
 
     StoreBotListener listener
 

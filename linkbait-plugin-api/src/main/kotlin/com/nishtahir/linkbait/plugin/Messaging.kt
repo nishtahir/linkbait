@@ -58,6 +58,11 @@ interface Messenger {
     fun setChannelTopic(channel: String, topic: String)
 
     /**
+     *
+     */
+    fun setTyping(channel: String)
+
+    /**
      * @return Builder to help format messages correctly for
      * the given platform.
      */

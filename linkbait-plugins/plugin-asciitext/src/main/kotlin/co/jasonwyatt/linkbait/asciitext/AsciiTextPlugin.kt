@@ -1,12 +1,12 @@
 package co.jasonwyatt.linkbait.asciitext
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
  * Created by jason on 8/22/16.
  */
-class AsciiTextPlugin: Plugin() {
+class AsciiTextPlugin : LinkbaitPlugin() {
 
     private lateinit var handler: AsciiTextHandler
 

@@ -1,10 +1,9 @@
 package com.nishtahir.linkbait.plugin
 
-import com.machinepublishers.jbrowserdriver.JBrowserDriver
-import com.machinepublishers.jbrowserdriver.Settings
-import com.machinepublishers.jbrowserdriver.Timezone
-import com.machinepublishers.jbrowserdriver.UserAgent
+import com.nishtahir.linkbait.plugin.common.BrowserAction
+import com.nishtahir.linkbait.plugin.common.BrowserPoolExecutor
 import org.jsoup.Jsoup
+import org.openqa.selenium.WebDriver
 
 class JobSearchHandler(val context: PluginContext) : MessageEventListener {
 
@@ -19,52 +18,48 @@ class JobSearchHandler(val context: PluginContext) : MessageEventListener {
             return
         }
 
-        val listings = queryLinkedInForJobs(req)
-        val newListings = listings.filter {
-            it.datePosted.toLowerCase() == "new"
-        }
-
-        if (newListings.size == 0) {
-            context.getMessenger().sendMessage(event.channel, "No new jobs in the area.")
-            return
-        } else {
-            val message = newListings.joinToString("\n") { listing: Job ->
-                "*<${listing.titleUrl}|${listing.title}>*, ${listing.company}, ${listing.location}. \n${listing.description}"
-            }
-            context.getMessenger().sendMessage(event.channel, message)
-        }
+        queryLinkedInForJobs(req, event)
     }
 
 
-    fun queryLinkedInForJobs(request: JobRequest): List<Job> {
+    fun queryLinkedInForJobs(request: JobRequest, event: MessageEvent) {
         val linkedInQuery = buildLinkedInUrl(request)
+        BrowserPoolExecutor.execute(object : BrowserAction {
+            override fun doOnExecutorPool(driver: WebDriver) {
+                context.getMessenger().setTyping(event.channel)
+                driver.get(linkedInQuery)
 
-        //This is a dependency that can be moved out of here - IOC
-        val driver = JBrowserDriver(Settings.builder().
-                userAgent(UserAgent.CHROME).
-                timezone(Timezone.AMERICA_NEWYORK).build())
-        driver.get(linkedInQuery)
+                val pageSource = driver.pageSource
+                val document = Jsoup.parse(pageSource)
 
-        val pageSource = driver.pageSource
-        val document = Jsoup.parse(pageSource)
+                val jobListings = mutableListOf<Job>()
+                document?.let {
+                    it.select(".job-listing").filter {
+                        it.select(".date-posted-or-new").text().toLowerCase() == "new"
+                    }.map {
+                        Job(title = it.select(".job-title-text").joinToString(" ") { elem ->
+                            elem.text().trim()
+                        },
+                                titleUrl = it.select(".job-title-link").attr("abs:href"),
+                                company = it.select(".company-name-text").text(),
+                                location = it.select(".job-location").text(),
+                                datePosted = it.select(".date-posted-or-new").text(),
+                                description = it.select(".job-description").text(),
+                                source = "LinkedIn")
+                    }.toCollection(jobListings)
 
-        val jobListings = mutableListOf<Job>()
-        document?.let {
-            it.select(".job-listing").forEach { listItem ->
-                val title = listItem.select(".job-title-text").joinToString(" ") { elem ->
-                    elem.text().trim()
+                    if (jobListings.size == 0) {
+                        context.getMessenger().sendMessage(event.channel, "No new jobs in the area.")
+                        return
+                    } else {
+                        val message = jobListings.joinToString("\n") { listing: Job ->
+                            "*<${listing.titleUrl}|${listing.title}>*, ${listing.company}, ${listing.location}. \n${listing.description}"
+                        }
+                        context.getMessenger().sendMessage(event.channel, message)
+                    }
                 }
-                val titleUrl = listItem.select(".job-title-link").attr("abs:href")
-                val company = listItem.select(".company-name-text").text()
-                val location = listItem.select(".job-location").text()
-                val datePosted = listItem.select(".date-posted-or-new").text()
-                val description = listItem.select(".job-description").text()
-
-                jobListings.add(Job(title, titleUrl, company, datePosted, location, description, "LinkedIn"))
             }
-        }
-        driver.quit()
-        return jobListings
+        })
     }
 
     fun parseJobRequest(str: String): JobRequest {

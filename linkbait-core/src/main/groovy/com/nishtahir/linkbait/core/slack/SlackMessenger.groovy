@@ -95,6 +95,7 @@ class SlackMessenger implements Messenger {
      */
     static SlackAttachment convertAttachmentToSlackAttachment(@NotNull Attachment attachment) {
         return new SlackAttachment().with {
+            fallback = attachment.title
             title = attachment.title
             titleLink = attachment.titleUrl
             imageUrl = attachment.imageUrl
@@ -105,8 +106,15 @@ class SlackMessenger implements Messenger {
             attachment.additionalFields?.each { key, value ->
                 addField(key, value, true)
             }
+
+            addMarkdownIn("title")
+            addMarkdownIn("text")
             return it
         }
     }
 
+    @Override
+    void setTyping(@NotNull String channel) {
+        session?.sendTyping(findChannel(channel))
+    }
 }

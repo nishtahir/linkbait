@@ -1,13 +1,13 @@
 package de.langerhans.linkbait.tenor
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
  * Created by maxke on 24.08.2016.
  * Better gifs!
  */
-class TenorPlugin: Plugin() {
+class TenorPlugin : LinkbaitPlugin() {
 
     private lateinit var handler: TenorHandler
 

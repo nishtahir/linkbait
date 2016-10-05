@@ -1,9 +1,9 @@
 package de.langerhans.linkbait.android
 
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
-class AndroidDocsPlugin: Plugin() {
+class AndroidDocsPlugin : LinkbaitPlugin() {
 
     private lateinit var handler: AndroidHandler
 

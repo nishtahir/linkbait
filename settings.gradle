@@ -16,6 +16,7 @@ include 'linkbait-plugins/plugin-tenor'
 include 'linkbait-plugins/plugin-android-docs'
 include 'linkbait-plugins/plugin-job-search'
 include 'linkbait-plugins/plugin-link-logger'
+include 'linkbait-plugins/plugin-github-bot'
 
 rootProject.name = 'linkbait'
 

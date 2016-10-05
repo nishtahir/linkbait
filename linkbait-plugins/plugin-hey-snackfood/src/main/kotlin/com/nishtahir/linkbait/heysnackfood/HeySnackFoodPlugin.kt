@@ -1,7 +1,7 @@
 package com.nishtahir.linkbait.heysnackfood
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource
-import com.nishtahir.linkbait.plugin.Plugin
+import com.nishtahir.linkbait.plugin.LinkbaitPlugin
 import com.nishtahir.linkbait.plugin.PluginContext
 
 /**
@@ -14,7 +14,7 @@ import com.nishtahir.linkbait.plugin.PluginContext
  *
  */
 
-class HeySnackFoodPlugin : Plugin() {
+class HeySnackFoodPlugin : LinkbaitPlugin() {
 
     /**
      *
@@ -31,7 +31,6 @@ class HeySnackFoodPlugin : Plugin() {
     }
 
     override fun start(context: PluginContext) {
-        println("start")
         heySnackFoodHandler = HeySnackFoodHandler(context)
         heySnackFoodHandler?.let {
             context.registerListener(it)
@@ -39,7 +38,6 @@ class HeySnackFoodPlugin : Plugin() {
     }
 
     override fun stop(context: PluginContext) {
-        println("stop")
         heySnackFoodHandler?.let {
             context.unregisterListener(it)
         }
