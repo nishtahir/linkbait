@@ -260,4 +260,3 @@ plugins/
 repo/
 *.sqlite
 config.yml
-memegen/
