@@ -31,17 +31,16 @@ open class SlackClientComponent : DisposableBean {
 
     @Bean
     open fun start(): Int {
-        val services = getServices()
-        serviceManager = ServiceManager(services)
+        serviceManager = ServiceManager(getServices())
         serviceManager.startAsync()
         return 0
     }
 
     fun getServices(): List<SlackBot> {
-        return botConfig.config.filter { config ->
-            SERVICE_NAME == config.service.toLowerCase()
-        }.map { config ->
-            SlackBot(null, config.key, serverConfig.name)
+        return botConfig.config.filter {
+            SERVICE_NAME == it.service.toLowerCase()
+        }.map {
+            SlackBot(serverConfig.repo, serverConfig.plugin, it.key, it.id)
         }
     }
 
@@ -51,6 +50,5 @@ open class SlackClientComponent : DisposableBean {
         } catch (timeout: TimeoutException) {
             log.e("Failed to stop services in time.", timeout)
         }
-        serviceManager.stopAsync()
     }
 }

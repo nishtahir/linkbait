@@ -16,38 +16,52 @@ import org.jetbrains.annotations.NotNull
 abstract class AbstractBot extends AbstractExecutionThreadService implements PluginContext {
 
     /**
-     *
+     * @deprecated
      */
+    @NotNull
     Configuration configuration
 
     /**
-     *
+     * Messenger used to send stuff to the message service
      */
+    @NotNull
     abstract Messenger messenger
 
     /**
-     * Bot owner
+     * Bot id
      */
-    String owner
+    @NotNull
+    String id
 
     /**
      *
      */
+    @NotNull
     PluginLoader loader
 
     /**
      * Associated event bus
      */
+    @NotNull
     protected EventBus eventBus
 
     /**
      *
+     * @param pluginRepository
+     * @param pluginDirectory
+     */
+    AbstractBot(@NotNull File pluginRepository, @NotNull File pluginDirectory) {
+        loader = new PluginLoader(pluginRepository)
+        loader.loadPlugins(pluginDirectory)
+    }
+
+    /**
      * @param configuration
+     * @deprecated
      */
     AbstractBot(@NotNull Configuration configuration) {
+        this(configuration.pluginRepository, configuration.pluginDirectory)
         this.configuration = configuration
-        loader = new PluginLoader(configuration)
-        loader.loadPluginsFromJar(configuration.getPluginDirectory())
     }
 
     /**

@@ -16,8 +16,8 @@ import com.ullink.slack.simpleslackapi.listeners.ReactionRemovedListener
 import com.ullink.slack.simpleslackapi.listeners.SlackMessagePostedListener
 import groovy.transform.Canonical
 import groovy.transform.ToString
-import groovy.util.logging.Log
 import groovy.util.logging.Slf4j
+import org.jetbrains.annotations.NotNull
 
 /**
  * Supports slack using the slack api.
@@ -43,16 +43,31 @@ class SlackBot extends AbstractBot {
     private Messenger messenger
 
     /**
-     * Bus to carry all of the sweet sweet messages across
+     *
+     * @param pluginRepository
+     * @param pluginDirectory
+     * @param apiToken
+     * @param id
      */
-
-    SlackBot(Configuration configuration, String apiToken, String owner) {
-        super(configuration)
+    SlackBot(@NotNull File pluginRepository, @NotNull File pluginDirectory,
+             @NotNull String apiToken, @NotNull String id) {
+        super(pluginRepository, pluginDirectory)
         this.apiToken = apiToken
-        this.owner = owner
+        this.id = id
 
-        eventBus = new EventBus(owner)
+        eventBus = new EventBus(id)
         init(apiToken)
+    }
+
+    /**
+     *
+     * @param configuration
+     * @param apiToken
+     * @param owner
+     */
+    @Deprecated
+    SlackBot(Configuration configuration, String apiToken, String owner) {
+        this(configuration.pluginRepository, configuration.pluginDirectory, apiToken, owner)
     }
 
     /**
@@ -60,7 +75,7 @@ class SlackBot extends AbstractBot {
      * @param apiToken for slack
      * @param owner identifies the eventbus and other properties
      */
-    private void init(String apiToken) {
+    private void init(@NotNull String apiToken) {
         session = SlackSessionFactory.createWebSocketSlackSession(apiToken);
         session.addMessagePostedListener(new SlackMessagePostedListener() {
             @Override
@@ -116,6 +131,7 @@ class SlackBot extends AbstractBot {
     @Override
     protected void startUp() throws Exception {
         super.startUp()
+        log.info("Starting: $id")
         session.connect();
     }
 
@@ -133,6 +149,7 @@ class SlackBot extends AbstractBot {
     @Override
     protected void shutDown() throws Exception {
         super.shutDown()
+        log.info("Stopping: $id")
         session.disconnect();
     }
 
@@ -145,7 +162,7 @@ class SlackBot extends AbstractBot {
     }
 
     @Override
-    void setMessenger(Messenger messenger) {
+    void setMessenger(@NotNull Messenger messenger) {
         this.messenger = messenger
     }
 
@@ -154,7 +171,7 @@ class SlackBot extends AbstractBot {
 
     }
 
-    String escapeSlackIds(String message) {
+    String escapeSlackIds(@NotNull String message) {
         def matcher = (message =~ /.*<@(?<id>\w+)>.*/)
         if (matcher.matches()) {
             matcher[0].eachWithIndex { String match, int i ->

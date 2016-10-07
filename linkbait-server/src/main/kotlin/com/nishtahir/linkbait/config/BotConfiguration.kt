@@ -10,7 +10,7 @@ open class BotConfiguration {
 
     var config: ArrayList<Config> = ArrayList()
 
-    open class Config() {
+    open class Config {
         var id: String = UUID.randomUUID().toString()
         var key: String = ""
         var service: String = ""

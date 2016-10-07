@@ -1,10 +1,10 @@
 server:
   name: anon
-# plugin: ./data/plugin
-# port: 8080
-# repo: ./data/repo
-# static: ./data/static
-# temp: ./data/temp
+  port: 8080
+  repo: ./data/repo
+  plugin: ./data/plugins
+  static: ./data/static
+  temp: ./data/temp
 spring:
   datasource:
     driverClassName: org.h2.Driver

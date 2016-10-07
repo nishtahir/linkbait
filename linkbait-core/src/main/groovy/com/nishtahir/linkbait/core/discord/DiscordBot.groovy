@@ -5,7 +5,6 @@ import com.nishtahir.linkbait.core.AbstractBot
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.Messenger
 import com.nishtahir.linkbait.plugin.model.Configuration
-import groovy.util.logging.Log
 import groovy.util.logging.Slf4j
 import org.jetbrains.annotations.NotNull
 import sx.blah.discord.api.ClientBuilder
@@ -42,7 +41,7 @@ class DiscordBot extends AbstractBot {
     DiscordBot(@NotNull Configuration configuration, String apiToken, String owner) {
         super(configuration)
         this.apiToken = apiToken
-        this.owner = owner
+        this.id = owner
 
         eventBus = new EventBus(owner)
         init(apiToken)
