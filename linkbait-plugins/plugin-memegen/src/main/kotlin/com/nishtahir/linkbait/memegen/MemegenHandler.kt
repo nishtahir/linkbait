@@ -1,6 +1,7 @@
 package com.nishtahir.linkbait.memegen
 
 import com.nishtahir.MemeGenerator
+import com.nishtahir.linkbait.commons.RandomNameGenerator
 import com.nishtahir.linkbait.plugin.MessageEvent
 import com.nishtahir.linkbait.plugin.MessageEventListener
 import com.nishtahir.linkbait.plugin.PluginContext
@@ -18,6 +19,8 @@ import java.util.*
 class MemegenHandler(val context: PluginContext) : MessageEventListener {
 
     val templatesFile = File("data/templates")
+
+    val randomNameGenerator = RandomNameGenerator()
 
     override fun handleMessageEvent(event: MessageEvent) {
         if (event.isDirectedAtBot) {
@@ -62,7 +65,7 @@ Available memes:
     }
 
     fun createMeme(title: String, top: String, bottom: String): File? {
-        val outputMemeFile = File("data/memegen/${UUID.randomUUID().toString()}.jpg")
+        val outputMemeFile = File("data/memegen/${randomNameGenerator.next()}.jpg")
         val file = findImageFile(title)
         file?.let {
             outputMemeFile.mkdirs()

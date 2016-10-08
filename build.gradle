@@ -59,17 +59,21 @@ apply plugin: 'com.bmuschko.docker-java-application'
 
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 
+import java.nio.charset.Charset
+
 mainClassName = 'com.nishtahir.linkbait.Application'
 
 version = getVersion()
 
 task copyDockerArchiveResources(type: Copy) {
+    group "docker"
     dependsOn distTar
     from { distTar.archivePath }
     into { createDockerfile.destFile.parentFile }
 }
 
 task createDockerfile(type: Dockerfile) {
+    group "docker"
     dependsOn copyDockerArchiveResources
     destFile = project.file("$project.buildDir/docker/Dockerfile")
     from 'nishtahir/openjfx:8-jre'
@@ -104,6 +108,12 @@ task printVersion() {
     println version
 }
 
+task cacheVersion() {
+    def file = file(".version")
+    file.delete()
+    file.write(version + "\n", "UTF-8")
+}
+
 dependencies {
     compile project(':linkbait-core')
     compile project(':linkbait-server')
@@ -117,5 +127,4 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "org.jetbrains.spek:spek:$spek_version"
-
 }

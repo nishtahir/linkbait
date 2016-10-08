@@ -5,7 +5,6 @@ import com.nishtahir.linkbait.config.BotConfiguration
 import com.nishtahir.linkbait.config.ServerConfiguration
 import com.nishtahir.linkbait.core.slack.SlackBot
 import com.nishtahir.linkbait.extensions.e
-import com.nishtahir.linkbait.extensions.i
 import com.nishtahir.linkbait.extensions.logger
 import org.springframework.beans.factory.DisposableBean
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,4 +1,4 @@
-package com.nishtahir.linkbait.plugin.common
+package com.nishtahir.linkbait.commons
 
 import com.machinepublishers.jbrowserdriver.JBrowserDriver
 import org.apache.commons.pool2.PooledObjectFactory

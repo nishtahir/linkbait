@@ -1,7 +1,7 @@
 package com.nishtahir.linkbait.plugin
 
-import com.nishtahir.linkbait.plugin.common.BrowserAction
-import com.nishtahir.linkbait.plugin.common.BrowserPoolExecutor
+import com.nishtahir.linkbait.commons.BrowserAction
+import com.nishtahir.linkbait.commons.BrowserPoolExecutor
 import org.jsoup.Jsoup
 import org.openqa.selenium.WebDriver
 
