@@ -37,7 +37,7 @@ class HeySnackFoodPluginSpec : Spek({
                 mockMessenger.message = ""
             }
 
-            it("should return a heart emoji when given nuttela") {
+            it("should return a heart emoji when given $SNACK_FOOD_NAME") {
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = true
                 messageEvent.channel = "test"
@@ -47,7 +47,7 @@ class HeySnackFoodPluginSpec : Spek({
                 assertTrue (mockMessenger.message.contains(":heart:", true))
             }
 
-            it("should reward one nuttela correctly") {
+            it("should reward one $SNACK_FOOD_NAME correctly") {
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = false
                 messageEvent.isDirectMessage = false
@@ -59,7 +59,21 @@ class HeySnackFoodPluginSpec : Spek({
                 assertEquals(1, service.findOrCreateUser("user").count)
             }
 
-            it("should reward many many nuttela correctly") {
+            it("should reward one $SNACK_FOOD_NAME to user with a dot in name") {
+                val user = "test.user"
+                val messageEvent: MessageEvent = MessageEvent().apply {
+                    isDirectedAtBot = false
+                    isDirectMessage = false
+                    channel = "test"
+                    sender = "other.user"
+                    message = "@$user $SNACK_FOOD_NAME"
+                }
+
+                handler.handleMessageEvent(messageEvent)
+                assertEquals(1, service.findOrCreateUser(user).count)
+            }
+
+            it("should reward many many $SNACK_FOOD_NAME correctly") {
                 val messageEvent: MessageEvent = MessageEvent()
                 messageEvent.isDirectedAtBot = false
                 messageEvent.isDirectMessage = false

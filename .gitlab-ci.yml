@@ -24,6 +24,7 @@ build:
   script:
     - ./gradlew -g $GRADLE_USER_HOME clean assemble
     - ./gradlew -g $GRADLE_USER_HOME createDockerfile
+    - ./gradlew -g $GRADLE_USER_HOME cacheVersion
   allow_failure: false
 
 test:
@@ -38,9 +39,9 @@ release:
     - docker:dind
   stage: release
   script:
-    - export BUILD_VER=$(git describe --tags)
-    - docker build -t registry.gitlab.com/nishtahir/linkbait:$BUILD_VER $BUILD_DIR/linkbait/docker/
-    - docker build -t registry.gitlab.com/nishtahir/linkbait:latest $BUILD_DIR/linkbait/docker/
+    - export BUILD_VER=$(cat .version)
+    - docker build -t registry.gitlab.com/nishtahir/linkbait:$BUILD_VER $BUILD_DIR/linkbait-server/docker/
+    - docker build -t registry.gitlab.com/nishtahir/linkbait:latest $BUILD_DIR/linkbait-server/docker/
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker push registry.gitlab.com/nishtahir/linkbait:$BUILD_VER
     - docker push registry.gitlab.com/nishtahir/linkbait:latest

@@ -5,13 +5,13 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-open class LinkbaitServerApplication {
+open class Application {
 
-    val log = logger(LinkbaitServerApplication::class.java)
+    val log = logger(Application::class.java)
 
     companion object {
         @JvmStatic fun main(args: Array<String>) {
-            SpringApplication.run(LinkbaitServerApplication::class.java, *args);
+            SpringApplication.run(Application::class.java, *args);
         }
     }
 }
