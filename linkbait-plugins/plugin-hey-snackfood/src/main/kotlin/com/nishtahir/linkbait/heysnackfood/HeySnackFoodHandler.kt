@@ -20,7 +20,7 @@ class HeySnackFoodHandler(val context: PluginContext) : MessageEventListener {
 
     @Subscribe
     override fun handleMessageEvent(event: MessageEvent) {
-        val match = """[\s+]?@(?<user>\w+)[\s+]?""".toRegex().find(event.message)
+        val match = """[\s+]?@(?<user>[\w|\.]+)[\s+]?""".toRegex().find(event.message)
         match?.let {
             val userName = it.value.trim().drop(1)
 
@@ -37,10 +37,10 @@ class HeySnackFoodHandler(val context: PluginContext) : MessageEventListener {
                 return
             }
 
-            val sweetDeliciousNuttella = snackFood.toRegex().findAll(event.message)
-            if (sweetDeliciousNuttella.count() > 0) {
+            val sweetDeliciousNutella = snackFood.toRegex().findAll(event.message)
+            if (sweetDeliciousNutella.count() > 0) {
                 val user = service.findOrCreateUser(userName)
-                user.incrementCount(sweetDeliciousNuttella.count())
+                user.incrementCount(sweetDeliciousNutella.count())
                 service.updateUser(user)
             }
 
