@@ -1,5 +1,6 @@
 package com.nishtahir.linkbait.config
 
+import com.nishtahir.linkbait.commons.RandomNameGenerator
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
 import java.util.*
@@ -11,7 +12,7 @@ open class BotConfiguration {
     var config: ArrayList<Config> = ArrayList()
 
     open class Config {
-        var id: String = UUID.randomUUID().toString()
+        var id: String = RandomNameGenerator().next()
         var key: String = ""
         var service: String = ""
     }

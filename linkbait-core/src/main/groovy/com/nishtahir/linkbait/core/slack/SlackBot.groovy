@@ -154,6 +154,7 @@ class SlackBot extends AbstractBot {
     }
 
     @Override
+    @NotNull
     Messenger getMessenger() {
         if (messenger == null) {
             messenger = new SlackMessenger(session: session)
@@ -171,6 +172,7 @@ class SlackBot extends AbstractBot {
 
     }
 
+    @NotNull
     String escapeSlackIds(@NotNull String message) {
         def matcher = (message =~ /.*<@(?<id>\w+)>.*/)
         if (matcher.matches()) {

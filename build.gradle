@@ -90,7 +90,6 @@ def getVersion() {
         commandLine 'git', 'describe', '--tags'
         standardOutput = stdout
     }
-    //
     def matcher = stdout.toString().trim() =~ /^(\d+)\.(\d+)-(\d+)-g([a-zA-z0-9]+)$/
     if (matcher.matches()) {
         def major = matcher.group(1)
