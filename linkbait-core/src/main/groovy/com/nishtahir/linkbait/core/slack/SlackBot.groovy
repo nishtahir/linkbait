@@ -183,5 +183,4 @@ class SlackBot extends AbstractBot {
         }
         return message
     }
-
 }
