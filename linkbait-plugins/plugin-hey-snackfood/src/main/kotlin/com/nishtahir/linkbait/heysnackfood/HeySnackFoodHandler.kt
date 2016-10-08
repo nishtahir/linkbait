@@ -32,7 +32,7 @@ class HeySnackFoodHandler(val context: PluginContext) : MessageEventListener {
                 }
                 return
             }
-            if (userName.equals(event.sender)) {
+            if (userName.equals(event.sender) && event.message.contains(snackFood)) {
                 context.getMessenger().sendMessage(event.channel, "Don't be greedy! Share the $snackFood love!")
                 return
             }
