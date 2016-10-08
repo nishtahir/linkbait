@@ -21,13 +21,13 @@ open class SlackClientComponent : DisposableBean {
 
     val log = logger(SlackClientComponent::class.java)
 
+    lateinit var serviceManager: ServiceManager
+
     @Autowired
     lateinit var botConfig: BotConfiguration
 
     @Autowired
     lateinit var serverConfig: ServerConfiguration
-
-    lateinit var serviceManager: ServiceManager
 
     @Bean
     open fun start(): Int {
@@ -36,12 +36,10 @@ open class SlackClientComponent : DisposableBean {
         return 0
     }
 
-    fun getServices(): List<SlackBot> {
-        return botConfig.config.filter {
-            SERVICE_NAME == it.service.toLowerCase()
-        }.map {
-            SlackBot(serverConfig.repo, serverConfig.plugin, it.key, it.id)
-        }
+    fun getServices(): List<SlackBot> = botConfig.config.filter {
+        SERVICE_NAME == it.service.toLowerCase()
+    }.map {
+        SlackBot(serverConfig.repo, serverConfig.plugin, it.key, it.id)
     }
 
     override fun destroy() {

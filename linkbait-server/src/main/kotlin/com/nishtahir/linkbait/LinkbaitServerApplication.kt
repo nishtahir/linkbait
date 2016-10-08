@@ -14,14 +14,4 @@ open class LinkbaitServerApplication {
             SpringApplication.run(LinkbaitServerApplication::class.java, *args);
         }
     }
-
-//    @Bean
-//    open fun demo(repository: UserRepository): CommandLineRunner {
-//        return CommandLineRunner { args ->
-//            repository.save(User(email = "test@test.com", password = "test"));
-//            for (user in repository.findAll()) {
-//                log.i(user.email)
-//            }
-//        }
-//    }
 }
