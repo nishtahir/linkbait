@@ -27,35 +27,53 @@ class PluginLoader {
     public static final ROOT_PACKAGE_NAME = 'com.nishtahir'
 
     /**
-     * Application config
+     * Local repository
      */
-    Configuration configuration
+    @NotNull
+    File pluginRepository
 
-    PluginLoader(@NotNull Configuration configuration) {
-        this.configuration = configuration
+    /**
+     * @param pluginRepository
+     */
+    PluginLoader(@NotNull File pluginRepository) {
+        if (!pluginRepository.exists()) {
+            pluginRepository.mkdirs()
+        }
+        this.pluginRepository = pluginRepository
+    }
+
+    /**
+     * @param path
+     */
+    PluginLoader(@NotNull String path) {
+        this(new File(path))
     }
 
     /**
      * List of plugins loaded from plugins.
      */
+    @NotNull
     Map<String, Plugin> plugins = [:]
 
     /**
      * Classloader where all the magic happens.
      */
+    @NotNull
     PluginClassLoader pluginClassLoader = new PluginClassLoader(new URL[0], getClass().classLoader)
 
     /**
      * @param path path to plugin folder
      * @throws FileNotFoundException
      */
-    public void loadPluginsFromJar(File path) throws FileNotFoundException {
-        path.eachFile(FileType.FILES) {
-            if (it.name.endsWith(".jar")) {
-                try {
-                    loadPlugin(it)
-                } catch (Exception e) {
-                    e.printStackTrace()
+    public void loadPlugins(File path) throws FileNotFoundException {
+        if (path.exists() && path.isDirectory()) {
+            path.eachFile(FileType.FILES) {
+                if (it.name.endsWith(".jar")) {
+                    try {
+                        loadPlugin(it)
+                    } catch (Exception e) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -84,7 +102,7 @@ class PluginLoader {
         log.info("Plugin-Version: $pluginVersion")
         log.info("Plugin-Description: $pluginDescription")
 
-        DependencyResolver resolver = new DependencyResolver(configuration.pluginRepository)
+        DependencyResolver resolver = new DependencyResolver(pluginRepository)
         List<File> files = DependencyUtils.parseDependencies(dependencies).findAll {
             //All of this should already be in the classpath
             //After all, they are compile time dependencies for the framework
