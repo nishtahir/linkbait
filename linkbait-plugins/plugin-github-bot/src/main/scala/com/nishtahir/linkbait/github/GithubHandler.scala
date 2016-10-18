@@ -12,6 +12,7 @@ import scala.io.Source
 
 /**
   * Created by nish on 10/4/16.
+  * Modified by niko-yuwono on 10/18/16.
   */
 class GithubHandler(context: PluginContext) extends MessageEventListener {
 
@@ -92,11 +93,9 @@ class GithubHandler(context: PluginContext) extends MessageEventListener {
     context.getMessenger.sendAttachment(event.getChannel, att)
   }
 
-  private def convertGHRepositories(repositories: Map[String, GHRepository]): Map[String, String] = {
-    return repositories.flatMap( repository => Map(repository._1 -> createGHRepositoryStringDescription(repository._2)))
-  }
+  private def convertGHRepositories(repositories: Map[String, GHRepository]) =
+    repositories.map(r => (r._1, createGHRepositoryStringDescription(r._2)))
 
-  private def createGHRepositoryStringDescription(repository: GHRepository): String = {
-    return " Lang : " + repository.getLanguage + " open issue count : " + repository.getOpenIssueCount
-  }
+  private def createGHRepositoryStringDescription(repository: GHRepository) =
+    " Lang : " + repository.getLanguage + " open issue count : " + repository.getOpenIssueCount
 }

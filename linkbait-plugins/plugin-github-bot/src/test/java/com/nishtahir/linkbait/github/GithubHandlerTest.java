@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by nish on 10/4/16.
+ * Modified by niko-yuwono on 10/18/16.
  */
 public class GithubHandlerTest {
 
