@@ -39,7 +39,7 @@ release:
     - docker:dind
   stage: release
   script:
-    - export BUILD_VER=$(cat .version)
+    - export BUILD_VER=$(cat linkbait-server/.version)
     - docker build -t registry.gitlab.com/nishtahir/linkbait:$BUILD_VER $BUILD_DIR/linkbait-server/docker/
     - docker build -t registry.gitlab.com/nishtahir/linkbait:latest $BUILD_DIR/linkbait-server/docker/
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
