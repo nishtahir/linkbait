@@ -1,5 +1,6 @@
 package de.langerhans.linkbait.imdb
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.nishtahir.linkbait.plugin.*
 import java.net.URL
@@ -38,6 +39,7 @@ class ImdbListener(ctx: PluginContext) : MessageEventListener {
         }
         val input = IMDB_PLUGIN_PATTERN.find(event.message)?.groups?.get(2)?.value?.replace(" ", "%20")
         val json = jacksonObjectMapper()
+        json.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
         if (input.isNullOrEmpty()) return
 
