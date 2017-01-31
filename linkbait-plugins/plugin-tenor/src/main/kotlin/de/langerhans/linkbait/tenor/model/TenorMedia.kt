@@ -5,9 +5,9 @@ package de.langerhans.linkbait.tenor.model
  * Media entry
  */
 data class TenorMedia(
-    val url: String,
-    val preview: String,
-    val dims: List<Int>,
-    val duration: Float,
-    val size: Int
+    val url: String?,
+    val preview: String?,
+    val dims: List<Int>?,
+    val duration: Float?,
+    val size: Int?
 )
