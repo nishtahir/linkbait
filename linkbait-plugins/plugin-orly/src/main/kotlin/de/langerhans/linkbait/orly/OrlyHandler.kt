@@ -14,7 +14,7 @@ import java.util.*
  */
 class OrlyHandler(val context: PluginContext): MessageEventListener {
 
-    private val BASE_URL = "https://orly-appstore.herokuapp.com/generate?"
+    private val BASE_URL = "https://dev.to/rly/generate?"
 
     fun String.urlEncode(): String = URLEncoder.encode(this, Charsets.UTF_8.name())
 
