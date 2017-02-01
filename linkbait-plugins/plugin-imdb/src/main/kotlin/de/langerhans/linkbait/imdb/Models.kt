@@ -26,7 +26,8 @@ data class OmdbResult(
         val imdbID: String,
         val Type: String,
         val Response: String, // Sample: "True"... /me flips table
-        val Error: String? // I bet it also returns 200 for "Movie not found"... Just checked, yes it does -.-
+        val Error: String?, // I bet it also returns 200 for "Movie not found"... Just checked, yes it does -.-
+        val totalSeasons: String?
 )
 
 data class ImdbResults(

@@ -38,10 +38,15 @@ class TenorHandler(val context: PluginContext): MessageEventListener {
                 }
 
                 if (response is TenorResponse) {
-                    val all = response.results
+                    var all = response.results
                     if (all == null || all.size == 0 || all.first().media.size == 0) {
                         context.getMessenger().sendMessage(event.channel, "No gifs found :disappointed:")
                         return
+                    }
+
+                    // Sometimes we get a null url now
+                    all = all.filter {
+                        it.media[0].gif.url != null
                     }
 
                     Collections.shuffle(all)
