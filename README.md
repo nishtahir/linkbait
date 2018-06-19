@@ -1,4 +1,10 @@
+
 # Linkbait
+
+<p align="center">
+    <img width="150px" height="150px" style="border-radius:50%" src="./artwork/logo.png"/>
+</p>
+
 
 Linkbait is an extensible bot framework with supports for plugins.
 
@@ -130,7 +136,7 @@ Plugins that are avaliable with Linkbait
 
 # Architecture
 
-![LinkbaitArchitecture](/uploads/d934b724ec8a31a4c3d2e0cad8e87394/LinkbaitArchitecture.png)
+![LinkbaitArchitecture](./artwork/LinkbaitArchitecture.png)
 
 Linkbait is made of a lot of smaller stuff that come together to make up the framework
 
