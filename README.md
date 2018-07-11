@@ -8,20 +8,29 @@
 
 Linkbait is an extensible bot framework with supports for plugins.
 
-# Supported platforms
+## Philosophy
+
+The guiding principle behind this project is 
+
+> Let's try to implement fun an obscure things while making them as obscure as possible
+
+To this end, you are encouraged to use newlanguages that introduce new runtimes provided 
+that the final result is stable
+
+## Supported platforms
 
 * [Slack](https://slack.com/)
 
 * [Discord](https://discordapp.com/)
 
-# Getting started
+## Getting started
 
 To get started with Linkbait, you have the option of pulling a docker image from the
 container registry, or building from source.
 
 If your aim is to contribute to Linkbait, please skip to builing building from source.
 
-## Docker
+### Docker
 
 Linkbait is made available though the gitlab container registry. Running the following command
 
@@ -40,9 +49,9 @@ Here you mount the `data` directory which contains the plugins, static files and
 
 > Plugins are not distributed in the container at this time. but will be in a future release.
 
-## Building from source
+### Building from source
 
-### Requirements
+## Requirements
 
 In order to build Linkbait, you need some variant of the Java Development Kit (JDK). However some packages require
 the JavaFX library.
@@ -61,7 +70,7 @@ Clone the repository run the following command in the project root directory
 
 This will build and deploy Linkbait into the `build/linkbait` directory.
 
-### Basic usage
+## Basic usage
 
 ``` sh
 Usage: <linkbait> [options] [command] [command options]
@@ -115,7 +124,7 @@ Linkbait can be run as a standalone single bot instance or as a bot server
 running multiple bots as services. As a standalone bot you must provide an Id and
 API key and specify the service in order to run Linkbait.
 
-# Extending Linkbait with plugins
+## Extending Linkbait with plugins
 
 Linkbait plugins are distributed as `*.jar` (java archives). All plugins should be placed
 in a *plugin* folder and set using the `--plugin` flag when launching the bot or server.
@@ -134,7 +143,7 @@ Plugins that are avaliable with Linkbait
 * [Tags](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-tags) 
 * [AsciiText](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugins/plugin-asciitext)
 
-# Architecture
+## Architecture
 
 ![LinkbaitArchitecture](./artwork/LinkbaitArchitecture.png)
 
@@ -146,7 +155,7 @@ connections to the various messaging providers are made.
 * [Linkbait-plugin-api](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-plugin-api) - Used to develop plugins which are loaded by the core.
 * [Linkbait-www](https://gitlab.com/nishtahir/linkbait/tree/master/linkbait-www) - The web interface served by the server.
 
-# Contributors
+## Contributors
 
 Thanks to these wonderful people, that have helped make Linkbait possible
 
